@@ -1,0 +1,85 @@
+<h1>Jeedom Plugin pour WebCams/Stations Eufy</h1>
+
+<p><img src="../images/jeedom.png" alt="Logo Jeedom" title="" />
+<img src="../images/eufy.png" alt="Logo Plugin" title="" /></p>
+
+<h2>Documentation</h2>
+
+<ul>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#synchronisation">Synchronisation</a></li>
+<li><a href="#health">Santé</a></li>
+<li><a href="#equipments">Equipements</a></li>
+<li><a href="#troubleshooting">Bugs et dépannage</a></li>
+</ul>
+
+<h3>Configuration</h3>
+
+<p><img src="../images/eufy3.png" alt="Configuration" title="" /></p>
+
+<p>Installer le plugin et ses dépendances.
+<br>Note: L'installation des dépendances n'installe PAS l'image <code>eufy-security-ws</code>.
+<br>Vous avez le choix entre les modes local et distant pour docker:</p>
+
+<h4>1. Mode local</h4>
+
+<p>L'installation du mode local a pour prérequis docker déjà installé et configuré</p>
+
+<ul>
+<li>Installer/désinstaller Eufy: installer/désinstaller l'image <code>eufy-security-ws</code></li>
+<li>Démarrer/arrêter Eufy: démarrer/arrêter le container <code>eufy-security-ws</code></li>
+<li>Device: paramètre Eufy-WS <code>TRUSTED_DEVICE_NAME</code> utilisé pour se connecter au serveur Cloud Eufy</li>
+<li>User/password: identifiants du service Cloud <code>Eufy-WS</code></li>
+</ul>
+
+<h4>2. Mode distant</h4>
+
+<p>Le container <code>eufy-security-ws</code> doit déjà être installé.
+<br>Vous pouvez copier et utiliser le script <code>resources/eufyctl.sh</code> pour installer et tester manuellement l'image <code>eufy-security-ws</code> sur un serveur distant:</p>
+
+<p><code>eufyctl.sh install|uninstall|status|test|stop|start &lt;device&gt; &lt;login&gt; &lt;passwd&gt; [ port ]</code></p>
+
+<h4>3. Paramètres communs</h4>
+
+<ul>
+<li>IP Docker: adresse IP du container <code>eufy-security-ws</code>, 127.0.0.1 par défaut</li>
+<li>Port Docker: port du container <code>eufy-security-ws</code>, 3000 par défaut</li>
+<li>Tester: Vérifier la présence du container <code>eufy-security-ws</code> et sa connexion au service Cloud Eufy</li>
+</ul>
+
+<p>Note: Le daemon Eufy ne démarrera pas si le container <code>eufy-security-ws</code> ne peut pas se connecter au service Cloud Eufy</p>
+
+<h4>4. Soucis de connexion</h4>
+
+<p>En cas de problème vérifier la connexion avec la commande suivante:
+<br><code>resources/eufyctl.sh test</code>
+<br>
+<br> Vous devriez obtenir l'output suivant:</p>
+
+<p><code>
+{"type":"result","success":true,"result":{"state":{"driver":{"version":"2.4.0","connected":true,"pushConnected":true}
+</code></p>
+
+<p>Note: <code>connected</code> et <code>pushConnected</code> doivent être à <code>true</code>
+<br>Voir également la log <code>eufy_service_setup</code> </p>
+
+<h3>Synchronisation</h3>
+
+<p><img src="../images/eufy2.png" alt="Configuration" title="" /></p>
+
+<p>Note: pour l'instant seule la base T8010 et les webcams T8113 et T8114 ont été testés, les autres modèles peuvent être reconnus ou fonctionner partiellement.
+<br>Si votre modèle n'est pas dans cette liste merci de m'envoyer les résultats de la commande <code>python3 resources/test_eufy.py &lt;device_id&gt;</code></p>
+
+<h3>Santé</h3>
+
+<p><img src="../images/eufy1.png" alt="Configuration" title="" /></p>
+
+<p>Liste et statut des devices reconnus </p>
+
+<h3>Equipements</h3>
+
+<p><img src="../images/eufy4.png" alt="Equipments" title="" /></p>
+
+<h3>Bugs et dépannage</h3>
+
+<p>Voir Jeedom community <a href="https://community.jeedom.com/t/integration-de-materiel-eufy/76603">ici</a></p>

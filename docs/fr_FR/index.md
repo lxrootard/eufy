@@ -1,18 +1,68 @@
-# Plugin template
+# Jeedom Plugin pour WebCams/Stations Eufy
 
-Ce "template de plugin" sert de base à la réalisation de plugins pour **Jeedom**.
+![Logo Jeedom](../images/jeedom.png)
+![Logo Plugin](../images/eufy.png)
 
-La documentation générale relative à la conception de plugin est consultable [ici](https://doc.jeedom.com/fr_FR/dev/).
+## Documentation
+- [Configuration](#configuration)
+- [Synchronisation](#synchronisation)
+- [Santé](#health)
+- [Equipements](#equipments)
+- [Bugs et dépannage](#troubleshooting)
 
-Dans le détail :   
-* [Utilisation du template de plugin](https://doc.jeedom.com/fr_FR/dev/plugin_template) : Le template de plugin est une base de plugin pour Jeedom qui doit être adaptée avec l'id de votre plugin et à laquelle il suffit d'ajouter vos propres fonctions.
+### Configuration
+![Configuration](../images/eufy3.png)
 
-* [Fichier info.json](https://doc.jeedom.com/fr_FR/dev/structure_info_json) : Intégré depuis la version 3.0 de Jeedom, le fichier **info.json** est obligatoire pour le bon fonctionnement des plugins et leur bon déploiement sur le Market Jeedom.
+Installer le plugin et ses dépendances.
+<br>Note: L'installation des dépendances n'installe PAS l'image `eufy-security-ws`.
+<br>Vous avez le choix entre les modes local et distant pour docker:
+#### 1. Mode local
+L'installation du mode local a pour prérequis docker déjà installé et configuré
 
-* [Icône du plugin](https://doc.jeedom.com/fr_FR/dev/Icone_de_plugin) : Afin de pouvoir être publié sur le Market Jeedom, tout plugin doit disposer d’une icône. Attention à ne pas utiliser le même code couleur que les icônes des plugins Jeedom officiels.
+- Installer/désinstaller Eufy: installer/désinstaller l'image `eufy-security-ws`
+- Démarrer/arrêter Eufy: démarrer/arrêter le container `eufy-security-ws`
+- Device: paramètre Eufy-WS `TRUSTED_DEVICE_NAME` utilisé pour se connecter au serveur Cloud Eufy
+- User/password: identifiants du service Cloud `Eufy-WS`
 
-* [Widget du plugin](https://doc.jeedom.com/fr_FR/dev/widget_plugin) : Présentation des différentes manières d'inclure des widgets personnalisés au plugin.
+#### 2. Mode distant
+Le container `eufy-security-ws` doit déjà être installé.
+<br>Vous pouvez copier et utiliser le script `resources/eufyctl.sh` pour installer et tester manuellement l'image `eufy-security-ws` sur un serveur distant:
 
-* [Documentation du plugin](https://doc.jeedom.com/fr_FR/dev/documentation_plugin) : Présentation de la mise en place d'une documentation car un bon plugin n'est rien sans documentation adéquate.
+`eufyctl.sh install|uninstall|status|test|stop|start <device> <login> <passwd> [ port ]`
+ 
+####  3. Paramètres communs
+- IP Docker: adresse IP du container `eufy-security-ws`, 127.0.0.1 par défaut
+- Port Docker: port du container `eufy-security-ws`, 3000 par défaut
+- Tester: Vérifier la présence du container `eufy-security-ws` et sa connexion au service Cloud Eufy
 
-* [Publication du plugin](https://doc.jeedom.com/fr_FR/dev/publication_plugin) : Description des pré-requis indispensables à la publication du plugin.
+Note: Le daemon Eufy ne démarrera pas si le container `eufy-security-ws` ne peut pas se connecter au service Cloud Eufy
+
+####  4. Soucis de connexion
+En cas de problème vérifier la connexion avec la commande suivante:
+<br>`resources/eufyctl.sh test`
+<br>
+<br> Vous devriez obtenir l'output suivant:
+
+```
+{"type":"result","success":true,"result":{"state":{"driver":{"version":"2.4.0","connected":true,"pushConnected":true}
+```
+
+Note: `connected` et `pushConnected` doivent être à `true`
+<br>Voir également la log `eufy_service_setup` 
+
+### Synchronisation
+![Configuration](../images/eufy2.png)
+
+Note: pour l'instant seule la base T8010 et les webcams T8113 et T8114 ont été testés, les autres modèles peuvent être reconnus ou fonctionner partiellement.
+<br>Si votre modèle n'est pas dans cette liste merci de m'envoyer les résultats de la commande `python3 resources/test_eufy.py <device_id>`
+
+### Santé
+![Configuration](../images/eufy1.png)
+
+Liste et statut des devices reconnus 
+
+### Equipements
+![Equipments](../images/eufy4.png)
+
+### Bugs et dépannage
+Voir Jeedom community [ici](https://community.jeedom.com/t/integration-de-materiel-eufy/76603)

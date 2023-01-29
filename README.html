@@ -1,0 +1,44 @@
+<h1>Jeedom Plugin for Eufy WebCams/Stations</h1>
+
+<p><img src="docs/images/jeedom.png" alt="Logo Jeedom" title="" />
+<img src="docs/images/eufy.png" alt="Logo Plugin" title="" /></p>
+
+<h2>Documentation</h2>
+
+<ul>
+<li>User Documentation <a href="docs/en_US/index.html">(en)</a></li>
+<li>User Documentation <a href="docs/fr_FR/index.html">(fr)</a></li>
+</ul>
+
+<h2>Credits</h2>
+
+<p>Project fork of <a href="https://github.com/alexandreberton/eufy">alexandreberton/eufy</a>
+<br>Uses <a href="https://github.com/bropat/eufy-security-ws">bropat/eufy-security-ws</a> lib (docker prerequisite)</p>
+
+<h2>ChangeLog</h2>
+
+<ul>
+<li><p>v0.2 <a href="https://github.com/lxrootard">lxrootard</a>
+<br> - Added station and webcam extended properties
+<br> - Added new infos and commands to T8113, T8114 and T8010 devices
+<br> - Added diagnostic script
+<br> - Added install script with dependencies
+<br> - Added local and remote container modes with docker image and container setup options
+<br> - Added checks for Eufy service at startup: container listening and driver connected
+<br> - Added health screen
+<br> - Added generic support for binary commands</p></li>
+<li><p>v0.1 <a href="https://github.com/lxrootard">lxrootard</a> 
+<br> - Created separate equipement types for Station and Webcam 
+<br> - Added support for T8010 base, updated other devices types (T8113 OK, other types to be tested, see core/config/*.json)
+<br> - Added support for Webcam commands: activation, motionDetection, LED, antiTheft, refresh
+<br> - Moved guard command to Station type, added IP, MAC address and status infos
+<br> - Corrected guardMode update bug</p></li>
+<li><p>v0 <a href="https://github.com/alexandreberton">a.berton</a></p></li>
+</ul>
+
+<h2>Todo</h2>
+
+<ul>
+<li>Add generic support for numeric properties</li>
+<li>Improve error checking</li>
+</ul>

@@ -5,12 +5,12 @@
 		"fr_FR": "Plugin permettant de piloter ses périphériques Eufy"
 	},
 	"licence" : "AGPL",
-	"author" : "Alexandre Berton",
+	"author" : "a.berton / lxrootard",
 	"require" : "4.2.0",
-	"category" : "automation protocol",
-	"hasDependency" : false,
+	"category" : "security",
+	"hasDependency" : true,
 	"hasOwnDeamon" : true,
-	"maxDependancyInstallTime" : 0,
+	"maxDependancyInstallTime" : 5,
 	"language": [
 		"fr_FR",
 		"en_US"

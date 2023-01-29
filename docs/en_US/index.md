@@ -1,0 +1,68 @@
+# Jeedom Plugin for Eufy WebCams/Stations
+
+![Logo Jeedom](../images/jeedom.png)
+![Logo Plugin](../images/eufy.png)
+
+## Documentation
+- [Configuration](#configuration)
+- [Synchronization](#synchronization)
+- [Health](#health)
+- [Equipments](#equipments)
+- [Bugs and troubleshooting](#troubleshooting)
+
+### Configuration
+![Configuration](../images/eufy3.png)
+
+Install the plugin and its dependencies first.
+<br>Note: This action does NOT install the `eufy-security-ws` image.
+<br>Choose either local or remote docker mode:
+#### 1. Local mode
+Local mode requires docker already installed. 
+
+- Install/uninstall Eufy: install/uninstall `eufy-security-ws` image
+- Start/stop Eufy: start/stop the `eufy-security-ws` container
+- Device name: Eufy `TRUSTED_DEVICE_NAME` used to connect to Cloud server
+- User/password: `Eufy-WS` Cloud service credentials
+
+#### 2. Remote mode
+Assumes an already running `eufy-security-ws` container.
+<br>Optionally you can copy and use the `resources/eufyctl.sh` script to install and test the `eufy-security-ws` image maneually on a remote server:
+
+`eufyctl.sh install|uninstall|status|test|stop|start <device> <login> <passwd> [ port ]`
+ 
+####  3. Common parameters
+- Docker IP: `eufy-security-ws` container host IP, 127.0.0.1 by default
+- Docker Port: `eufy-security-ws` container port, 3000 by default
+- Test communication: Check connexion to `eufy-security-ws` container
+
+Note: The Eufy daemon won't start if the `eufy-security-ws` container can't connect to the Eufy Cloud service
+
+####  4. Connectivity issues
+If something goes wrong first run:
+<br>`resources/eufyctl.sh test`
+<br>
+<br> you should get something like this:
+
+```
+{"type":"result","success":true,"result":{"state":{"driver":{"version":"2.4.0","connected":true,"pushConnected":true}
+```
+
+Note that `connected` and `pushConnected` need to be `true`
+<br>Also see see `eufy_service_setup` log 
+
+### Synchronization
+![Configuration](../images/eufy2.png)
+
+Note: for now only the T8010 base and the T8113 and T8114 cams have been tested, other models might be recognized incompletely or work partially.
+<br>If your model is not on this list please send me the results of this command: `python3 resources/test_eufy.py <device_id>`
+
+### Health
+![Configuration](../images/eufy1.png)
+
+Lists the recognized devices and their status. 
+
+### Equipments
+![Equipments](../images/eufy4.png)
+
+### Bugs and troubleshooting
+See the Jeedom community [blog entry](https://community.jeedom.com/t/integration-de-materiel-eufy/76603)

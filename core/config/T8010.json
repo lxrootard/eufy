@@ -1,5 +1,4 @@
 [
-
 	{
 		"logicalId": "lanIpAddress",
 		"name": "Adresse IP",
@@ -48,6 +47,42 @@
                         "mobile": "line"
                 }
 	},
+        {
+                "logicalId": "alarm",
+                "name": "Alarme",
+                "type": "info",
+                "subtype": "binary",
+                "isVisible": 1,
+                "generic_type": "ALARM_STATE",
+                "template": {
+                        "dashboard": "line",
+                        "mobile": "line"
+                }
+        },
+        {
+                "logicalId": "alarmDelay",
+                "name": "Délai alarme",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 0,
+                "generic_type": "GENERIC_INFO",
+                "template": {
+                        "dashboard": "line",
+                        "mobile": "line"
+                }
+        },
+        {
+                "logicalId": "alarmVolume",
+                "name": "Volume alarme",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 1,
+                "generic_type": "VOLUME",
+                "template": {
+                        "dashboard": "line",
+                        "mobile": "line"
+                }
+        },
         {
                 "logicalId": "away",
                 "name": "Mode absent",
@@ -111,5 +146,49 @@
                 "subtype": "other",
                 "isVisible": 0,
                 "generic_type": "ALARM_MODE"
+        },
+        {
+                "logicalId": "chime",
+                "name": "Carillon",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "generic_type": "ALARM_ARMED",
+                "display": {
+                     "icon": "<i class=\"fas fa-concierge-bell\"><\/i>"
+                }
+        },
+        {
+                "logicalId": "reboot",
+                "name": "Reboot",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "generic_type": "REBOOT",
+                "display": {
+                     "icon": "<i class=\"kiko-reload-arrow\"><\/i>"
+                }
+        },
+        {
+                "logicalId": "trigger_alarm",
+                "name": "Alarme On",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 0,
+                "generic_type": "SIREN_ON",
+                "display": {
+                     "icon": "<i class=\"fas fa-bell\"><\/i>"
+                }
+        },
+        {
+                "logicalId": "reset_alarm",
+                "name": "Alarme Off",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 0,
+                "generic_type": "SIREN_OFF",
+                "display": {
+                     "icon": "<i class=\"fas fa-bell-slash\"><\/i>"
+                }
         }
 ]

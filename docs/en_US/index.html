@@ -1,0 +1,85 @@
+<h1>Jeedom Plugin for Eufy WebCams/Stations</h1>
+
+<p><img src="../images/jeedom.png" alt="Logo Jeedom" title="" />
+<img src="../images/eufy.png" alt="Logo Plugin" title="" /></p>
+
+<h2>Documentation</h2>
+
+<ul>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#synchronization">Synchronization</a></li>
+<li><a href="#health">Health</a></li>
+<li><a href="#equipments">Equipments</a></li>
+<li><a href="#troubleshooting">Bugs and troubleshooting</a></li>
+</ul>
+
+<h3>Configuration</h3>
+
+<p><img src="../images/eufy3.png" alt="Configuration" title="" /></p>
+
+<p>Install the plugin and its dependencies first.
+<br>Note: This action does NOT install the <code>eufy-security-ws</code> image.
+<br>Choose either local or remote docker mode:</p>
+
+<h4>1. Local mode</h4>
+
+<p>Local mode requires docker already installed. </p>
+
+<ul>
+<li>Install/uninstall Eufy: install/uninstall <code>eufy-security-ws</code> image</li>
+<li>Start/stop Eufy: start/stop the <code>eufy-security-ws</code> container</li>
+<li>Device name: Eufy <code>TRUSTED_DEVICE_NAME</code> used to connect to Cloud server</li>
+<li>User/password: <code>Eufy-WS</code> Cloud service credentials</li>
+</ul>
+
+<h4>2. Remote mode</h4>
+
+<p>Assumes an already running <code>eufy-security-ws</code> container.
+<br>Optionally you can copy and use the <code>resources/eufyctl.sh</code> script to install and test the <code>eufy-security-ws</code> image maneually on a remote server:</p>
+
+<p><code>eufyctl.sh install|uninstall|status|test|stop|start &lt;device&gt; &lt;login&gt; &lt;passwd&gt; [ port ]</code></p>
+
+<h4>3. Common parameters</h4>
+
+<ul>
+<li>Docker IP: <code>eufy-security-ws</code> container host IP, 127.0.0.1 by default</li>
+<li>Docker Port: <code>eufy-security-ws</code> container port, 3000 by default</li>
+<li>Test communication: Check connexion to <code>eufy-security-ws</code> container</li>
+</ul>
+
+<p>Note: The Eufy daemon won't start if the <code>eufy-security-ws</code> container can't connect to the Eufy Cloud service</p>
+
+<h4>4. Connectivity issues</h4>
+
+<p>If something goes wrong first run:
+<br><code>resources/eufyctl.sh test</code>
+<br>
+<br> you should get something like this:</p>
+
+<p><code>
+{"type":"result","success":true,"result":{"state":{"driver":{"version":"2.4.0","connected":true,"pushConnected":true}
+</code></p>
+
+<p>Note that <code>connected</code> and <code>pushConnected</code> need to be <code>true</code>
+<br>Also see see <code>eufy_service_setup</code> log </p>
+
+<h3>Synchronization</h3>
+
+<p><img src="../images/eufy2.png" alt="Configuration" title="" /></p>
+
+<p>Note: for now only the T8010 base and the T8113 and T8114 cams have been tested, other models might be recognized incompletely or work partially.
+<br>If your model is not on this list please send me the results of this command: <code>python3 resources/test_eufy.py &lt;device_id&gt;</code></p>
+
+<h3>Health</h3>
+
+<p><img src="../images/eufy1.png" alt="Configuration" title="" /></p>
+
+<p>Lists the recognized devices and their status. </p>
+
+<h3>Equipments</h3>
+
+<p><img src="../images/eufy4.png" alt="Equipments" title="" /></p>
+
+<h3>Bugs and troubleshooting</h3>
+
+<p>See the Jeedom community <a href="https://community.jeedom.com/t/integration-de-materiel-eufy/76603">blog entry</a></p>

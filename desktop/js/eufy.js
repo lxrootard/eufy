@@ -101,6 +101,13 @@ $('#bt_syncEufy').on('click', function () {
 });
 
 
+$('#bt_healtheufy').on('click', function () {
+  $('#md_modal').dialog({title: "{{Santé Eufy}}"});
+  $('#md_modal').load('index.php?v=d&plugin=eufy&modal=health').dialog('open');
+});
+
+
+
 $("#table_cmd").sortable({
   axis: "y",
   cursor: "move",

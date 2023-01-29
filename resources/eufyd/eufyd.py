@@ -38,46 +38,47 @@ except ImportError:
 	print("Error: importing module jeedom.jeedom")
 	sys.exit(1)
 
+# gestion de la commande Jeedom
 def read_socket():
 	global JEEDOM_SOCKET_MESSAGE
+	global _serialNumber
 	if not JEEDOM_SOCKET_MESSAGE.empty():
 		message = json.loads(JEEDOM_SOCKET_MESSAGE.get().decode('utf-8'))
 		if message['apikey'] != _apikey:
 			logging.error("Invalid apikey from socket : " + str(message))
 			return
-
+		logging.debug("read_socket msg=" + str(message))
 		if "command" not in message:
 			return
-
+#		getStations
 		if message["command"] == "getStations":
-			logging.info("_stations : " + str(_stations))
+			logging.debug("eufyd stations: " + str(_stations))
 			_jeedomCom.send_change_immediate({'type': 'stations', 'stations': str(_stations)})
 			return
-
+#		getDevices
 		if message["command"] == "getDevices":
-			logging.info("_devices : " + str(_devices))
+			logging.debug("eufyd devices: " + str(_devices))
 			_jeedomCom.send_change_immediate({'type': 'devices', 'devices': str(_devices)})
 			return
-
+# 		setProperty
 		if "name" in message and "value" in message:
 			jsonMsg = "{\"command\": \"" + message['command'] + "\", \"serialNumber\": \"" + message['serialNumber'] + "\", \"name\": \"" + message['name'] + "\", \"value\": \"" + message['value'] + "\"}"
-			logging.debug("json sent : " + jsonMsg)
-
+			logging.debug("eufyd set property name/value: " + jsonMsg)
+			_serialNumber = message['serialNumber']
 			_websocket.send(jsonMsg)
 			time.sleep(1)
 			return
-
+#		other commands
 		try:
 			jsonMsg = "{\"command\": \"" + message['command'] + "\", \"serialNumber\": \"" + message['serialNumber'] + "\"}"
-			logging.debug("json sent : " + jsonMsg)
-
+			logging.debug("eufyd command: " + jsonMsg)
+			_serialNumber = message['serialNumber']
 			_websocket.send(jsonMsg)
 			time.sleep(1)
 			return
 		except Exception as e:
 			logging.error("Unable to send Websocket command: " + str(e))
-			
-		
+
 def listen():
 	jeedom_socket.open()
 	try:
@@ -87,7 +88,7 @@ def listen():
 	except KeyboardInterrupt:
 		shutdown()
 
-def startWebsocket():	
+def startWebsocket():
 	logging.debug("Starting websocket with the container")
 	websocket.enableTrace(False)
 	host = "ws://" + _containerip + ":" + _containerport + "/"
@@ -134,8 +135,9 @@ def shutdown():
 
 # ----------------------------------------------------------------------------
 
+# lecture du websocket eufy-security-ws
 def on_message(ws, msg):
-	logging.debug(msg)
+	logging.debug('on_message: ' + msg)
 	jsonMsg = json.loads(msg)
 
 	if jsonMsg['type'] == 'version':
@@ -148,7 +150,7 @@ def on_message(ws, msg):
 		parseEventMessage(jsonMsg)
 
 def on_error(ws, error):
-	logging.error(error)
+	logging.error('on_error: '+ str(error))
 
 def on_close(ws, close_status_code, close_msg):
 	logging.info("Websocket closed")
@@ -162,37 +164,62 @@ def on_open(ws):
 		time.sleep(1)
 		_websocket.send("{\"command\": \"start_listening\"}") # start listening events
 		time.sleep(1)
-		_websocket.send("{\"command\": \"set_api_schema\", \"schemaVersion\": 11}") # Set API schema
+		_websocket.send("{\"command\": \"set_api_schema\", \"schemaVersion\": 16}") # Set API schema
 		time.sleep(1)
 	
 	Thread(target=run).start()
 
+def updatePresence(msg):
+	logging.debug('updatePresence for device ' + _serialNumber + ", success: " + str(msg['success']))
+	if msg['success']:
+		_jeedomCom.send_change_immediate({'type': 'event', 'subtype': 'properties', 'serialNumber': _serialNumber, 'property': 'present', 'value': True})
+	else:
+		logging.debug('***  msg[success] is FALSE ')
+		if "errorCode" in msg:
+			if msg['errorCode'] == 'device_not_found':
+				_jeedomCom.send_change_immediate({'type': 'event', 'subtype': 'properties', 'serialNumber': _serialNumber, 'property': 'present', 'value': False})
+			else:
+				 logging.error("Unknown error code received: " + msg['errorCode'])
+
 def parseResultMessage(msg):
 	global _stations
 	global _devices
+	global _online
+	if not msg['success']:
+		updatePresence(msg)
+	if not "result" in msg:
+		return
+
 	result = msg['result']
+	logging.debug('parseResultMessage: ' + str(result))
+	if not result:
+		return
 
 	if "state" in result:
-		logging.debug('State message Result received')
-		_stations= msg['result']['state']['stations']
-		logging.debug(str(_stations))
-		_devices = msg['result']['state']['devices']
-		logging.debug(str(_devices))
+		logging.debug('State message received:')
+		_online = result['state']['driver']['pushConnected']
+		logging.debug('online: ' + str(_online))
+		_jeedomCom.send_change_immediate({'type': 'connexion', 'online': str(_online)})
+		_stations= result['state']['stations']
+		logging.debug('stations: ' + str(_stations))
+		_devices = result['state']['devices']
+		logging.debug('devices: ' + str(_devices))
 		return
 	if "properties" in result:
 		logging.debug('Properties message received')
+		updatePresence(msg)
 		for prop in result['properties']:
 			_jeedomCom.send_change_immediate({'type': 'event', 'subtype': 'properties', 'serialNumber': result['serialNumber'], 'property': prop, 'value':  result['properties'][prop]})
-
-	logging.warning('Unsupported Result message received')
+		return
+#	logging.warning('Unsupported Result message received')
 
 def parseEventMessage(msg):
 	evtMsg = msg['event']
-	
+
 	if evtMsg['event'] == 'property changed':
 		logging.debug('Event property changed received')
 		_jeedomCom.send_change_immediate({'type': 'event', 'source': evtMsg['source'], 'serialNumber': evtMsg['serialNumber'], 'property': evtMsg['name'], 'value': evtMsg['value']})
-	
+
 def parseVersionMessage(msg):
 	logging.debug('Version message received')
 # ----------------------------------------------------------------------------
@@ -207,7 +234,10 @@ _callback = ''
 _cycle = 0.3
 _containerip = ""
 _containerport = 0
-_devices = ""
+_stations = ''
+_devices = ''
+_online = False
+_serialNumber = ''
 
 parser = argparse.ArgumentParser(
     description='Desmond Daemon for Jeedom plugin')
@@ -237,7 +267,7 @@ if args.containerip:
 	_containerip = args.containerip
 if args.containerport:
 	_containerport = args.containerport
-		
+
 _socket_port = int(_socket_port)
 
 jeedom_utils.set_log_level(_log_level)
@@ -254,7 +284,7 @@ logging.info('Container Port : '+str(_containerport))
 _ws = websocket
 
 signal.signal(signal.SIGINT, handler)
-signal.signal(signal.SIGTERM, handler)	
+signal.signal(signal.SIGTERM, handler)
 
 try:
 	jeedom_utils.write_pid(str(_pidfile))

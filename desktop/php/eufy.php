@@ -12,18 +12,23 @@ $eqLogics = eqLogic::byType($plugin->getId());
     <div class="col-xs-12 eqLogicThumbnailDisplay">
         <legend><i class="fas fa-cog"></i> {{Gestion}}</legend>
         <div class="eqLogicThumbnailContainer">
-			<div class="cursor eqLogicAction logoPrimary" data-action="gotoPluginConf">
-				<i class="fas fa-plus-circle"></i>
-				<br>
-				<span>{{Configuration}}</span>
-			</div>
-			<div class="cursor logoSecondary" id="bt_syncEufy">
+		<div class="cursor eqLogicAction logoPrimary" data-action="gotoPluginConf">
+		<i class="fas fa-wrench"></i>
+		<br>
+		<span>{{Configuration}}</span>
+	</div>
+	<div class="cursor logoSecondary" id="bt_syncEufy">
                 <i class="fas fa-sync"></i>
                 <br>
                 <span>{{Synchroniser}}</span>
-            </div>
-		</div>
-        <legend><i class="fas fa-table"></i> {{Mes équipements}}</legend>
+        </div>
+        <div class="cursor logoSecondary" id="bt_healtheufy">
+          	<i class="fas fa-medkit"></i>
+        	<br/>
+        	<span>{{Santé}}</span>
+        </div>
+</div>
+<legend><i class="fas fa-table"></i> {{Mes équipements}}</legend>
         <div class="input-group" style="margin:5px;">
             <input class="form-control roundedLeft" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
             <div class="input-group-btn">
@@ -35,7 +40,11 @@ $eqLogics = eqLogic::byType($plugin->getId());
             foreach ($eqLogics as $eqLogic) {
                 $opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
                 echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '">';
-                echo '<img src="' . $eqLogic->getImage() . '"/>';
+
+                if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('model') . '.png'))
+			echo '<img src="plugins/eufy/core/config/devices/' . $eqLogic->getConfiguration('model') . '.png"/>';
+		else
+                	echo '<img src="' . $eqLogic->getImage() . '"/>';
                 echo "<br>";
                 echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
                 echo '</div>';
