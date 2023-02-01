@@ -1,0 +1,347 @@
+[
+	{
+		"logicalId": "enabled",
+		"name": "Caméra activée",
+		"type": "info",
+		"subtype": "binary",
+		"isVisible": 1,
+		"generic_type": "ALARM_ENABLE_STATE",
+		"template": {
+			"dashboard": "line",
+			"mobile": "line"
+		}
+	},
+	{
+		"logicalId": "motionDetected",
+		"name": "Mouvement",
+		"type": "info",
+		"subtype": "binary",
+		"isVisible": 1,
+		"isHistorized": 1,
+		"generic_type": "PRESENCE"
+	},
+	{
+		"logicalId": "personDetected",
+		"name": "Personne detectée",
+		"type": "info",
+		"subtype": "binary",
+		"isVisible": 1,
+		"isHistorized": 1,
+		"generic_type": "PRESENCE"
+	},
+	{
+		"logicalId": "personName",
+		"name": "Identification",
+		"type": "info",
+		"subtype": "string",
+		"isVisible": 0,
+		"isHistorized": 0,
+		"generic_type": "GENERIC_INFO",
+		"template": {
+			"dashboard": "line",
+			"mobile": "line"
+		}
+	},
+	{
+		"logicalId": "ringing",
+		"name": "Sonnerie detectée",
+		"type": "info",
+		"subtype": "binary",
+		"isVisible": 1,
+		"isHistorized": 0,
+		"generic_type": "PRESENCE"
+	},
+	{
+		"logicalId": "chimeIndoor",
+		"name": "Carillon intérieur",
+		"type": "info",
+		"subtype": "binary",
+		"isVisible": 1,
+		"isHistorized": 0,
+		"generic_type": "PRESENCE"
+	},
+	{
+		"logicalId": "chimeHomebase",
+		"name": "Carillon base",
+		"type": "info",
+		"subtype": "binary",
+		"isVisible": 1,
+		"isHistorized": 0,
+		"generic_type": "PRESENCE"
+	},
+	{
+		"logicalId": "chimeHomebaseRingtoneType",
+		"name": "Carillon base",
+		"type": "info",
+		"subtype": "string",
+		"isVisible": 1,
+		"isHistorized": 0,
+		"generic_type": "GENERIC_INFO"
+	},
+	{
+		"logicalId": "pictureUrl",
+		"name": "URL snapshot",
+		"type": "info",
+		"subtype": "string",
+		"isVisible": 0,
+		"isHistorized": 0,
+		"generic_type": "CAMERA_URL",
+		"template": {
+			"dashboard": "line",
+			"mobile": "line"
+		}
+	},
+	{
+		"logicalId": "statusLed",
+		"name": "Etat LED",
+		"type": "info",
+		"subtype": "binary",
+		"isVisible": 1,
+		"generic_type": "CAMERA_RECORD_STATE",
+		"template": {
+			"dashboard": "line",
+			"mobile": "line"
+		}
+	},
+	{
+		"logicalId": "motionDetection",
+		"name": "Détection de mouvement",
+		"type": "info",
+		"subtype": "binary",
+		"isVisible": 1,
+		"generic_type": "GENERIC_INFO",
+		"template": {
+			"dashboard": "line",
+			"mobile": "line"
+		}
+	},
+	{
+		"logicalId": "speakerVolume",
+		"name": "Volume",
+		"type": "info",
+		"subtype": "string",
+		"isVisible": 1,
+		"isHistorized": 0,
+		"generic_type": "GENERIC_INFO",
+		"template": {
+			"dashboard": "line",
+			"mobile": "line"
+		}
+	},
+	{
+		"logicalId": "chimeHomebaseRingtoneVolume",
+		"name": "Chime volume",
+		"type": "info",
+		"subtype": "string",
+		"isVisible": 1,
+		"isHistorized": 0,
+		"generic_type": "GENERIC_INFO",
+		"template": {
+			"dashboard": "line",
+			"mobile": "line"
+		}
+	},
+	{
+		"logicalId": "audioRecording",
+		"name": "Enregistrement audio",
+		"type": "info",
+		"subtype": "binary",
+		"isVisible": 1,
+		"isHistorized": 0,
+		"generic_type": "GENERIC_INFO",
+		"template": {
+			"dashboard": "line",
+			"mobile": "line"
+		}
+	},
+	{
+		"logicalId": "autoNightvision",
+		"name": "Vision nocturne",
+		"type": "info",
+		"subtype": "binary",
+		"isVisible": 1,
+		"isHistorized": 0,
+		"generic_type": "GENERIC_INFO",
+		"template": {
+			"dashboard": "line",
+			"mobile": "line"
+		}
+	},
+	{
+		"logicalId": "trigger_alarm",
+		"name": "Alarme On",
+		"type": "action",
+		"subtype": "other",
+		"isVisible": 0,
+		"generic_type": "SIREN_ON",
+		"display": {
+			"icon": "<i class=\"fas fa-bell\"></i>"
+		}
+	},
+	{
+		"logicalId": "reset_alarm",
+		"name": "Alarme Off",
+		"type": "action",
+		"subtype": "other",
+		"isVisible": 0,
+		"generic_type": "SIREN_OFF",
+		"display": {
+			"icon": "<i class=\"fas fa-bell-slash\"></i>"
+		}
+	},
+	{
+		"logicalId": "enabled:on",
+		"name": "Activer la Caméra",
+		"type": "action",
+		"subtype": "other",
+		"isVisible": 1,
+		"generic_type": "CAMERA_PRESET",
+		"display": {
+			"icon": "<i class=\"jeedom-on\"></i>"
+		}
+	},
+	{
+		"logicalId": "enabled:off",
+		"name": "Désactiver la Caméra",
+		"type": "action",
+		"subtype": "other",
+		"isVisible": 1,
+		"generic_type": "CAMERA_PRESET",
+		"display": {
+			"icon": "<i class=\"jeedom-off\"></i>"
+		}
+	},
+	{
+		"logicalId": "motionDetection:on",
+		"name": "Activer la détection de Mouvement",
+		"type": "action",
+		"subtype": "other",
+		"isVisible": 1,
+		"generic_type": "CAMERA_PRESET",
+		"display": {
+			"icon": "<i class=\"loisir-runner5\"></i>"
+		}
+	},
+	{
+		"logicalId": "motionDetection:off",
+		"name": "Désactiver la détection de Mouvement",
+		"type": "action",
+		"subtype": "other",
+		"isVisible": 1,
+		"generic_type": "CAMERA_PRESET",
+		"display": {
+			"icon": "<i class=\"fas fa-running\"></i>"
+		}
+	},
+	{
+		"logicalId": "statusLed:on",
+		"name": "Activer la LED",
+		"type": "action",
+		"subtype": "other",
+		"isVisible": 1,
+		"generic_type": "CAMERA_PRESET",
+		"display": {
+			"icon": "<i class=\"jeedom-lumiere-on\"></i>"
+		}
+	},
+	{
+		"logicalId": "statusLed:off",
+		"name": "Désactiver la LED",
+		"type": "action",
+		"subtype": "other",
+		"isVisible": 1,
+		"generic_type": "CAMERA_PRESET",
+		"display": {
+			"icon": "<i class=\"jeedom-lumiere-off\"></i>"
+		}
+	},
+	{
+		"logicalId": "autoNightvision:on",
+		"name": "Activer vision nocturne",
+		"type": "action",
+		"subtype": "other",
+		"isVisible": 1,
+		"generic_type": "CAMERA_PRESET"
+	},
+	{
+		"logicalId": "autoNightvision:off",
+		"name": "Désactiver vision nocturne",
+		"type": "action",
+		"subtype": "other",
+		"isVisible": 1,
+		"generic_type": "CAMERA_PRESET"
+	},
+	{
+		"logicalId": "audioRecording:on",
+		"name": "Activer enregistrement audio",
+		"type": "action",
+		"subtype": "other",
+		"isVisible": 1,
+		"generic_type": "CAMERA_PRESET",
+		"display": {
+			"icon": "<i class=\"jeedomapp-circlevalidation\"></i>"
+		}
+	},
+	{
+		"logicalId": "audioRecording:off",
+		"name": "Désactiver enregistrement audio",
+		"type": "action",
+		"subtype": "other",
+		"isVisible": 1,
+		"generic_type": "CAMERA_PRESET",
+		"display": {
+			"icon": "<i class=\"jeedomapp-circlestop\"></i>"
+		}
+	},
+	{
+		"logicalId": "speakerVolume:set",
+		"name": "Volume Son",
+		"type": "action",
+		"subtype": "slider",
+		"isVisible": 1,
+		"generic_type": "SET_VOLUME",
+		"configuration": {
+			"params": "[#slider#]",
+			"minValue": 0,
+			"maxValue": 100
+		}
+	},
+	{
+		"logicalId": "ringtoneVolume:set",
+		"name": "Volume sonnerie",
+		"type": "action",
+		"subtype": "slider",
+		"isVisible": 1,
+		"generic_type": "SET_VOLUME",
+		"configuration": {
+			"params": "[#slider#]",
+			"minValue": 0,
+			"maxValue": 100
+		}
+	},
+	{
+		"logicalId": "chimeHomebaseRingtoneVolume:set",
+		"name": "Volume carillon",
+		"type": "action",
+		"subtype": "slider",
+		"isVisible": 1,
+		"generic_type": "SET_VOLUME",
+		"configuration": {
+			"params": "[#slider#]",
+			"minValue": 1,
+			"maxValue": 26
+		}
+	},
+	{
+		"logicalId": "chimeHomebaseRingtoneType:set",
+		"name": "Type de sonnerie Carillon",
+		"type": "action",
+		"subtype": "select",
+		"isVisible": 1,
+		"generic_type": "CAMERA_PRESET",
+		"configuration": {
+			"switch": "status",
+			"listValue": "0|Default;1|Silent;2|Beacon;3|Chord;4|Christmas;5|Circuit;6|Clock;7|Ding;8|Hillside;9|Presto"
+		}
+	}
+]

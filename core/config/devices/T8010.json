@@ -84,64 +84,77 @@
                 }
         },
         {
-                "logicalId": "away",
-                "name": "Mode absent",
+                "logicalId": "alarmVolume:set",
+                "name": "Réglage volume",
+                "type": "action",
+                "subtype": "slider",
+                "isVisible": 1,
+                "generic_type": "SET_VOLUME",
+		"configuration" : {
+			"params" : "[#slider#]",
+			"minValue" : 0,
+			"maxValue" : 26
+		}
+        },
+        {
+                "logicalId": "guardMode:set:0",
+                "name": "Away",
                 "type": "action",
                 "subtype": "other",
                 "isVisible": 1,
                 "generic_type": "ALARM_MODE"
         },
         {
-                "logicalId": "home",
-                "name": "A la maison",
+                "logicalId": "guardMode:set:1",
+                "name": "Home",
                 "type": "action",
                 "subtype": "other",
                 "isVisible": 1,
                 "generic_type": "ALARM_MODE"
         },
         {
-                "logicalId": "disarmed",
-                "name": "Mode désarmé",
+                "logicalId": "guardMode:set:63",
+                "name": "Disarmed",
                 "type": "action",
                 "subtype": "other",
                 "isVisible": 1,
                 "generic_type": "ALARM_MODE"
         },
         {
-                "logicalId": "scheduled",
-                "name": "Mode planifié",
+                "logicalId": "guardMode:set:2",
+                "name": "Scheduled",
                 "type": "action",
                 "subtype": "other",
                 "isVisible": 0,
                 "generic_type": "ALARM_MODE"
         },
         {
-                "logicalId": "geolocalized",
-                "name": "Mode géolocalisé",
+                "logicalId": "guardMode:set:47",
+                "name": "Geofencing",
                 "type": "action",
                 "subtype": "other",
                 "isVisible": 0,
                 "generic_type": "ALARM_MODE"
         },
         {
-                "logicalId": "custom1",
-                "name": "Mode custom1",
+                "logicalId": "guardMode:set:3",
+                "name": "Custom1",
                 "type": "action",
                 "subtype": "other",
                 "isVisible": 1,
                 "generic_type": "ALARM_MODE"
         },
         {
-                "logicalId": "custom2",
-                "name": "Mode custom2",
+                "logicalId": "guardMode:set:4",
+                "name": "Custom2",
                 "type": "action",
                 "subtype": "other",
                 "isVisible": 0,
                 "generic_type": "ALARM_MODE"
         },
         {
-                "logicalId": "custom3",
-                "name": "Mode custom3",
+                "logicalId": "guardMode:set:5",
+                "name": "Custom3",
                 "type": "action",
                 "subtype": "other",
                 "isVisible": 0,

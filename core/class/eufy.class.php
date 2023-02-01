@@ -172,7 +172,7 @@ class eufy extends eqLogic {
 	$eqLogic->save();
 
         try{
-          $commandsConfig = eufy::getCommandsFileContent(__DIR__ . '/../config/' . $device->model . '.json');
+          $commandsConfig = eufy::getCommandsFileContent(__DIR__ . '/../config/devices/' . $device->model . '.json');
           $eqLogic->createCommandsFromConfig($commandsConfig, $jsonObjArray[$deviceId]);
         }
         catch(Exception $e) {
@@ -236,11 +236,11 @@ class eufy extends eqLogic {
   /* helper */
   private static function getCommandsFileContent(string $filePath) {
 		if (!file_exists($filePath)) {
-			throw new RuntimeException("Fichier de configuration non trouvé:{$filePath}");
+			throw new RuntimeException("Fichier de configuration non trouvé: {$filePath}");
 		}
 		$content = file_get_contents($filePath);
 		if (!is_json($content)) {
-			throw new RuntimeException("Fichier de configuration incorrecte:{$filePath}");
+			throw new RuntimeException("Fichier de configuration incorrect: {$filePath}");
 		}
 		return json_decode($content, true);
 	}
@@ -459,9 +459,9 @@ class eufy extends eqLogic {
   // install | uninstall
   public static function setupEufy($action)
   {
-	$device = config::byKey('devicename', __CLASS__);
-        $user = config::byKey('username', __CLASS__);
-	$passwd = config::byKey('password', __CLASS__);
+	$device = "'" . config::byKey('devicename', __CLASS__) . "'";
+        $user = "'" . config::byKey('username', __CLASS__) . "'";
+	$passwd = "'" . config::byKey('password', __CLASS__) . "'";
 	$port = config::byKey('containerport', __CLASS__);
 
 	$log = __DIR__ . '/../../../../log/eufy_service_setup';
@@ -470,12 +470,12 @@ class eufy extends eqLogic {
 
         log::add(__CLASS__, 'warning', $msg);
 
-        if (($action == 'install') and (empty($device) or empty($passwd)))
-                 throw new Exception(__('Nom du device non renseigné', __FILE__));
-
-	if (($action == 'install') and (empty($user) or empty($passwd)))
-		 throw new Exception(__('Login ou password non renseignés', __FILE__));
-
+        if ($action == 'install') {
+		if (empty($device))
+                	throw new Exception(__('Nom du device non renseigné', __FILE__));
+		else if (empty($user) or empty($passwd))
+			throw new Exception(__('Login ou password non renseignés', __FILE__));
+	}
 	if (empty($port))
 		$port = '3000';
 
@@ -489,6 +489,8 @@ class eufy extends eqLogic {
 		'message' => __($msg, __FILE__) ));
 
 	$cmdline = $script . ' ' . $action . ' ' . $device . ' ' . $user . ' ' . $passwd . ' ' . $port;
+        log::add(__CLASS__, 'debug',  'cmdline: ' . $cmdline);
+
 	shell_exec($cmdline . ' > ' . $log);
 
 	$result = shell_exec('grep OK '. $log);
@@ -534,89 +536,36 @@ class eufyCmd extends cmd {
     $cmd = $this->getLogicalId();
     log::add('eufy', 'debug', 'execute: ' . $cmd);
     $serialNumber= $eqlogic->getConfiguration('serialNumber');
+    $type =  $eqlogic->getConfiguration('eufyType');
+    $device = ($type == 'Station') ? 'station' : 'device';
     switch ($cmd) {
       case 'refresh': 
 	$eqlogic->refreshDevice();
       	break;
-      case 'start_rtsp':
-        $params = array('command' => 'device.set_property', 'serialNumber' => $serialNumber, 'name' => 'rtspStream', 'value' => 'True');
-        eufy::sendToDaemon($params);
-        $params = array('command' => 'device.start_rtsp_livestream', 'serialNumber' => $serialNumber);
-        eufy::sendToDaemon($params);
-        break;
-      case 'stop_rtsp': 
-        $params = array('command' => 'device.set_property', 'serialNumber' => $serialNumber, 'name' => 'rtspStream', 'value' => 'False');
-        eufy::sendToDaemon($params);
-        $params = array('command' => 'device.stop_rtsp_livestream', 'serialNumber' => $serialNumber);
-        eufy::sendToDaemon($params);
-        break;
-      case 'away':
-        $params = array('command' => 'station.set_property', 'serialNumber' => $serialNumber, 'name' => 'guardMode', 'value' => '0');
-        eufy::sendToDaemon($params);
-        break;
-      case 'home':
-        $params = array('command' => 'station.set_property', 'serialNumber' => $serialNumber, 'name' => 'guardMode', 'value' => '1');
-        eufy::sendToDaemon($params);
-        break;
-      case 'scheduled':
-        $params = array('command' => 'station.set_property', 'serialNumber' => $serialNumber, 'name' => 'guardMode', 'value' => '2');
-        eufy::sendToDaemon($params);
-        break;
-      case 'custom1':
-        $params = array('command' => 'station.set_property', 'serialNumber' => $serialNumber, 'name' => 'guardMode', 'value' => '3');
-        eufy::sendToDaemon($params);
-        break;
-      case 'custom2':
-        $params = array('command' => 'station.set_property', 'serialNumber' => $serialNumber, 'name' => 'guardMode', 'value' => '4');
-        eufy::sendToDaemon($params);
-	break;
-      case 'custom3':
-        $params = array('command' => 'station.set_property', 'serialNumber' => $serialNumber, 'name' => 'guardMode', 'value' => '5');
-        eufy::sendToDaemon($params);
-        break;
-      case 'geolocalized':
-        $params = array('command' => 'station.set_property', 'serialNumber' => $serialNumber, 'name' => 'guardMode', 'value' => '47');
-        eufy::sendToDaemon($params);
-        break;
-      case 'disarmed':
-        $params = array('command' => 'station.set_property', 'serialNumber' => $serialNumber, 'name' => 'guardMode', 'value' => '63');
-        eufy::sendToDaemon($params);
-        break;
-      case 'chime':
-        $params = array('command' => 'station.chime', 'serialNumber' => $serialNumber);
-        eufy::sendToDaemon($params);
-        break;
-      case 'reboot':
-        $params = array('command' => 'station.reboot', 'serialNumber' => $serialNumber);
-        eufy::sendToDaemon($params);
-        break;
-      case 'trigger_alarm':
-        $params = array('command' => 'station.trigger_alarm', 'serialNumber' => $serialNumber);
-        eufy::sendToDaemon($params);
-        break;
-      case 'reset_alarm':
-        $params = array('command' => 'station.reset_alarm', 'serialNumber' => $serialNumber);
-        eufy::sendToDaemon($params);
-        break;
-      case 'enableNightvision':
-        $params = array('command' => 'station.set_property', 'serialNumber' => $serialNumber, 'name' => 'nightvision', 'value' => '1');
-        eufy::sendToDaemon($params);
-        break;
-      case 'disableNightvision':
-        $params = array('command' => 'station.set_property', 'serialNumber' => $serialNumber, 'name' => 'nightvision', 'value' => '0');
-        eufy::sendToDaemon($params);
-        break;
       default:
-	$info = preg_replace("/enable/", "", $cmd);
-   	if ($info != $cmd)
-        	$value = 'True';
-   	else {
-        	$info = preg_replace("/disable/", "", $cmd);
-        	$value = 'False';
-   	}
-   	$info = lcfirst($info);
-//   	log::add('eufy', 'debug', 'commande: ' . $cmd . " info: ". $info . " value: ". $value);
-	$params = array('command' => 'device.set_property', 'serialNumber' => $serialNumber, 'name' => $info, 'value' => $value);
+        $enable = preg_replace("/:on$/", "", $cmd);
+        $disable = preg_replace("/:off$/", "", $cmd);
+        $set = preg_replace("/:set.*$/", "", $cmd);
+	$value = preg_replace("/[^0-9.]/","", $cmd);
+
+        log::add('eufy', 'debug', '>>>> $_options: ' . json_encode($_options));
+
+  	if ($enable != $cmd)
+		$params = array('command' => $device . '.set_property', 'serialNumber' => $serialNumber, 'name' => $enable, 'value' => 'True');
+   	else if ($disable != $cmd) 
+                $params = array('command' => $device . '.set_property', 'serialNumber' => $serialNumber, 'name' => $disable, 'value' => 'False');
+	else if ($set != $cmd) {
+//        	log::add('eufy', 'debug', '>>>> $value: ' . $value);
+		if ($value == "")
+			$value = $_options['slider']; // slider
+		if (! isset($value))
+			$value = $_options['select']; // combo list
+                $params = array('command' => $device . '.set_property', 'serialNumber' => $serialNumber, 'name' => $set, 'value' => $value);
+	}
+        else  // other commands
+		$params = array('command' => $device . '.' . $set, 'serialNumber' => $serialNumber);
+
+   	log::add('eufy', 'debug', 'cmd::execute send to daemon: ' . json_encode($params));
         eufy::sendToDaemon($params);
  //     $eqlogic->checkAndUpdateCmd($info, true);
     }

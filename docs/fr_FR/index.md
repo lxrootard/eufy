@@ -53,8 +53,7 @@ Note: `connected` et `pushConnected` doivent être à `true`
 ### Synchronisation
 ![Configuration](../images/eufy2.png)
 
-Note: pour l'instant seule la base T8010 et les webcams T8113 et T8114 ont été testés, les autres modèles peuvent être reconnus ou fonctionner partiellement.
-<br>Si votre modèle n'est pas dans cette liste merci de m'envoyer les résultats de la commande `python3 resources/test_eufy.py <device_id>`
+Note: pour l'instant seuls certains modèles ont été testés, voir [ici](../../README.md#Tested) pour plus d'infos.
 
 ### Santé
 ![Configuration](../images/eufy1.png)

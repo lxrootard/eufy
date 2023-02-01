@@ -53,8 +53,7 @@ Note that `connected` and `pushConnected` need to be `true`
 ### Synchronization
 ![Configuration](../images/eufy2.png)
 
-Note: for now only the T8010 base and the T8113 and T8114 cams have been tested, other models might be recognized incompletely or work partially.
-<br>If your model is not on this list please send me the results of this command: `python3 resources/test_eufy.py <device_id>`
+Note: for now only some devices have been tested, please see [here](../../README.md#Tested) for details.
 
 ### Health
 ![Configuration](../images/eufy1.png)
