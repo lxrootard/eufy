@@ -4,11 +4,11 @@
 ![Logo Plugin](docs/images/eufy.png)
 
 ## Tested devices
-- T8010 homebase2 station
-- T8113 Eufycam 2C
-- T8114 new Eufycam 2
-- T8210 Doorbell
-- T8410 Indoor Cam
+- T8010 homebase2 (type 0)
+- T8113 Eufycam 2 (type 8)
+- T8114 Eufycam 2C (type 9)
+- T8210 Battery Doorbell (type 7)
+- T8410 Indoor Cam PT (type 31)
 
 <br>Note: other models might be recognized incompletely or work partially.
 <br>If your model is not on this list please send me the results of this command:

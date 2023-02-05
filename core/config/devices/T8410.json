@@ -48,6 +48,15 @@
 		"generic_type": "PRESENCE"
 	},
 	{
+		"logicalId": "soundDetection",
+		"name": "Détection son",
+		"type": "info",
+		"subtype": "binary",
+		"isVisible": 1,
+		"isHistorized": 1,
+		"generic_type": "GENERIC_INFO"
+	},
+	{
 		"logicalId": "cryingDetected",
 		"name": "Pleur detecté",
 		"type": "info",
@@ -133,6 +142,31 @@
 		}
 	},
 	{
+		"logicalId": "notificationType",
+		"name": "Type ntification",
+		"type": "info",
+		"subtype": "numeric",
+		"isVisible": 0,
+		"generic_type": "GENERIC_INFO",
+		"template": {
+			"dashboard": "line",
+			"mobile": "line"
+		}
+	},
+	{
+		"logicalId": "motionDetectionSensitivity",
+		"name": "Sensibilité détection mvt",
+		"type": "info",
+		"subtype": "numeric",
+		"isVisible": 1,
+		"isHistorized": 0,
+		"generic_type": "GENERIC_INFO",
+		"template": {
+			"dashboard": "line",
+			"mobile": "line"
+		}
+	},
+	{
 		"logicalId": "motionTracking",
 		"name": "Tracking de mouvement",
 		"type": "info",
@@ -157,11 +191,12 @@
 		}
 	},
 	{
-		"logicalId": "soundDetection",
-		"name": "Détection sons",
+		"logicalId": "speaker",
+		"name": "Haut-parleur",
 		"type": "info",
 		"subtype": "binary",
 		"isVisible": 1,
+		"isHistorized": 0,
 		"generic_type": "GENERIC_INFO",
 		"template": {
 			"dashboard": "line",
@@ -169,10 +204,10 @@
 		}
 	},
 	{
-		"logicalId": "speaker",
-		"name": "Haut-parleur",
+		"logicalId": "speakerVolume",
+		"name": "Volume",
 		"type": "info",
-		"subtype": "binary",
+		"subtype": "numeric",
 		"isVisible": 1,
 		"isHistorized": 0,
 		"generic_type": "GENERIC_INFO",
@@ -423,6 +458,31 @@
 			"params": "[#slider#]",
 			"minValue": 0,
 			"maxValue": 100
+		}
+	},
+	{
+		"logicalId": "motionDetectionSensitivity:set",
+		"name": "Sensibilité détection",
+		"type": "action",
+		"subtype": "slider",
+		"isVisible": 1,
+		"generic_type": "CAMERA_PRESET",
+		"configuration": {
+			"params": "[#slider#]",
+			"minValue": 1,
+			"maxValue": 7
+		}
+	},
+	{
+		"logicalId": "notificationType:set",
+		"name": "Types de notification",
+		"type": "action",
+		"subtype": "select",
+		"isVisible": 1,
+		"generic_type": "CAMERA_PRESET",
+		"configuration": {
+			"switch": "status",
+			"listValue": "1|Efficient;2|Include thumbnail;3|Full effect"
 		}
 	}
 ]

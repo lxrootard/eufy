@@ -73,10 +73,86 @@
 		"logicalId": "chimeHomebaseRingtoneType",
 		"name": "Carillon base",
 		"type": "info",
-		"subtype": "string",
+		"subtype": "numeric",
 		"isVisible": 1,
 		"isHistorized": 0,
 		"generic_type": "GENERIC_INFO"
+	},
+	{
+		"logicalId": "motionDetectionType",
+		"name": "Type de détection mvt",
+		"type": "info",
+		"subtype": "numeric",
+		"isVisible": 1,
+		"isHistorized": 0,
+		"generic_type": "GENERIC_INFO",
+		"template": {
+			"dashboard": "line",
+			"mobile": "line"
+		}
+	},
+	{
+		"logicalId": "battery",
+		"name": "Batterie",
+		"type": "info",
+		"subtype": "numeric",
+		"isVisible": 1,
+		"unite": "%",
+		"generic_type": "BATTERY",
+		"template": {
+			"dashboard": "line",
+			"mobile": "line"
+		}
+	},
+	{
+		"logicalId": "batteryTemperature",
+		"name": "Température batterie",
+		"type": "info",
+		"subtype": "numeric",
+		"isVisible": 0,
+		"unite": "°C",
+		"generic_type": "TEMPERATURE",
+		"template": {
+			"dashboard": "line",
+			"mobile": "line"
+		}
+	},
+	{
+		"logicalId": "notificationType",
+		"name": "Type de notification",
+		"type": "info",
+		"subtype": "numeric",
+		"isVisible": 1,
+		"isHistorized": 0,
+		"generic_type": "GENERIC_INFO",
+		"template": {
+			"dashboard": "line",
+			"mobile": "line"
+		}
+	},
+	{
+		"logicalId": "notificationRing",
+		"name": "Notif. sonnerie",
+		"type": "info",
+		"subtype": "binary",
+		"isVisible": 1,
+		"generic_type": "GENERIC_INFO",
+		"template": {
+			"dashboard": "line",
+			"mobile": "line"
+		}
+	},
+	{
+		"logicalId": "notificationMotion",
+		"name": "Notif. mouvement",
+		"type": "info",
+		"subtype": "binary",
+		"isVisible": 1,
+		"generic_type": "GENERIC_INFO",
+		"template": {
+			"dashboard": "line",
+			"mobile": "line"
+		}
 	},
 	{
 		"logicalId": "pictureUrl",
@@ -104,6 +180,20 @@
 		}
 	},
 	{
+		"logicalId": "wifiRSSI",
+		"name": "Signal Wifi",
+		"type": "info",
+		"subtype": "numeric",
+		"isVisible": 1,
+		"isHistorized": 0,
+		"unite": "dBm",
+		"generic_type": "GENERIC_INFO",
+		"template": {
+			"dashboard": "line",
+			"mobile": "line"
+		}
+	},
+	{
 		"logicalId": "motionDetection",
 		"name": "Détection de mouvement",
 		"type": "info",
@@ -123,6 +213,18 @@
 		"isVisible": 1,
 		"isHistorized": 0,
 		"generic_type": "GENERIC_INFO",
+		"template": {
+			"dashboard": "line",
+			"mobile": "line"
+		}
+	},
+	{
+		"logicalId": "ringtoneVolume",
+		"name": "Volume sonnerie",
+		"type": "info",
+		"subtype": "numeric",
+		"isVisible": 1,
+		"generic_type": "VOLUME",
 		"template": {
 			"dashboard": "line",
 			"mobile": "line"
@@ -256,6 +358,38 @@
 		}
 	},
 	{
+		"logicalId": "notificationRing:on",
+		"name": "Activer notif. sonnerie",
+		"type": "action",
+		"subtype": "other",
+		"isVisible": 1,
+		"generic_type": "CAMERA_PRESET"
+	},
+	{
+		"logicalId": "notificationRing:off",
+		"name": "Désactiver notif. sonnerie",
+		"type": "action",
+		"subtype": "other",
+		"isVisible": 1,
+		"generic_type": "CAMERA_PRESET"
+	},
+	{
+		"logicalId": "notificationMotion:on",
+		"name": "Activer notif. mouvement",
+		"type": "action",
+		"subtype": "other",
+		"isVisible": 1,
+		"generic_type": "CAMERA_PRESET"
+	},
+	{
+		"logicalId": "notificationMotion:off",
+		"name": "Désactiver notif. mouvement",
+		"type": "action",
+		"subtype": "other",
+		"isVisible": 1,
+		"generic_type": "CAMERA_PRESET"
+	},
+	{
 		"logicalId": "autoNightvision:on",
 		"name": "Activer vision nocturne",
 		"type": "action",
@@ -266,6 +400,22 @@
 	{
 		"logicalId": "autoNightvision:off",
 		"name": "Désactiver vision nocturne",
+		"type": "action",
+		"subtype": "other",
+		"isVisible": 1,
+		"generic_type": "CAMERA_PRESET"
+	},
+	{
+		"logicalId": "chimeHomebase:on",
+		"name": "Activer carillon",
+		"type": "action",
+		"subtype": "other",
+		"isVisible": 1,
+		"generic_type": "CAMERA_PRESET"
+	},
+	{
+		"logicalId": "chimeHomebase:off",
+		"name": "Désactiver carillon",
 		"type": "action",
 		"subtype": "other",
 		"isVisible": 1,
@@ -291,6 +441,30 @@
 		"generic_type": "CAMERA_PRESET",
 		"display": {
 			"icon": "<i class=\"jeedomapp-circlestop\"></i>"
+		}
+	},
+	{
+		"logicalId": "motionDetectionType:set",
+		"name": "Type détection mouvement",
+		"type": "action",
+		"subtype": "select",
+		"isVisible": 1,
+		"generic_type": "CAMERA_PRESET",
+		"configuration": {
+			"switch": "status",
+			"listValue": "0|Humans;2|All"
+		}
+	},
+	{
+		"logicalId": "notificationType:set",
+		"name": "Types de notification",
+		"type": "action",
+		"subtype": "select",
+		"isVisible": 1,
+		"generic_type": "CAMERA_PRESET",
+		"configuration": {
+			"switch": "status",
+			"listValue": "1|Efficient;2|Include thumbnail;3|Full effect"
 		}
 	},
 	{

@@ -248,6 +248,44 @@
 		}
 	},
 	{
+		"logicalId": "motionDetectionType",
+		"name": "Type de détection mvt",
+		"type": "info",
+		"subtype": "numeric",
+		"isVisible": 1,
+		"isHistorized": 0,
+		"generic_type": "GENERIC_INFO",
+		"template": {
+			"dashboard": "line",
+			"mobile": "line"
+		}
+	},
+	{
+		"logicalId": "motionDetectionSensitivity",
+		"name": "Sensibilité détection mvt",
+		"type": "info",
+		"subtype": "numeric",
+		"isVisible": 1,
+		"isHistorized": 0,
+		"generic_type": "GENERIC_INFO",
+		"template": {
+			"dashboard": "line",
+			"mobile": "line"
+		}
+	},
+	{
+		"logicalId": "watermark",
+		"name": "Filigrane",
+		"type": "info",
+		"subtype": "numeric",
+		"isVisible": 0,
+		"generic_type": "GENERIC_INFO",
+		"template": {
+			"dashboard": "line",
+			"mobile": "line"
+		}
+	},
+	{
 		"logicalId": "rtspStream:on",
 		"name": "Démarrer le flux RTSP",
 		"type": "action",
@@ -274,7 +312,7 @@
 		"name": "Alarme On",
 		"type": "action",
 		"subtype": "other",
-		"isVisible": 0,
+		"isVisible": 1,
 		"generic_type": "SIREN_ON",
 		"display": {
 			"icon": "<i class=\"fas fa-bell\"></i>"
@@ -285,7 +323,7 @@
 		"name": "Alarme Off",
 		"type": "action",
 		"subtype": "other",
-		"isVisible": 0,
+		"isVisible": 1,
 		"generic_type": "SIREN_OFF",
 		"display": {
 			"icon": "<i class=\"fas fa-bell-slash\"></i>"
@@ -358,6 +396,31 @@
 		}
 	},
 	{
+		"logicalId": "motionDetectionType:set",
+		"name": "Type détection mouvement",
+		"type": "action",
+		"subtype": "select",
+		"isVisible": 1,
+		"generic_type": "CAMERA_PRESET",
+		"configuration": {
+			"switch": "status",
+			"listValue": "0|Humans;2|All"
+		}
+	},
+	{
+		"logicalId": "motionDetectionSensitivity:set",
+		"name": "Sensibilité détection",
+		"type": "action",
+		"subtype": "slider",
+		"isVisible": 1,
+		"generic_type": "CAMERA_PRESET",
+		"configuration": {
+			"params": "[#slider#]",
+			"minValue": 1,
+			"maxValue": 7
+		}
+	},
+	{
 		"logicalId": "statusLed:on",
 		"name": "Activer la LED",
 		"type": "action",
@@ -389,6 +452,18 @@
 		"configuration": {
 			"switch": "status",
 			"listValue": "0|Off;1|B&W;2|Color"
+		}
+	},
+	{
+		"logicalId": "watermark:set",
+		"name": "Options Filigrane",
+		"type": "action",
+		"subtype": "select",
+		"isVisible": 0,
+		"generic_type": "CAMERA_PRESET",
+		"configuration": {
+			"switch": "status",
+			"listValue": "0|Off;1|Timestamp;2|Timestamp+Logo"
 		}
 	},
 	{
@@ -481,7 +556,7 @@
 	},
 	{
 		"logicalId": "speakerVolume:set",
-		"name": "Speaker volume",
+		"name": "Volume alarme",
 		"type": "action",
 		"subtype": "select",
 		"isVisible": 1,

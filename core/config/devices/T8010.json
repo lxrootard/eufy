@@ -4,7 +4,7 @@
 		"name": "Adresse IP",
 		"type": "info",
 		"subtype": "string",
-		"isVisible": 1,
+		"isVisible": 0,
 		"generic_type": "GENERIC_INFO",
                 "template": {
                         "dashboard": "line",
@@ -16,7 +16,7 @@
                 "name": "Adresse MAC",
                 "type": "info",
                 "subtype": "string",
-                "isVisible": 1,
+                "isVisible": 0,
                 "generic_type": "GENERIC_INFO",
                 "template": {
                         "dashboard": "line",
@@ -72,6 +72,18 @@
                 }
         },
         {
+                "logicalId": "alarmTone",
+                "name": "Tonalité alarme",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 0,
+                "generic_type": "GENERIC_INFO",
+                "template": {
+                        "dashboard": "line",
+                        "mobile": "line"
+                }
+        },
+        {
                 "logicalId": "alarmVolume",
                 "name": "Volume alarme",
                 "type": "info",
@@ -95,6 +107,18 @@
 			"minValue" : 0,
 			"maxValue" : 26
 		}
+        },
+        {
+                "logicalId": "alarmTone:set",
+                "name": "Tonalités alarme",
+                "type": "action",
+                "subtype": "select",
+                "isVisible": 0,
+                "generic_type": "CAMERA_PRESET",
+                "configuration": {
+                        "switch": "status",
+                        "listValue": "1|Sound 1;2|Sound 2"
+                }
         },
         {
                 "logicalId": "guardMode:set:0",
@@ -187,7 +211,7 @@
                 "name": "Alarme On",
                 "type": "action",
                 "subtype": "other",
-                "isVisible": 0,
+                "isVisible": 1,
                 "generic_type": "SIREN_ON",
                 "display": {
                      "icon": "<i class=\"fas fa-bell\"><\/i>"
@@ -198,7 +222,7 @@
                 "name": "Alarme Off",
                 "type": "action",
                 "subtype": "other",
-                "isVisible": 0,
+                "isVisible": 1,
                 "generic_type": "SIREN_OFF",
                 "display": {
                      "icon": "<i class=\"fas fa-bell-slash\"><\/i>"
