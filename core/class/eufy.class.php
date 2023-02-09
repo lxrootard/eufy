@@ -131,7 +131,7 @@ class eufy extends eqLogic {
   }
 
   public static function syncDevices($message, $type){
-    log::add(__CLASS__, 'info', 'Sync devices');
+    log::add(__CLASS__, 'info', 'Sync devices, type:'. $type);
     log::add(__CLASS__, 'debug', $message);
     if (empty($message))
 	return;
@@ -143,21 +143,18 @@ class eufy extends eqLogic {
     $jsonObj = json_decode($message);
 
     $deviceId = 0;
-
-    $serialStations = [];
     foreach($jsonObj as $device)
     {
       $eqLogic = eqLogic::byLogicalId($device->serialNumber, __CLASS__);
 
       if (!is_object($eqLogic)) {
-        log::add(__CLASS__, 'info', 'Creating (' . $device->name . ' - ' . $device->serialNumber . ')');
+        log::add(__CLASS__, 'info', 'Creating ' . $device->name . ' serial #' . $device->serialNumber);
         $eqLogic = new self();
         $eqLogic->setLogicalId($device->serialNumber);
        	$eqLogic->setName($device->name);
      	$eqLogic->setEqType_name(__CLASS__);
      	$eqLogic->setIsEnable(1);
         $eqLogic->setCategory('security', 1);
-
 	if ($type == 'Station') 
 		$station = $device->serialNumber;
 	else
@@ -168,25 +165,20 @@ class eufy extends eqLogic {
         $eqLogic->setConfiguration('serialNumber', $device->serialNumber);
         $eqLogic->setConfiguration('stationSerialNumber', $station);
         $eqLogic->setConfiguration('hardwareVersion', $device->hardwareVersion);
-	$eqLogic->setConfiguration('softwareVersion', $device->softwareVersion);
-	$eqLogic->save();
-
-        try{
-          $commandsConfig = eufy::getCommandsFileContent(__DIR__ . '/../config/devices/' . $device->model . '.json');
-          $eqLogic->createCommandsFromConfig($commandsConfig, $jsonObjArray[$deviceId]);
-        }
-        catch(Exception $e) {
-          log::add(__CLASS__, 'warning', $e);
-        }
-
-        if(!in_array($device->stationSerialNumber, $serialStations))
-          $serialStations[] = $device->stationSerialNumber;
-
-        $eqLogic->refreshDevice();
+        $eqLogic->setConfiguration('softwareVersion', $device->softwareVersion);
+        $eqLogic->save();
       }
       else
-          log::add(__CLASS__, 'debug', 'Device already exists: ' . $device->name . '-' . $device->serialNumber);
+	log::add(__CLASS__, 'debug', 'Device already exists: ' . $device->name . ' #' . $device->serialNumber);
 
+      try {
+          $commandsConfig = eufy::getCommandsFileContent(__DIR__ . '/../config/devices/' . $device->model . '.json');
+          $eqLogic->createCommandsFromConfig($commandsConfig, $jsonObjArray[$deviceId]);
+      }
+      catch(Exception $e) {
+          log::add(__CLASS__, 'warning', $e);
+      }
+      $eqLogic->refreshDevice();
       $deviceId = $deviceId + 1;
     }
   }
@@ -201,8 +193,9 @@ class eufy extends eqLogic {
   public function refreshDevice()
   {
         $type = $this->getConfiguration('eufyType');
+	$name = $this->getConfiguration('eufyName');
         $serialNumber= $this->getConfiguration('serialNumber');
-        log::add(__CLASS__, 'debug', 'Refresh device: ' . $serialNumber . ' type: ' . $type);
+        log::add(__CLASS__, 'debug', 'Refresh device: ' . $name .' #'. $serialNumber . ' type: ' . $type);
         if ($type == 'Station')
                 $params = array('command' => 'station.get_properties', 'serialNumber' => $serialNumber);
         else
@@ -235,93 +228,93 @@ class eufy extends eqLogic {
 
   /* helper */
   private static function getCommandsFileContent(string $filePath) {
-		if (!file_exists($filePath)) {
-			throw new RuntimeException("Fichier de configuration non trouvé: {$filePath}");
-		}
-		$content = file_get_contents($filePath);
-		if (!is_json($content)) {
-			throw new RuntimeException("Fichier de configuration incorrect: {$filePath}");
-		}
-		return json_decode($content, true);
+	if (!file_exists($filePath)) {
+		throw new RuntimeException("Fichier de configuration non trouvé: {$filePath}");
 	}
-
-	public function createCommandsFromConfigFile(string $filePath, string $commandsKey) {
-		$commands = self::getCommandsFileContent($filePath);
-		$this->createCommandsFromConfig($commands[$commandsKey], null);
+	$content = file_get_contents($filePath);
+	if (!is_json($content)) {
+		throw new RuntimeException("Fichier de configuration incorrect: {$filePath}");
 	}
+	return json_decode($content, true);
+}
 
-	public function createCommandsFromConfig(array $commands, $values) {
-		$link_cmds = array();
-		foreach ($commands as $cmdDef){
-			$cmd = $this->getCmd(null, $cmdDef["logicalId"]);
-			if (!is_object($cmd)) {
-				log::add(__CLASS__, 'debug', 'create:'.$cmdDef["logicalId"].'/'.$cmdDef["name"]);
-				$cmd = new cmd();
-				$cmd->setLogicalId($cmdDef["logicalId"]);
-				$cmd->setEqLogic_id($this->getId());
-				$cmd->setName(__($cmdDef["name"], __FILE__));
-				if(isset($cmdDef["isHistorized"])) {
-					$cmd->setIsHistorized($cmdDef["isHistorized"]);
-				}
-				if(isset($cmdDef["isVisible"])) {
-					$cmd->setIsVisible($cmdDef["isVisible"]);
-				}
-				if (isset($cmdDef['template'])) {
-					foreach ($cmdDef['template'] as $key => $value) {
-						$cmd->setTemplate($key, $value);
-					}
-				}
-			}
-			$cmd->setType($cmdDef["type"]);
-			$cmd->setSubType($cmdDef["subtype"]);
-			if(isset($cmdDef["generic_type"])) {
-				$cmd->setGeneric_type($cmdDef["generic_type"]);
-			}
-			if (isset($cmdDef['display'])) {
-				foreach ($cmdDef['display'] as $key => $value) {
-					if ($key=='title_placeholder' || $key=='message_placeholder') {
-						$value = __($value, __FILE__);
-					}
-					$cmd->setDisplay($key, $value);
-				}
-			}
-			if(isset($cmdDef["unite"])) {
-				$cmd->setUnite($cmdDef["unite"]);
-			}
+public function createCommandsFromConfigFile(string $filePath, string $commandsKey) {
+	$commands = self::getCommandsFileContent($filePath);
+	$this->createCommandsFromConfig($commands[$commandsKey], null);
+}
 
-			if (isset($cmdDef['configuration'])) {
-				foreach ($cmdDef['configuration'] as $key => $value) {
-					$cmd->setConfiguration($key, $value);
-				}
-			}
+public function createCommand ($cmdDef)
+{
+	log::add(__CLASS__, 'debug', 'createCommand: '. $cmdDef["logicalId"].'/'.$cmdDef["name"]);
+	$cmd = new cmd();
+        $cmd->setLogicalId($cmdDef["logicalId"]);
+        $cmd->setEqLogic_id($this->getId());
+        $cmd->setName(__($cmdDef["name"], __FILE__));
+        if(isset($cmdDef["isHistorized"]))
+        	$cmd->setIsHistorized($cmdDef["isHistorized"]);
 
-			if (isset($cmdDef['value'])) {
-				$link_cmds[$cmdDef["logicalId"]] = $cmdDef['value'];
-			}
+        if(isset($cmdDef["isVisible"]))
+        	$cmd->setIsVisible($cmdDef["isVisible"]);
 
-			$cmd->save();
+        if (isset($cmdDef['template']))
+        	foreach ($cmdDef['template'] as $key => $value)
+                	$cmd->setTemplate($key, $value);
 
-      // Init value
-      if(isset($values))
-        eufy::sendEvent($cmd, $values[$cmdDef["logicalId"]]);
-      elseif (isset($cmdDef['initialValue'])) {
+        $cmd->setType($cmdDef["type"]);
+        $cmd->setSubType($cmdDef["subtype"]);
+
+        if(isset($cmdDef["generic_type"]))
+        	$cmd->setGeneric_type($cmdDef["generic_type"]);
+
+        if (isset($cmdDef['display']))
+        	foreach ($cmdDef['display'] as $key => $value) {
+                	if ($key=='title_placeholder' || $key=='message_placeholder')
+                        	$value = __($value, __FILE__);
+                        $cmd->setDisplay($key, $value);
+                }
+
+        if(isset($cmdDef["unite"]))
+        	$cmd->setUnite($cmdDef["unite"]);
+
+        if (isset($cmdDef['configuration']))
+        	foreach ($cmdDef['configuration'] as $key => $value)
+			$cmd->setConfiguration($key, $value);
+
+        if (isset($cmdDef['value']))
+        	$link_cmds[$cmdDef["logicalId"]] = $cmdDef['value'];
+
+        $cmd->save();
+ 	return $cmd;
+}
+
+public function createCommandsFromConfig(array $commands, $values) {
+	$link_cmds = array();
+	foreach ($commands as $cmdDef) {
+		// log::add(__CLASS__, 'debug', 'createCommandsFromConfig: '.$cmdDef["logicalId"].'/'.$cmdDef["name"]);
+		$cmd = $this->getCmd(null, $cmdDef["logicalId"]);
+		if (!is_object($cmd)) {
+			$cmd = $this->createCommand ($cmdDef);
+		      	// Init value
+			if(isset($values))
+        			eufy::sendEvent($cmd, $values[$cmdDef["logicalId"]]);
+      			elseif (isset($cmdDef['initialValue'])) {
 		  		$cmdValue = $cmd->execCmd();
-				if ($cmdValue=='') {
+				if ($cmdValue=='')
 					$this->checkAndUpdateCmd($cmdDef["logicalId"], $cmdDef['initialValue']);
-				}
-			}
-		}
-
-		foreach ($link_cmds as $cmd_logicalId => $link_logicalId) {
-			$cmd = $this->getCmd(null, $cmd_logicalId);
-			$linkCmd = $this->getCmd(null, $link_logicalId);
-
-			if (is_object($cmd) && is_object($linkCmd)) {
-				$cmd->setValue($linkCmd->getId());
-				$cmd->save();
 			}
 		}
 	}
+
+	foreach ($link_cmds as $cmd_logicalId => $link_logicalId) {
+		$cmd = $this->getCmd(null, $cmd_logicalId);
+		$linkCmd = $this->getCmd(null, $link_logicalId);
+
+		if (is_object($cmd) && is_object($linkCmd)) {
+			$cmd->setValue($linkCmd->getId());
+			$cmd->save();
+		}
+	}
+}
 
   // Fonction exécutée automatiquement avant la création de l'équipement
   public function preInsert() {
@@ -548,7 +541,7 @@ class eufyCmd extends cmd {
         $set = preg_replace("/:set.*$/", "", $cmd);
 	$value = preg_replace("/[^0-9.]/","", $cmd);
 
-        log::add('eufy', 'debug', '>>>> $_options: ' . json_encode($_options));
+//        log::add('eufy', 'debug', '>>>> $_options: ' . json_encode($_options));
 
   	if ($enable != $cmd)
 		$params = array('command' => $device . '.set_property', 'serialNumber' => $serialNumber, 'name' => $enable, 'value' => 'True');

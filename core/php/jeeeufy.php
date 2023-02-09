@@ -17,22 +17,22 @@ try {
      if(isset($result['type'])) {
           // lxrootard check connexion Eufy-WS et création des types Station et WebCam
           if ($result['type'] == 'connexion') {
-              log::add('eufy', 'debug', 'Connexion info received from daemon');
+              log::add('eufy', 'debug', '>>> Connexion info received from daemon');
 	      eufy::setOnlineStatus ($result['online']);
 	  }
 
 	  if ($result['type'] == 'stations') {
-              log::add('eufy', 'debug', 'Stations received from daemon');
+              log::add('eufy', 'debug', '>>> Stations received from daemon');
               eufy::syncDevices($result['stations'],'Station');
           }
 
           if ($result['type'] == 'devices') {
-              log::add('eufy', 'debug', 'Devices received from daemon');
+              log::add('eufy', 'debug', '>>> Devices received from daemon');
               eufy::syncDevices($result['devices'],'WebCam');
           }
 
           if ($result['type'] == 'event') {
-              log::add('eufy', 'debug', 'Event received from daemon: serialNumber: '. $result['serialNumber'] . ', property: ' 
+              log::add('eufy', 'debug', '>>> Event received from daemon: serialNumber: '. $result['serialNumber'] . ', property: ' 
 		. $result['property'] . ', value: ' . $result['value']);
 	      eufy::updateDeviceInfo($result['serialNumber'], $result['property'], $result['value']);
           }

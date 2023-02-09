@@ -34,6 +34,13 @@ Project fork of [alexandreberton/eufy](https://github.com/alexandreberton/eufy)
 <br>Uses [bropat/eufy-security-ws](https://github.com/bropat/eufy-security-ws) lib (docker prerequisite)
 
 ## ChangeLog
+
+* v0.5 [lxrootard](https://github.com/lxrootard)
+<br> - Fix to sync for devices supporting both Station and Device interface 
+
+* v0.4 [lxrootard](https://github.com/lxrootard)
+<br> - Added new infos and commands for T8010 T8113 T8114 T8210 T8210 and T8210 devices
+
 * v0.3 [lxrootard](https://github.com/lxrootard)
 <br> - Added generic support for integer command values, lists and sliders
 <br> - Added support for T8410 and T8210 devices
