@@ -27,7 +27,6 @@ $eqLogics = eufy::byType('eufy');
 			<th>{{Image}}</th>
 			<th>{{Module}}</th>
 			<th>{{ID}}</th>
-                        <th>{{Type}}</th>
 			<th>{{Modèle}}</th>
 			<th>{{Identifiant}}</th>
 			<th>{{Présent}}</th>
@@ -46,7 +45,6 @@ foreach ($eqLogics as $eqLogic) {
 	}
 	echo '<tr><td>' . $image . '</td><td><a href="' . $eqLogic->getLinkToConfiguration() . '" style="text-decoration: none;">' . $eqLogic->getHumanName(true) . '</a></td>';
 	echo '<td><span class="label label-info" style="font-size : 1em; cursor : default;">' . $eqLogic->getId() . '</span></td>';
-        echo '<td><span class="label label-info" style="font-size : 1em; cursor : default;">' . $eqLogic->getConfiguration('eufyType') . '</span></td>';
 	echo '<td><span class="label label-info" style="font-size : 1em; cursor : default;">' . $eqLogic->getConfiguration('model') . '</span></td>';
 	echo '<td><span class="label label-info" style="font-size : 1em; cursor : default;">' . $eqLogic->getConfiguration('serialNumber') . '</span></td>';
 

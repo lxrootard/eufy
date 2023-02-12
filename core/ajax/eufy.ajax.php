@@ -30,9 +30,7 @@ try {
     ajax::init();
 
     if (init('action') == 'sync') {
-	$params = array('command' => 'getStations');
-	eufy::sendToDaemon($params);
-	$params = array('command' => 'getDevices');
+	$params = array('command' => 'syncDevices');
 	eufy::sendToDaemon($params);
     	ajax::success();
     }

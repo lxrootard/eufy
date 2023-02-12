@@ -1,4 +1,4 @@
-<h1>Jeedom Plugin pour WebCams/Stations Eufy</h1>
+<h1>Jeedom Plugin pour Devices/Stations Eufy</h1>
 
 <p><img src="../images/jeedom.png" alt="Logo Jeedom" title="" />
 <img src="../images/eufy.png" alt="Logo Plugin" title="" /></p>
@@ -51,7 +51,7 @@
 
 <h4>4. Soucis de connexion</h4>
 
-<p>En cas de problème vérifier la connexion avec la commande suivante:
+<p>En cas de problème vérifier la connexion avec le container via la commande suivante:
 <br><code>resources/eufyctl.sh test</code>
 <br>
 <br> Vous devriez obtenir l'output suivant:</p>
@@ -67,7 +67,8 @@
 
 <p><img src="../images/eufy2.png" alt="Configuration" title="" /></p>
 
-<p>Note: pour l'instant seuls certains modèles ont été testés, voir <a href="../../README.html#Tested">ici</a> pour plus d'infos.</p>
+<p>Note: pour l'instant seuls certains modèles ont été testés. Si votre modèle n'est pas suporté vous pouvez m'envoyer le résutat de la commande <code>resources/test_eufy.py</code>
+<br> Voir <a href="../../README.html#Tested">ici</a> pour plus d'infos.</p>
 
 <h3>Santé</h3>
 
@@ -78,6 +79,11 @@
 <h3>Equipements</h3>
 
 <p><img src="../images/eufy4.png" alt="Equipments" title="" /></p>
+
+<h3>Video stream RTSP</h3>
+
+<p>Le flux RTSP fonctionne dans le plugin <a href="https://doc.jeedom.com/fr_FR/plugins/security/camera">Camera</a>
+<br>Voir <a href="https://camlytics.com/camera/eufy">ici</a> selon votre modèle</p>
 
 <h3>Bugs et dépannage</h3>
 

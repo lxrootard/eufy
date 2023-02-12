@@ -1,4 +1,4 @@
-# Jeedom Plugin pour WebCams/Stations Eufy
+# Jeedom Plugin pour Devices/Stations Eufy
 
 ![Logo Jeedom](../images/jeedom.png)
 ![Logo Plugin](../images/eufy.png)
@@ -38,7 +38,7 @@ Le container `eufy-security-ws` doit déjà être installé.
 Note: Le daemon Eufy ne démarrera pas si le container `eufy-security-ws` ne peut pas se connecter au service Cloud Eufy
 
 ####  4. Soucis de connexion
-En cas de problème vérifier la connexion avec la commande suivante:
+En cas de problème vérifier la connexion avec le container via la commande suivante:
 <br>`resources/eufyctl.sh test`
 <br>
 <br> Vous devriez obtenir l'output suivant:
@@ -53,7 +53,8 @@ Note: `connected` et `pushConnected` doivent être à `true`
 ### Synchronisation
 ![Configuration](../images/eufy2.png)
 
-Note: pour l'instant seuls certains modèles ont été testés, voir [ici](../../README.md#Tested) pour plus d'infos.
+Note: pour l'instant seuls certains modèles ont été testés. Si votre modèle n'est pas suporté vous pouvez m'envoyer le résutat de la commande `resources/test_eufy.py`
+<br> Voir [ici](../../README.md#Tested) pour plus d'infos.
 
 ### Santé
 ![Configuration](../images/eufy1.png)
@@ -62,6 +63,10 @@ Liste et statut des devices reconnus
 
 ### Equipements
 ![Equipments](../images/eufy4.png)
+
+### Video stream RTSP
+Le flux RTSP fonctionne dans le plugin [Camera](https://doc.jeedom.com/fr_FR/plugins/security/camera)
+<br>Voir [ici](https://camlytics.com/camera/eufy) selon votre modèle
 
 ### Bugs et dépannage
 Voir Jeedom community [ici](https://community.jeedom.com/t/integration-de-materiel-eufy/76603)

@@ -7,25 +7,31 @@
 
 <ul>
 <li>T8010 homebase2 (type 0)</li>
-<li>T8113 Eufycam 2 (type 8)</li>
+<li>T8030 homebase3 (type 18)</li>
+<li>T8113 Eufycam 2 (type 8) </li>
 <li>T8114 Eufycam 2C (type 9)</li>
 <li>T8210 Battery Doorbell (type 7)</li>
 <li>T8410 Indoor Cam PT (type 31)</li>
 </ul>
 
 <p><br>Note: other models might be recognized incompletely or work partially.
-<br>If your model is not on this list please send me the results of this command:</p>
+<br>If your model is not on this list please send me the results of these commands:</p>
+
+<p><code>$ python3 resources/test_eufy.py -s station_serial</code>
+<p>and/or (depending on your model):<p>
+<code>$ python3 resources/test_eufy.py -d device_serial</code>
+<p>help: </p>
 
 <pre><code>$ python3 resources/test_eufy.py -h
-usage: test_eufy.py [-h] [-s STATION] [-w WEBCAM] [-u URL]
+usage: test_eufy.py [-h] [-s STATION] [-d DEVICE] [-u URL]
 
 optional arguments:
-  -h, --help            show this help message and exit
-  -s STATION, --station STATION
+-h, --help            show this help message and exit
+-s STATION, --station STATION
                     station serial number
-  -w WEBCAM, --webcam WEBCAM
-                    webcam serial number
-  -u URL, --url URL     eufy service URL
+-d DEVICE, --device DEVICE
+                    device serial number
+-u URL, --url URL     eufy service URL, default 127.0.0.1:3000
 </code></pre>
 
 <h2>Documentation</h2>
@@ -43,6 +49,9 @@ optional arguments:
 <h2>ChangeLog</h2>
 
 <ul>
+<li><p>v0.6 <a href="https://github.com/lxrootard">lxrootard</a>
+<br> - Changed json format
+<br> - Added T8030 suport</p></li>
 <li><p>v0.5 <a href="https://github.com/lxrootard">lxrootard</a>
 <br> - Fix to sync for devices supporting both Station and Device interface </p></li>
 <li><p>v0.4 <a href="https://github.com/lxrootard">lxrootard</a>

@@ -50,16 +50,11 @@ def read_socket():
 		logging.debug("read_socket msg=" + str(message))
 		if "command" not in message:
 			return
-#		getStations
-		if message["command"] == "getStations":
+# 		sync
+		if message["command"] == "syncDevices":
 			logging.debug("eufyd stations: " + str(_stations))
-			_jeedomCom.send_change_immediate({'type': 'stations', 'stations': str(_stations)})
-			return
-#		getDevices
-		if message["command"] == "getDevices":
 			logging.debug("eufyd devices: " + str(_devices))
-			_jeedomCom.send_change_immediate({'type': 'devices', 'devices': str(_devices)})
-			return
+			_jeedomCom.send_change_immediate({'type': 'sync', 'stations': str(_stations),'devices': str(_devices)})
 # 		setProperty
 		if "name" in message and "value" in message:
 			jsonMsg = "{\"command\": \"" + message['command'] + "\", \"serialNumber\": \"" + message['serialNumber'] + "\", \"name\": \"" + message['name'] + "\", \"value\": \"" + message['value'] + "\"}"

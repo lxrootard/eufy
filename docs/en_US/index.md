@@ -1,4 +1,4 @@
-# Jeedom Plugin for Eufy WebCams/Stations
+# Jeedom Plugin for Eufy Devices/Stations
 
 ![Logo Jeedom](../images/jeedom.png)
 ![Logo Plugin](../images/eufy.png)
@@ -53,7 +53,8 @@ Note that `connected` and `pushConnected` need to be `true`
 ### Synchronization
 ![Configuration](../images/eufy2.png)
 
-Note: for now only some devices have been tested, please see [here](../../README.md#Tested) for details.
+Note: for now only some devices have been tested. If your device is not supported you can send me the outputs from the `resources/test_eufy.py`
+<br>Please see [here](../../README.md#Tested) for details.
 
 ### Health
 ![Configuration](../images/eufy1.png)
@@ -62,6 +63,10 @@ Lists the recognized devices and their status.
 
 ### Equipments
 ![Equipments](../images/eufy4.png)
+
+### RTSP video stream
+The RTSP stream can be accessed with the [Camera](https://doc.jeedom.com/en_US/plugins/security/camera) plugin
+<br>Check the URL [here](https://camlytics.com/camera/eufy) depending your model
 
 ### Bugs and troubleshooting
 See the Jeedom community [blog entry](https://community.jeedom.com/t/integration-de-materiel-eufy/76603)

@@ -4,14 +4,14 @@ from websocket import create_connection
 
 argParser = argparse.ArgumentParser()
 argParser.add_argument("-s", "--station", help="station serial number")
-argParser.add_argument("-w", "--webcam", help="webcam serial number")
-argParser.add_argument("-u", "--url", help="eufy service URL")
+argParser.add_argument("-d", "--device", help="device serial number")
+argParser.add_argument("-u", "--url", help="eufy service URL, default 127.0.0.1:3000")
 
 args = argParser.parse_args()
 #print("args=%s" % args)
 
 #print("args.station=%s" % args.station)
-#print("args.webcam=%s" % args.webcam)
+#print("args.device=%s" % args.device)
 
 if args.url:
 	url = args.url
@@ -26,13 +26,13 @@ print ('\n*** Start listening ***')
 ws.send(json.dumps({"command": "start_listening"}))
 print(ws.recv())
 
-if args.webcam:
-	print ('\n*** WebCam commands: ***')
-	ws.send(json.dumps({"command": "device.get_properties","serialNumber": args.webcam}))
+if args.device:
+	print ('\n*** Device commands: ***')
+	ws.send(json.dumps({"command": "device.get_properties","serialNumber": args.device}))
 	print(ws.recv())
 
-	print ('\n*** WebCam metadata: ***')
-	ws.send(json.dumps({"command": "device.get_properties_metadata","serialNumber": args.webcam}))
+	print ('\n*** Device metadata: ***')
+	ws.send(json.dumps({"command": "device.get_properties_metadata","serialNumber": args.device}))
 	print(ws.recv())
 
 if args.station:
