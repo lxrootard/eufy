@@ -1,4 +1,4 @@
-# Jeedom Plugin for Eufy WebCams/Stations
+# Jeedom Plugin for Eufy Devices/Stations
 
 ![Logo Jeedom](docs/images/jeedom.png)
 ![Logo Plugin](docs/images/eufy.png)
@@ -9,15 +9,20 @@
 - T8113 Eufycam 2 (type 8) 
 - T8114 Eufycam 2C (type 9)
 - T8210 Battery Doorbell (type 7)
+- T8400 Indoor Cam (type 30)
 - T8410 Indoor Cam PT (type 31)
+- T8161 Eufycam 3C (type 23)
 
 <br>Note: other models might be recognized incompletely or work partially.
 <br>If your model is not on this list please send me the results of these commands:
 
-`$ python3 resources/test_eufy.py -s station_serial`
-<p>and/or (depending on your model):<p>
-`$ python3 resources/test_eufy.py -d device_serial`
-<p>help: 
+$ python3 resources/test_eufy.py -s station_serial
+
+and/or (depending on your model):
+
+$ python3 resources/test_eufy.py -d device_serial
+
+help: 
 
     $ python3 resources/test_eufy.py -h
     usage: test_eufy.py [-h] [-s STATION] [-d DEVICE] [-u URL]
@@ -40,21 +45,19 @@ Project fork of [alexandreberton/eufy](https://github.com/alexandreberton/eufy)
 <br>Uses [bropat/eufy-security-ws](https://github.com/bropat/eufy-security-ws) lib (docker prerequisite)
 
 ## ChangeLog
+* v0.7 [lxrootard](https://github.com/lxrootard)
+<br> added support for T8400 and T8161
 * v0.6 [lxrootard](https://github.com/lxrootard)
 <br> - Changed json format
 <br> - Added T8030 suport
-
 * v0.5 [lxrootard](https://github.com/lxrootard)
 <br> - Fix to sync for devices supporting both Station and Device interface 
-
 * v0.4 [lxrootard](https://github.com/lxrootard)
 <br> - Added new infos and commands for T8010 T8113 T8114 T8210 T8210 and T8210 devices
-
 * v0.3 [lxrootard](https://github.com/lxrootard)
 <br> - Added generic support for integer command values, lists and sliders
 <br> - Added support for T8410 and T8210 devices
 <br> - Added metadata check to test_eufy.py script
-
 * v0.2 [lxrootard](https://github.com/lxrootard)
 <br> - Added station and webcam extended properties support
 <br> - Added new infos and commands to T8113, T8114 and T8010 devices
