@@ -4,23 +4,25 @@
 ![Logo Plugin](docs/images/eufy.png)
 
 ## Tested devices
-- T8010 homebase2 (type 0)
-- T8030 homebase3 (type 18)
-- T8113 Eufycam 2 (type 8) 
-- T8114 Eufycam 2C (type 9)
-- T8210 Battery Doorbell (type 7)
-- T8400 Indoor Cam (type 30)
-- T8410 Indoor Cam PT (type 31)
-- T8161 Eufycam 3C (type 23)
+- T8010 homebase2
+- T8030 homebase3
+- T8113 Eufycam 2C 
+- T8114 Eufycam 2
+- T8161 Eufycam 3C
+- T8210 Battery Doorbell
+- T8400 Indoor Cam
+- T8410 Indoor Cam Pan&Tilt
 
-<br>Note: other models might be recognized incompletely or work partially.
-<br>If your model is not on this list please send me the results of these commands:
+## Untested devices
+Other Eufy models should also work but might not be recognized incompletely or require a config file.
+<br>See the full list [here](https://bropat.github.io/eufy-security-client/#/supported_devices)
+<br>If your model is not listed above please send me the results of these commands:
 
-$ python3 resources/test_eufy.py -s station_serial
+    $ python3 resources/test_eufy.py -s station_serial
 
 and/or (depending on your model):
 
-$ python3 resources/test_eufy.py -d device_serial
+    $ python3 resources/test_eufy.py -d device_serial
 
 help: 
 
@@ -45,6 +47,8 @@ Project fork of [alexandreberton/eufy](https://github.com/alexandreberton/eufy)
 <br>Uses [bropat/eufy-security-ws](https://github.com/bropat/eufy-security-ws) lib (docker prerequisite)
 
 ## ChangeLog
+* v0.8 [lxrootard](https://github.com/lxrootard)
+<br> minor json fixes and icon enhancements
 * v0.7 [lxrootard](https://github.com/lxrootard)
 <br> added support for T8400 and T8161
 * v0.6 [lxrootard](https://github.com/lxrootard)
@@ -77,6 +81,11 @@ Project fork of [alexandreberton/eufy](https://github.com/alexandreberton/eufy)
 
 * v0 [a.berton](https://github.com/alexandreberton)
 
+## Troubleshooting and known issues
+* Quotes are not supported in equipment names
+* 2FA is not supported yet, please use a secondary account with 2FA disabled
+<p>
+Also see the [Jeedom community blog](https://community.jeedom.com/t/integration-de-materiel-eufy/76603)
+
 ## Todo
-* Add generic support for numeric properties
 * Improve error checking

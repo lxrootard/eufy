@@ -1,4 +1,4 @@
-<h1>Jeedom Plugin for Eufy WebCams/Stations</h1>
+<h1>Jeedom Plugin for Eufy Devices/Stations</h1>
 
 <p><img src="docs/images/jeedom.png" alt="Logo Jeedom" title="" />
 <img src="docs/images/eufy.png" alt="Logo Plugin" title="" /></p>
@@ -6,20 +6,30 @@
 <h2>Tested devices</h2>
 
 <ul>
-<li>T8010 homebase2 (type 0)</li>
-<li>T8030 homebase3 (type 18)</li>
-<li>T8113 Eufycam 2 (type 8) </li>
-<li>T8114 Eufycam 2C (type 9)</li>
-<li>T8210 Battery Doorbell (type 7)</li>
-<li>T8410 Indoor Cam PT (type 31)</li>
+<li>T8010 homebase2</li>
+<li>T8030 homebase3</li>
+<li>T8113 Eufycam 2C </li>
+<li>T8114 Eufycam 2</li>
+<li>T8161 Eufycam 3C</li>
+<li>T8210 Battery Doorbell</li>
+<li>T8400 Indoor Cam</li>
+<li>T8410 Indoor Cam Pan&amp;Tilt</li>
 </ul>
 
-<p><br>Note: other models might be recognized incompletely or work partially.
-<br>If your model is not on this list please send me the results of these commands:</p>
+<h2>Untested devices</h2>
 
-<p><code>$ python3 resources/test_eufy.py -s station_serial</code>
-<p>and/or (depending on your model):<p>
-<code>$ python3 resources/test_eufy.py -d device_serial</code>
+<p>Other Eufy models should also work but might not be recognized incompletely or require a config file.
+<br>See the full list <a href="https://bropat.github.io/eufy-security-client/#/supported_devices">here</a>
+<br>If your model is not listed above please send me the results of these commands:</p>
+
+<pre><code>$ python3 resources/test_eufy.py -s station_serial
+</code></pre>
+
+<p>and/or (depending on your model):</p>
+
+<pre><code>$ python3 resources/test_eufy.py -d device_serial
+</code></pre>
+
 <p>help: </p>
 
 <pre><code>$ python3 resources/test_eufy.py -h
@@ -49,17 +59,21 @@ optional arguments:
 <h2>ChangeLog</h2>
 
 <ul>
-<li><p>v0.6 <a href="https://github.com/lxrootard">lxrootard</a>
+<li>v0.8 <a href="https://github.com/lxrootard">lxrootard</a>
+<br> minor json fixes and icon enhancements</li>
+<li>v0.7 <a href="https://github.com/lxrootard">lxrootard</a>
+<br> added support for T8400 and T8161</li>
+<li>v0.6 <a href="https://github.com/lxrootard">lxrootard</a>
 <br> - Changed json format
-<br> - Added T8030 suport</p></li>
-<li><p>v0.5 <a href="https://github.com/lxrootard">lxrootard</a>
-<br> - Fix to sync for devices supporting both Station and Device interface </p></li>
-<li><p>v0.4 <a href="https://github.com/lxrootard">lxrootard</a>
-<br> - Added new infos and commands for T8010 T8113 T8114 T8210 T8210 and T8210 devices</p></li>
-<li><p>v0.3 <a href="https://github.com/lxrootard">lxrootard</a>
+<br> - Added T8030 suport</li>
+<li>v0.5 <a href="https://github.com/lxrootard">lxrootard</a>
+<br> - Fix to sync for devices supporting both Station and Device interface </li>
+<li>v0.4 <a href="https://github.com/lxrootard">lxrootard</a>
+<br> - Added new infos and commands for T8010 T8113 T8114 T8210 T8210 and T8210 devices</li>
+<li>v0.3 <a href="https://github.com/lxrootard">lxrootard</a>
 <br> - Added generic support for integer command values, lists and sliders
 <br> - Added support for T8410 and T8210 devices
-<br> - Added metadata check to test_eufy.py script</p></li>
+<br> - Added metadata check to test_eufy.py script</li>
 <li><p>v0.2 <a href="https://github.com/lxrootard">lxrootard</a>
 <br> - Added station and webcam extended properties support
 <br> - Added new infos and commands to T8113, T8114 and T8010 devices
@@ -78,9 +92,17 @@ optional arguments:
 <li><p>v0 <a href="https://github.com/alexandreberton">a.berton</a></p></li>
 </ul>
 
+<h2>Troubleshooting and known issues</h2>
+
+<ul>
+<li>Quotes are not supported in equipment names</li>
+<li>2FA is not supported yet, please use a secondary account with 2FA disabled
+<p>
+Also see the <a href="https://community.jeedom.com/t/integration-de-materiel-eufy/76603">Jeedom community blog</a></li>
+</ul>
+
 <h2>Todo</h2>
 
 <ul>
-<li>Add generic support for numeric properties</li>
 <li>Improve error checking</li>
 </ul>

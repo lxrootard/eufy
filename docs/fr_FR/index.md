@@ -69,4 +69,4 @@ Le flux RTSP fonctionne dans le plugin [Camera](https://doc.jeedom.com/fr_FR/plu
 <br>Voir [ici](https://camlytics.com/camera/eufy) selon votre modèle
 
 ### Bugs et dépannage
-Voir Jeedom community [ici](https://community.jeedom.com/t/integration-de-materiel-eufy/76603)
+Voir [ici](../../README.md#Troubleshooting)

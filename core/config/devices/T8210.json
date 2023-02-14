@@ -273,6 +273,18 @@
 				}
 			},
 			"23": {
+				"logicalId": "state",
+				"name": "Etat",
+				"type": "info",
+				"subtype": "string",
+				"isVisible": 0,
+				"generic_type": "ALARM_STATE",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			},
+			"24": {
 				"logicalId": "trigger_alarm",
 				"name": "Alarme On",
 				"type": "action",
@@ -283,7 +295,7 @@
 					"icon": "<i class=\"fas fa-bell\"></i>"
 				}
 			},
-			"24": {
+			"25": {
 				"logicalId": "reset_alarm",
 				"name": "Alarme Off",
 				"type": "action",
@@ -294,7 +306,7 @@
 					"icon": "<i class=\"fas fa-bell-slash\"></i>"
 				}
 			},
-			"25": {
+			"26": {
 				"logicalId": "enabled:on",
 				"name": "Activer la Caméra",
 				"type": "action",
@@ -305,7 +317,7 @@
 					"icon": "<i class=\"jeedom-on\"></i>"
 				}
 			},
-			"26": {
+			"27": {
 				"logicalId": "enabled:off",
 				"name": "Désactiver la Caméra",
 				"type": "action",
@@ -316,7 +328,7 @@
 					"icon": "<i class=\"jeedom-off\"></i>"
 				}
 			},
-			"27": {
+			"28": {
 				"logicalId": "motionDetection:on",
 				"name": "Activer la détection de Mouvement",
 				"type": "action",
@@ -327,7 +339,7 @@
 					"icon": "<i class=\"loisir-runner5\"></i>"
 				}
 			},
-			"28": {
+			"29": {
 				"logicalId": "motionDetection:off",
 				"name": "Désactiver la détection de Mouvement",
 				"type": "action",
@@ -338,7 +350,7 @@
 					"icon": "<i class=\"fas fa-running\"></i>"
 				}
 			},
-			"29": {
+			"30": {
 				"logicalId": "statusLed:on",
 				"name": "Activer la LED",
 				"type": "action",
@@ -349,7 +361,7 @@
 					"icon": "<i class=\"jeedom-lumiere-on\"></i>"
 				}
 			},
-			"30": {
+			"31": {
 				"logicalId": "statusLed:off",
 				"name": "Désactiver la LED",
 				"type": "action",
@@ -360,7 +372,7 @@
 					"icon": "<i class=\"jeedom-lumiere-off\"></i>"
 				}
 			},
-			"31": {
+			"32": {
 				"logicalId": "notificationRing:on",
 				"name": "Activer notif. sonnerie",
 				"type": "action",
@@ -368,7 +380,7 @@
 				"isVisible": 1,
 				"generic_type": "CAMERA_PRESET"
 			},
-			"32": {
+			"33": {
 				"logicalId": "notificationRing:off",
 				"name": "Désactiver notif. sonnerie",
 				"type": "action",
@@ -376,7 +388,7 @@
 				"isVisible": 1,
 				"generic_type": "CAMERA_PRESET"
 			},
-			"33": {
+			"34": {
 				"logicalId": "notificationMotion:on",
 				"name": "Activer notif. mouvement",
 				"type": "action",
@@ -384,7 +396,7 @@
 				"isVisible": 1,
 				"generic_type": "CAMERA_PRESET"
 			},
-			"34": {
+			"35": {
 				"logicalId": "notificationMotion:off",
 				"name": "Désactiver notif. mouvement",
 				"type": "action",
@@ -392,7 +404,7 @@
 				"isVisible": 1,
 				"generic_type": "CAMERA_PRESET"
 			},
-			"35": {
+			"36": {
 				"logicalId": "autoNightvision:on",
 				"name": "Activer vision nocturne",
 				"type": "action",
@@ -400,7 +412,7 @@
 				"isVisible": 1,
 				"generic_type": "CAMERA_PRESET"
 			},
-			"36": {
+			"37": {
 				"logicalId": "autoNightvision:off",
 				"name": "Désactiver vision nocturne",
 				"type": "action",
@@ -408,7 +420,7 @@
 				"isVisible": 1,
 				"generic_type": "CAMERA_PRESET"
 			},
-			"37": {
+			"38": {
 				"logicalId": "chimeHomebase:on",
 				"name": "Activer carillon",
 				"type": "action",
@@ -416,7 +428,7 @@
 				"isVisible": 1,
 				"generic_type": "CAMERA_PRESET"
 			},
-			"38": {
+			"39": {
 				"logicalId": "chimeHomebase:off",
 				"name": "Désactiver carillon",
 				"type": "action",
@@ -424,7 +436,7 @@
 				"isVisible": 1,
 				"generic_type": "CAMERA_PRESET"
 			},
-			"39": {
+			"40": {
 				"logicalId": "audioRecording:on",
 				"name": "Activer enregistrement audio",
 				"type": "action",
@@ -435,7 +447,7 @@
 					"icon": "<i class=\"jeedomapp-circlevalidation\"></i>"
 				}
 			},
-			"40": {
+			"41": {
 				"logicalId": "audioRecording:off",
 				"name": "Désactiver enregistrement audio",
 				"type": "action",
@@ -446,7 +458,7 @@
 					"icon": "<i class=\"jeedomapp-circlestop\"></i>"
 				}
 			},
-			"41": {
+			"42": {
 				"logicalId": "motionDetectionType:set",
 				"name": "Type détection mouvement",
 				"type": "action",
@@ -458,7 +470,7 @@
 					"listValue": "0|Humans;2|All"
 				}
 			},
-			"42": {
+			"43": {
 				"logicalId": "notificationType:set",
 				"name": "Types de notification",
 				"type": "action",
@@ -470,7 +482,7 @@
 					"listValue": "1|Efficient;2|Include thumbnail;3|Full effect"
 				}
 			},
-			"43": {
+			"44": {
 				"logicalId": "speakerVolume:set",
 				"name": "Volume Son",
 				"type": "action",
@@ -483,7 +495,7 @@
 					"maxValue": 100
 				}
 			},
-			"44": {
+			"45": {
 				"logicalId": "ringtoneVolume:set",
 				"name": "Volume sonnerie",
 				"type": "action",
@@ -496,7 +508,7 @@
 					"maxValue": 100
 				}
 			},
-			"45": {
+			"46": {
 				"logicalId": "chimeHomebaseRingtoneVolume:set",
 				"name": "Volume carillon",
 				"type": "action",
@@ -509,7 +521,7 @@
 					"maxValue": 26
 				}
 			},
-			"46": {
+			"47": {
 				"logicalId": "chimeHomebaseRingtoneType:set",
 				"name": "Type de sonnerie Carillon",
 				"type": "action",

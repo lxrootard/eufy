@@ -69,4 +69,4 @@ The RTSP stream can be accessed with the [Camera](https://doc.jeedom.com/en_US/p
 <br>Check the URL [here](https://camlytics.com/camera/eufy) depending your model
 
 ### Bugs and troubleshooting
-See the Jeedom community [blog entry](https://community.jeedom.com/t/integration-de-materiel-eufy/76603)
+See [here](../../README.md#Troubleshooting)

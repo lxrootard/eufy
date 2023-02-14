@@ -27,11 +27,11 @@
 				}
 			},
 			"2": {
-				"logicalId": "connected",
-				"name": "Connecté",
+				"logicalId": "alarmArmed",
+				"name": "Alarme armée",
 				"type": "info",
 				"subtype": "binary",
-				"isVisible": 1,
+				"isVisible": 0,
 				"generic_type": "GENERIC_INFO",
 				"template": {
 					"dashboard": "line",
