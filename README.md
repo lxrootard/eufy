@@ -3,6 +3,11 @@
 ![Logo Jeedom](docs/images/jeedom.png)
 ![Logo Plugin](docs/images/eufy.png)
 
+## Documentation
+
+- User Documentation [(en)](docs/en_US/index.md)
+- User Documentation [(fr)](docs/fr_FR/index.md)
+
 ## Tested devices
 - T8010 homebase2
 - T8030 homebase3
@@ -37,16 +42,9 @@ help:
                         device serial number
 	-u URL, --url URL     eufy service URL, default 127.0.0.1:3000
 
-## Documentation
-
-- User Documentation [(en)](docs/en_US/index.md)
-- User Documentation [(fr)](docs/fr_FR/index.md)
-
-## Credits
-Project fork of [alexandreberton/eufy](https://github.com/alexandreberton/eufy)
-<br>Uses [bropat/eufy-security-ws](https://github.com/bropat/eufy-security-ws) lib (docker prerequisite)
-
 ## ChangeLog
+* v0.9 [lxrootard](https://github.com/lxrootard)
+<br> metadata for market publication
 * v0.8 [lxrootard](https://github.com/lxrootard)
 <br> minor json fixes and icon enhancements
 * v0.7 [lxrootard](https://github.com/lxrootard)
@@ -85,7 +83,12 @@ Project fork of [alexandreberton/eufy](https://github.com/alexandreberton/eufy)
 * Quotes are not supported in equipment names
 * 2FA is not supported yet, please use a secondary account with 2FA disabled
 <p>
-Also see the [Jeedom community blog](https://community.jeedom.com/t/integration-de-materiel-eufy/76603)
+Also see the Jeedom community [blog](https://community.jeedom.com/t/integration-de-materiel-eufy/76603)
 
 ## Todo
 * Improve error checking
+
+## Credits
+Project fork of [alexandreberton/eufy](https://github.com/alexandreberton/eufy)
+<br>Uses [bropat/eufy-security-ws](https://github.com/bropat/eufy-security-ws) lib (docker prerequisite)
+
