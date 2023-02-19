@@ -2,8 +2,10 @@
   "pre-install": {
   },
   "apt": {
+    "python3-pip" : {}
   },
   "pip3": {
+    "websocket-client" : {"reinstall" : true}
   },
   "npm": {
   },

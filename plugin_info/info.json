@@ -2,17 +2,18 @@
 	"id" : "eufy",
 	"name" : "Eufy",
 	"description" : {
-		"fr_FR": "Plugin permettant de piloter les périphériques de sécurité Eufy: caméras, sonnettes, stations..."
+		"fr_FR": "Plugin permettant de piloter les périphériques de sécurité Eufy: caméras, sonnettes, stations...",
+		"en_US": "Plugin to control the Eufy security devices: webcams, ringbells, stations..."
 	},
 	"licence" : "AGPL",
-	"author" : "a.berton / lxrootard",
+	"author" : "a.berton & lxrootard",
 	"require" : "4.2.0",
 	"category" : "security",
 	"hasDependency" : true,
 	"hasOwnDeamon" : true,
-	"maxDependancyInstallTime" : 5,
+	"maxDependancyInstallTime" : 15,
 	"language": [ "fr_FR", "en_US" ],
 	"compatibility": [ "docker", "diy","rpi","v4" ],
-	"changelog" : "https://github.com/lxrootard/eufy#changelog",
-	"documentation" : "https://github.com/lxrootard/eufy"
+	"changelog" : "https:\/\/github.com\/lxrootard\/eufy#changelog",
+	"documentation" : "https:\/\/github.com\/lxrootard\/eufy"
 }

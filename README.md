@@ -43,6 +43,8 @@ help:
 	-u URL, --url URL     eufy service URL, default 127.0.0.1:3000
 
 ## ChangeLog
+* v1.0 [lxrootard](https://github.com/lxrootard)
+<br> fix dependencies install
 * v0.9 [lxrootard](https://github.com/lxrootard)
 <br> metadata for market publication
 * v0.8 [lxrootard](https://github.com/lxrootard)
