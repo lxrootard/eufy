@@ -43,6 +43,8 @@ help:
 	-u URL, --url URL     eufy service URL, default 127.0.0.1:3000
 
 ## ChangeLog
+* v1.1 [lxrootard](https://github.com/lxrootard)
+<br> fix install script permissions
 * v1.0 [lxrootard](https://github.com/lxrootard)
 <br> fix dependencies install
 * v0.9 [lxrootard](https://github.com/lxrootard)
@@ -85,8 +87,8 @@ help:
 * Quotes are not supported in equipment names
 * 2FA is not supported yet, please use a secondary account with 2FA disabled
 <p>
-Also see the Jeedom community [blog](https://community.jeedom.com/t/integration-de-materiel-eufy/76603)
-
+Also see the Jeedom community [blog](https://community.jeedom.com/t/integration-de-materiel-eufy/76603) 
+<br>
 ## Todo
 * Improve error checking
 

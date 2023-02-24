@@ -6,7 +6,7 @@
 		"en_US": "Plugin to control the Eufy security devices: webcams, ringbells, stations..."
 	},
 	"licence" : "AGPL",
-	"author" : "a.berton & lxrootard",
+	"author" : "a.berton / lxrootard",
 	"require" : "4.2.0",
 	"category" : "security",
 	"hasDependency" : true,

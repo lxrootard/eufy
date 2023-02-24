@@ -14,5 +14,6 @@
   "plugin": {
   },
   "post-install": {
+    "script" : "chmod 755 plugins/eufy/resources/eufyctl.sh"
   }
 }
