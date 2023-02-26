@@ -9,14 +9,17 @@
 - User Documentation [(fr)](docs/fr_FR/index.md)
 
 ## Tested devices
-- T8010 homebase2
-- T8030 homebase3
+- T8010 Homebase 2
+- T8030 Homebase 3
 - T8113 Eufycam 2C 
 - T8114 Eufycam 2
 - T8161 Eufycam 3C
 - T8210 Battery Doorbell
 - T8400 Indoor Cam
+- T8424 Floodlight Cam 2
 - T8410 Indoor Cam Pan&Tilt
+- T8441 Outdoor Cam Pro
+- T8910 Motion Sensor
 
 ## Untested devices
 Other Eufy models should also work but might not be recognized incompletely or require a config file.
@@ -43,6 +46,8 @@ help:
 	-u URL, --url URL     eufy service URL, default 127.0.0.1:3000
 
 ## ChangeLog
+* v1.1 [lxrootard](https://github.com/lxrootard)
+* added support for T8424, T8441, T8910. fixed T8210
 * v1.1 [lxrootard](https://github.com/lxrootard)
 <br> fix install script permissions
 * v1.0 [lxrootard](https://github.com/lxrootard)
@@ -73,22 +78,21 @@ help:
 <br> - Added checks for Eufy service at startup: container listening and driver connected
 <br> - Added health screen
 <br> - Added generic support for binary commands
-
 * v0.1 [lxrootard](https://github.com/lxrootard) 
 <br> - Created separate equipement types for Station and Webcam 
 <br> - Added support for T8010 base, updated other devices types (T8113 OK, other types to be tested, see core/config/*.json)
 <br> - Added support for Webcam commands: activation, motionDetection, LED, antiTheft, refresh
 <br> - Moved guard command to Station type, added IP, MAC address and status infos
 <br> - Corrected guardMode update bug
-
 * v0 [a.berton](https://github.com/alexandreberton)
 
 ## Troubleshooting and known issues
 * Quotes are not supported in equipment names
 * 2FA is not supported yet, please use a secondary account with 2FA disabled
+
 <p>
 Also see the Jeedom community [blog](https://community.jeedom.com/t/integration-de-materiel-eufy/76603) 
-<br>
+
 ## Todo
 * Improve error checking
 

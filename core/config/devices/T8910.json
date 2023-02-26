@@ -1,0 +1,25 @@
+[
+	{
+		"interface": "device",
+		"commands": {
+			"0": {
+				"logicalId": "motionDetected",
+				"name": "Mouvement",
+				"type": "info",
+				"subtype": "binary",
+				"isVisible": 1,
+				"isHistorized": 1,
+				"generic_type": "PRESENCE"
+			},
+			"1": {
+				"logicalId": "batteryLow",
+				"name": "Batterie faible",
+				"type": "info",
+				"subtype": "binary",
+				"isVisible": 1,
+				"isHistorized": 0,
+				"generic_type": "GENERIC_INFO"
+			}
+		}
+	}
+]

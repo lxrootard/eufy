@@ -13,14 +13,17 @@
 <h2>Tested devices</h2>
 
 <ul>
-<li>T8010 homebase2</li>
-<li>T8030 homebase3</li>
+<li>T8010 Homebase 2</li>
+<li>T8030 Homebase 3</li>
 <li>T8113 Eufycam 2C </li>
 <li>T8114 Eufycam 2</li>
 <li>T8161 Eufycam 3C</li>
 <li>T8210 Battery Doorbell</li>
 <li>T8400 Indoor Cam</li>
+<li>T8424 Floodlight Cam 2</li>
 <li>T8410 Indoor Cam Pan&amp;Tilt</li>
+<li>T8441 Outdoor Cam Pro</li>
+<li>T8910 Motion Sensor</li>
 </ul>
 
 <h2>Untested devices</h2>
@@ -54,6 +57,8 @@ optional arguments:
 <h2>ChangeLog</h2>
 
 <ul>
+<li>v1.1 <a href="https://github.com/lxrootard">lxrootard</a></li>
+<li>added support for T8424, T8441, T8910. fixed T8210</li>
 <li>v1.1 <a href="https://github.com/lxrootard">lxrootard</a>
 <br> fix install script permissions</li>
 <li>v1.0 <a href="https://github.com/lxrootard">lxrootard</a>
@@ -75,7 +80,7 @@ optional arguments:
 <br> - Added generic support for integer command values, lists and sliders
 <br> - Added support for T8410 and T8210 devices
 <br> - Added metadata check to test_eufy.py script</li>
-<li><p>v0.2 <a href="https://github.com/lxrootard">lxrootard</a>
+<li>v0.2 <a href="https://github.com/lxrootard">lxrootard</a>
 <br> - Added station and webcam extended properties support
 <br> - Added new infos and commands to T8113, T8114 and T8010 devices
 <br> - Added test_eufy.py diagnostic script
@@ -83,27 +88,30 @@ optional arguments:
 <br> - Added local and remote container modes with docker image and container setup options
 <br> - Added checks for Eufy service at startup: container listening and driver connected
 <br> - Added health screen
-<br> - Added generic support for binary commands</p></li>
-<li><p>v0.1 <a href="https://github.com/lxrootard">lxrootard</a> 
+<br> - Added generic support for binary commands</li>
+<li>v0.1 <a href="https://github.com/lxrootard">lxrootard</a> 
 <br> - Created separate equipement types for Station and Webcam 
 <br> - Added support for T8010 base, updated other devices types (T8113 OK, other types to be tested, see core/config/*.json)
 <br> - Added support for Webcam commands: activation, motionDetection, LED, antiTheft, refresh
 <br> - Moved guard command to Station type, added IP, MAC address and status infos
-<br> - Corrected guardMode update bug</p></li>
-<li><p>v0 <a href="https://github.com/alexandreberton">a.berton</a></p></li>
+<br> - Corrected guardMode update bug</li>
+<li>v0 <a href="https://github.com/alexandreberton">a.berton</a></li>
 </ul>
 
 <h2>Troubleshooting and known issues</h2>
 
 <ul>
 <li>Quotes are not supported in equipment names</li>
-<li><p>2FA is not supported yet, please use a secondary account with 2FA disabled
-<p>
-Also see the Jeedom community <a href="https://community.jeedom.com/t/integration-de-materiel-eufy/76603">blog</a> 
-<br></p>
+<li>2FA is not supported yet, please use a secondary account with 2FA disabled</li>
+</ul>
 
-<h2>Todo</h2></li>
-<li><p>Improve error checking</p></li>
+<p><p>
+Also see the Jeedom community <a href="https://community.jeedom.com/t/integration-de-materiel-eufy/76603">blog</a> </p>
+
+<h2>Todo</h2>
+
+<ul>
+<li>Improve error checking</li>
 </ul>
 
 <h2>Credits</h2>
