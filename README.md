@@ -19,7 +19,8 @@
 - T8424 Floodlight Cam 2
 - T8410 Indoor Cam Pan&Tilt
 - T8441 Outdoor Cam Pro
-- T8910 Motion Sensor
+- T8910 Motion Sensor. `motionDetection` events not working, 
+see [this thread](https://github.com/fuatakgun/eufy_security/issues/22)
 
 ## Untested devices
 Other Eufy models should also work but might not be recognized incompletely or require a config file.
@@ -46,8 +47,10 @@ help:
 	-u URL, --url URL     eufy service URL, default 127.0.0.1:3000
 
 ## ChangeLog
-* v1.1 [lxrootard](https://github.com/lxrootard)
-* added support for T8424, T8441, T8910. fixed T8210
+* v1.3 [lxrootard](https://github.com/lxrootard)
+<br> added support for model name + sendEvent bug fix
+* v1.2 [lxrootard](https://github.com/lxrootard)
+<br> added support for T8424, T8441, T8910. fixed T8210
 * v1.1 [lxrootard](https://github.com/lxrootard)
 <br> fix install script permissions
 * v1.0 [lxrootard](https://github.com/lxrootard)
@@ -89,9 +92,8 @@ help:
 ## Troubleshooting and known issues
 * Quotes are not supported in equipment names
 * 2FA is not supported yet, please use a secondary account with 2FA disabled
-
 <p>
-Also see the Jeedom community [blog](https://community.jeedom.com/t/integration-de-materiel-eufy/76603) 
+Also see the [Jeedom community blog](https://community.jeedom.com/t/integration-de-materiel-eufy/76603) 
 
 ## Todo
 * Improve error checking

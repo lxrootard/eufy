@@ -95,6 +95,7 @@ class eufy extends eqLogic {
         // throw new Exception(__('Container Eufy non connecté !!!', __FILE__));
 	return false;
     }
+    eufy::initModelTypes();
     eufy::refreshAllDevices();
 
     message::removeAll(__CLASS__, 'unableStartDeamon');
@@ -130,6 +131,12 @@ class eufy extends eqLogic {
 	socket_close($socket);
   }
 
+   public static function initModelTypes()
+   {
+    //log::add(__CLASS__, 'debug','initModelTypes');
+    $types = eufyCmd::getCommandsFileContent(__DIR__ . '/../config/devices/eufy_types.json');
+    cache::set('eufy::modelTypes',$types);
+   }
 
    public static function syncDevices($stations, $devices)
    {
@@ -158,7 +165,7 @@ class eufy extends eqLogic {
       $eqLogic = eqLogic::byLogicalId($device->serialNumber, __CLASS__);
 
       if (!is_object($eqLogic)) {
-        log::add(__CLASS__, 'info', 'Creating ' . $device->name . ' serial #' . $device->serialNumber);
+        log::add(__CLASS__, 'info', 'Creating ' . $device->name . ' serial #' . $device->serialNumber . ' type '. $device->type);
         $eqLogic = new self();
         $eqLogic->setLogicalId($device->serialNumber);
         $eqLogic->setName($device->name);
@@ -166,7 +173,7 @@ class eufy extends eqLogic {
         $eqLogic->setIsEnable(1);
         $eqLogic->setCategory('security', 1);
         $eqLogic->setConfiguration('eufyName', $device->name); // nom app Eufy
-        $eqLogic->setConfiguration('model', $device->model);
+        $eqLogic->setConfiguration('eufyModel', $device->model);
         $eqLogic->setConfiguration('serialNumber', $device->serialNumber);
         $eqLogic->setConfiguration('hardwareVersion', $device->hardwareVersion);
         $eqLogic->setConfiguration('softwareVersion', $device->softwareVersion);
@@ -216,6 +223,14 @@ class eufy extends eqLogic {
 	log::add(__CLASS__, 'error', $serialNumber . ': eqLogic not found');
 	return;
     }
+    if ($property == 'type') {
+	$types = cache::byKey('eufy::modelTypes')->getValue();
+	if (isset($types)) {
+		 $eqLogic->setConfiguration('eufyType', $types[$value]);
+		 $eqLogic->save();
+	}
+    }
+
     $cmd = $eqLogic->getCmd('info', $property);
     if (eufy::sendEvent($cmd, $value)) {
         log::add(__CLASS__, 'debug', 'device info updated, property: '. $property);
@@ -225,11 +240,12 @@ class eufy extends eqLogic {
   }
 
   public static function sendEvent($cmd, $value) {
-    if ($cmd->execCmd() != $cmd->formatValue($value)) {
-      $cmd->event($value, null);
-      return true;
-     }
-     return false;
+    if (is_object($cmd))
+    	if ($cmd->execCmd() != $cmd->formatValue($value)) {
+      		$cmd->event($value, null);
+      		return true;
+        }
+    return false;
   }
 
   public function createCommandsFromConfig(array $commands, $values, $itf) {
@@ -572,7 +588,7 @@ class eufyCmd extends cmd {
         else  // other commands
 		$params = array('command' => $itf . '.' . $set, 'serialNumber' => $serialNumber);
 
-   	log::add('eufy', 'debug', 'cmd::execute send to daemon: ' . json_encode($params));
+  // 	log::add('eufy', 'debug', 'cmd::execute send to daemon: ' . json_encode($params));
         eufy::sendToDaemon($params);
  //     $eqLogic->checkAndUpdateCmd($info, true);
     }

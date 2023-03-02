@@ -27,8 +27,9 @@ $eqLogics = eufy::byType('eufy');
 			<th>{{Image}}</th>
 			<th>{{Module}}</th>
 			<th>{{ID}}</th>
+                        <th>{{N° de série}}</th>
 			<th>{{Modèle}}</th>
-			<th>{{Identifiant}}</th>
+			<th>{{Type}}</th>
 			<th>{{Présent}}</th>
 			<th>{{Batterie}}</th>
 			<th>{{Dernière communication}}</th>
@@ -38,15 +39,16 @@ $eqLogics = eufy::byType('eufy');
 	<tbody>
 <?php
 foreach ($eqLogics as $eqLogic) {
-	if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('model') . '.png')) {
-		$image = '<img src="plugins/eufy/core/config/devices/' . $eqLogic->getConfiguration('model') . '.png' . '" height="55" width="55" />';
+	if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('eufyModel') . '.png')) {
+		$image = '<img src="plugins/eufy/core/config/devices/' . $eqLogic->getConfiguration('eufyModel') . '.png' . '" height="55" width="55" />';
 	} else {
 		$image = '<img src="' . $plugin->getPathImgIcon() . '" height="55" width="55" />';
 	}
 	echo '<tr><td>' . $image . '</td><td><a href="' . $eqLogic->getLinkToConfiguration() . '" style="text-decoration: none;">' . $eqLogic->getHumanName(true) . '</a></td>';
 	echo '<td><span class="label label-info" style="font-size : 1em; cursor : default;">' . $eqLogic->getId() . '</span></td>';
-	echo '<td><span class="label label-info" style="font-size : 1em; cursor : default;">' . $eqLogic->getConfiguration('model') . '</span></td>';
 	echo '<td><span class="label label-info" style="font-size : 1em; cursor : default;">' . $eqLogic->getConfiguration('serialNumber') . '</span></td>';
+        echo '<td><span class="label label-info" style="font-size : 1em; cursor : default;">' . $eqLogic->getConfiguration('eufyModel') . '</span></td>';
+        echo '<td><span class="label label-info" style="font-size : 1em; cursor : default;">' . $eqLogic->getConfiguration('eufyType') . '</span></td>';
 
         $present = $eqLogic->getCmd('info','present');
 	$status = '<span class="label label-danger" style="font-size : 1em; cursor : default;">{{NOK}}</span>';

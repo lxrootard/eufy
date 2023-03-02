@@ -41,8 +41,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
                 $opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
                 echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '">';
 
-                if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('model') . '.png'))
-			echo '<img src="plugins/eufy/core/config/devices/' . $eqLogic->getConfiguration('model') . '.png"/>';
+                if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('eufyModel') . '.png'))
+			echo '<img src="plugins/eufy/core/config/devices/' . $eqLogic->getConfiguration('eufyModel') . '.png"/>';
 		else
                 	echo '<img src="' . $eqLogic->getImage() . '"/>';
                 echo "<br>";
@@ -127,10 +127,17 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                     </div>
                                 </div>
 
+                               <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Type}}</label>
+                                    <div class="col-sm-6">
+                                        <span type="text" class="eqLogicAttr label label-default" data-l1key="configuration" data-l2key="eufyType"></span>
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">{{Modèle}}</label>
                                     <div class="col-sm-6">
-                                        <span type="text" class="eqLogicAttr label label-default" data-l1key="configuration" data-l2key="model"></span>
+                                        <span type="text" class="eqLogicAttr label label-default" data-l1key="configuration" data-l2key="eufyModel"></span>
                                     </div>
                                 </div>
 
