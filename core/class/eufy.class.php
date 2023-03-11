@@ -95,6 +95,7 @@ class eufy extends eqLogic {
         // throw new Exception(__('Container Eufy non connecté !!!', __FILE__));
 	return false;
     }
+    sleep(1);
     eufy::initModelTypes();
     eufy::refreshAllDevices();
 
@@ -230,7 +231,6 @@ class eufy extends eqLogic {
 		 $eqLogic->save();
 	}
     }
-
     $cmd = $eqLogic->getCmd('info', $property);
     if (eufy::sendEvent($cmd, $value)) {
         log::add(__CLASS__, 'debug', 'device info updated, property: '. $property);

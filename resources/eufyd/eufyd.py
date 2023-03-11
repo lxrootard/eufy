@@ -161,7 +161,6 @@ def on_open(ws):
 		time.sleep(1)
 		_websocket.send("{\"command\": \"set_api_schema\", \"schemaVersion\": 16}") # Set API schema
 		time.sleep(1)
-	
 	Thread(target=run).start()
 
 def updatePresence(msg):
@@ -169,7 +168,7 @@ def updatePresence(msg):
 	if msg['success']:
 		_jeedomCom.send_change_immediate({'type': 'event', 'subtype': 'properties', 'serialNumber': _serialNumber, 'property': 'present', 'value': True})
 	else:
-		logging.debug('***  msg[success] is FALSE ')
+#		logging.debug('***  msg[success] is FALSE ')
 		if "errorCode" in msg:
 			if msg['errorCode'] == 'device_not_found':
 				_jeedomCom.send_change_immediate({'type': 'event', 'subtype': 'properties', 'serialNumber': _serialNumber, 'property': 'present', 'value': False})

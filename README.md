@@ -47,6 +47,8 @@ help:
 	-u URL, --url URL     eufy service URL, default 127.0.0.1:3000
 
 ## ChangeLog
+* v1.4 [lxrootard](https://github.com/lxrootard)
+<br> fixed serialNumber error at startup
 * v1.3 [lxrootard](https://github.com/lxrootard)
 <br> added support for model name + sendEvent bug fix
 * v1.2 [lxrootard](https://github.com/lxrootard)
