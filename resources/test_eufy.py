@@ -6,6 +6,7 @@ argParser = argparse.ArgumentParser()
 argParser.add_argument("-s", "--station", help="station serial number")
 argParser.add_argument("-d", "--device", help="device serial number")
 argParser.add_argument("-u", "--url", help="eufy service URL, default 127.0.0.1:3000")
+argParser.add_argument("-n", "--nolog", action='store_true', help="check eufy service status only")
 
 args = argParser.parse_args()
 #print("args=%s" % args)
@@ -18,11 +19,15 @@ if args.url:
 else:
 	url = '127.0.0.1:3000'
 
-print ('\n*** Create connexion to ' + url + '***')
 ws = create_connection("ws://" + url)
-print(ws.recv())
 
-print ('\n*** Start listening ***')
+if not args.nolog:
+	print ('\n*** Create connexion to ' + url + '***')
+	print(ws.recv())
+	print ('\n*** Start listening ***')
+else:
+	ws.recv()
+
 ws.send(json.dumps({"command": "start_listening"}))
 print(ws.recv())
 

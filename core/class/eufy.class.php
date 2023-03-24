@@ -58,10 +58,16 @@ class eufy extends eqLogic {
     }
 
     if (! eufy::checkContainer()) {
-//       log::add(__CLASS__, 'error', __('Container Eufy non démarré', __FILE__), 'unableStartDeamon');
+        log::add(__CLASS__, 'error', __('Container Eufy non démarré', __FILE__), 'unableStartDeamon');
         event::add('jeedom::alert', array('level' => 'error', 'page' => 'plugin',
                 'message' => __('Container Eufy non démarré', __FILE__)));
     //    throw new Exception(__('Container Eufy non démarré!!!', __FILE__));
+	return false;
+    }
+    if (! eufy::testService()) {
+	log::add(__CLASS__, 'error', __('Container Eufy non connecté au Cloud', __FILE__), 'unableStartDeamon');
+        event::add('jeedom::alert', array('level' => 'error', 'page' => 'plugin',
+                'message' => __('Container Eufy non connecté au Cloud', __FILE__)));
 	return false;
     }
 
@@ -88,14 +94,7 @@ class eufy extends eqLogic {
         log::add(__CLASS__, 'error', __('Impossible de lancer le démon, vérifiez le log', __FILE__), 'unableStartDeamon');
         return false;
     }
-    sleep(1);
-    if (! eufy::isOnline()) {
-        event::add('jeedom::alert', array('level' => 'error', 'page' => 'plugin',
-                'message' => __('Container Eufy non connecté', __FILE__)));
-        // throw new Exception(__('Container Eufy non connecté !!!', __FILE__));
-	return false;
-    }
-    sleep(1);
+    sleep(3);
     eufy::initModelTypes();
     eufy::refreshAllDevices();
 
@@ -428,18 +427,18 @@ class eufy extends eqLogic {
   {
     $ip = config::byKey('containerip', __CLASS__);
     $port = config::byKey('containerport', __CLASS__);
-    log::add(__CLASS__, 'debug', 'Checking container ' . $ip .':' . $port);
+    log::add(__CLASS__, 'debug', '>>> Checking container ' . $ip .':' . $port);
     try {
         $conn = @fsockopen($ip, $port);
         if (is_resource($conn)) {
-                log::add(__CLASS__, 'debug', 'Service ' . $ip .':' . $port .' listening');
+                log::add(__CLASS__, 'debug', 'Container ' . $ip .':' . $port .' is listening');
                 fclose($conn);
                 cache::set('eufy::container_ok',true);
                 return true;
         }
     }
     catch (Exception $ex) {}
-    log::add(__CLASS__, 'debug', 'Service '. $ip . ':'. $port . ' not responding :(');
+    log::add(__CLASS__, 'debug', 'Container '. $ip . ':'. $port . ' is not responding :(');
     cache::set('eufy::container_ok',false);
     return false;
   }
@@ -467,8 +466,33 @@ class eufy extends eqLogic {
 	return $online ;
   }
 
+  // test service
+  public static function testService() {
+	$host = config::byKey('containerIP', __CLASS__);
+	$port = config::byKey('containerPort', __CLASS__);
+        if ((! isset($host)) or (! isset($port))) {
+                $host="127.0.0.1";
+                $port="3000";
+        }
+        $h = "'" . $host . "'";
+        $p = "'" . $port . "'";
+
+        // log::add(__CLASS__, 'debug',  '>>> Testing EufyWS service on '. $host . ':' . $port);
+        $python='python3';
+        $script =  __DIR__ . '/../../resources/test_eufy.py';
+        $rc = shell_exec(system::getCmdSudo() . $python . ' ' . $script . ' -n -u ' . $h . ':' . $p .' 2>&1');
+        //log::add(__CLASS__, 'debug', '*** Test result '. $rc);
+        $online = False;
+        $jsonObj = json_decode($rc);
+        if (is_object($jsonObj))
+                $online = $jsonObj->result->state->driver->connected;
+        log::add(__CLASS__, 'debug', 'EufyWS service on '. $host . ':' . $port . ' online: ' . $online);
+        cache::set('eufy::online', $online);
+	return $online;
+  }
+
   // install | uninstall
-  public static function setupEufy($action)
+  public static function setupContainer($action)
   {
 	$device = "'" . config::byKey('devicename', __CLASS__) . "'";
         $user = "'" . config::byKey('username', __CLASS__) . "'";
@@ -518,7 +542,6 @@ class eufy extends eqLogic {
 	}
         log::add(__CLASS__, 'warning', $msg);
   }
-
 }
 
 

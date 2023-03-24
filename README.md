@@ -11,11 +11,13 @@
 ## Tested devices
 - T8010 Homebase 2
 - T8030 Homebase 3
-- T8113 Eufycam 2C 
-- T8114 Eufycam 2
-- T8161 Eufycam 3C
-- T8210 Battery Doorbell
+- T8113 Camera 2C 
+- T8114 Camera 2
+- T8142 Camera 2C Pro
+- T8161 Camera 3C
+- T8210 Battery Doorbell. RTSP not supported
 - T8400 Indoor Cam
+- T8423 Floodlight 8423 
 - T8424 Floodlight Cam 2
 - T8410 Indoor Cam Pan&Tilt
 - T8441 Outdoor Cam Pro
@@ -46,7 +48,21 @@ help:
                         device serial number
 	-u URL, --url URL     eufy service URL, default 127.0.0.1:3000
 
+## Troubleshooting
+* The daemon doesn't start
+<br> Make sure both container and Cloud communication indicators are green in the Configuration section 
+* Synchronization failed, devices are not found
+<br> Quotes are not supported in equipment names
+
+## Known issues
+* 2FA is not supported yet, please use a secondary account with 2FA disabled
+* P2P streaming is not supported, use RTSP when available instead
+<p>
+Also see the [Jeedom community blog](https://community.jeedom.com/t/integration-de-materiel-eufy/76603) 
+
 ## ChangeLog
+* v1.5 [lxrootard](https://github.com/lxrootard)
+<br> improved container readiness checking. Added support for fixed T8142 and T8423
 * v1.4 [lxrootard](https://github.com/lxrootard)
 <br> fixed serialNumber error at startup
 * v1.3 [lxrootard](https://github.com/lxrootard)
@@ -90,12 +106,6 @@ help:
 <br> - Moved guard command to Station type, added IP, MAC address and status infos
 <br> - Corrected guardMode update bug
 * v0 [a.berton](https://github.com/alexandreberton)
-
-## Troubleshooting and known issues
-* Quotes are not supported in equipment names
-* 2FA is not supported yet, please use a secondary account with 2FA disabled
-<p>
-Also see the [Jeedom community blog](https://community.jeedom.com/t/integration-de-materiel-eufy/76603) 
 
 ## Todo
 * Improve error checking

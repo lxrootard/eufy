@@ -46,7 +46,7 @@ $deamonRunning = eufy::deamonRunning();
         <div class="form-group">
             <label class="col-lg-4 control-label">{{IP Docker}}</label>
             <div class="col-lg-4">
-                <input class="configKey form-control" data-l1key="containerip" />
+                <input class="configKey form-control" data-l1key="containerIP" />
             </div>
         </div>
         <div class="form-group">
@@ -58,7 +58,7 @@ $deamonRunning = eufy::deamonRunning();
         <div class="form-group eufyMode local">
             <label class="col-lg-4 control-label">{{Device}}</label>
             <div class="col-lg-4">
-                <input class="configKey form-control" data-l1key="devicename"/>
+                <input class="configKey form-control" data-l1key="deviceName"/>
             </div>
         </div>
         <div class="form-group eufyMode local">

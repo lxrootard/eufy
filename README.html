@@ -15,11 +15,13 @@
 <ul>
 <li>T8010 Homebase 2</li>
 <li>T8030 Homebase 3</li>
-<li>T8113 Eufycam 2C </li>
-<li>T8114 Eufycam 2</li>
-<li>T8161 Eufycam 3C</li>
-<li>T8210 Battery Doorbell</li>
+<li>T8113 Camera 2C </li>
+<li>T8114 Camera 2</li>
+<li>T8142 Camera 2C Pro</li>
+<li>T8161 Camera 3C</li>
+<li>T8210 Battery Doorbell. RTSP not supported</li>
 <li>T8400 Indoor Cam</li>
+<li>T8423 Floodlight 8423 </li>
 <li>T8424 Floodlight Cam 2</li>
 <li>T8410 Indoor Cam Pan&amp;Tilt</li>
 <li>T8441 Outdoor Cam Pro</li>
@@ -55,9 +57,29 @@ optional arguments:
 -u URL, --url URL     eufy service URL, default 127.0.0.1:3000
 </code></pre>
 
+<h2>Troubleshooting</h2>
+
+<ul>
+<li>The daemon doesn't start
+<br> Make sure both container and Cloud communication indicators are green in the Configuration section </li>
+<li>Synchronization failed, devices are not found
+<br> Quotes are not supported in equipment names</li>
+</ul>
+
+<h2>Known issues</h2>
+
+<ul>
+<li>2FA is not supported yet, please use a secondary account with 2FA disabled</li>
+<li>P2P streaming is not supported, use RTSP when available instead
+<p>
+Also see the <a href="https://community.jeedom.com/t/integration-de-materiel-eufy/76603">Jeedom community blog</a> </li>
+</ul>
+
 <h2>ChangeLog</h2>
 
 <ul>
+<li>v1.5 <a href="https://github.com/lxrootard">lxrootard</a>
+<br> improved container readiness checking. Added support for fixed T8142 and T8423</li>
 <li>v1.4 <a href="https://github.com/lxrootard">lxrootard</a>
 <br> fixed serialNumber error at startup</li>
 <li>v1.3 <a href="https://github.com/lxrootard">lxrootard</a>
@@ -101,15 +123,6 @@ optional arguments:
 <br> - Moved guard command to Station type, added IP, MAC address and status infos
 <br> - Corrected guardMode update bug</li>
 <li>v0 <a href="https://github.com/alexandreberton">a.berton</a></li>
-</ul>
-
-<h2>Troubleshooting and known issues</h2>
-
-<ul>
-<li>Quotes are not supported in equipment names</li>
-<li>2FA is not supported yet, please use a secondary account with 2FA disabled
-<p>
-Also see the <a href="https://community.jeedom.com/t/integration-de-materiel-eufy/76603">Jeedom community blog</a> </li>
 </ul>
 
 <h2>Todo</h2>

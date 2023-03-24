@@ -325,6 +325,58 @@
 				}
 			},
 			"15": {
+				"logicalId": "wifiRSSI",
+				"name": "Signal Wifi",
+				"type": "info",
+				"subtype": "numeric",
+				"isVisible": 1,
+				"isHistorized": 0,
+				"unite": "dBm",
+				"generic_type": "GENERIC_INFO",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			},
+			"16": {
+				"logicalId": "motionTracking",
+				"name": "Tracking mouvement",
+				"type": "info",
+				"subtype": "binary",
+				"isVisible": 1,
+				"generic_type": "GENERIC_INFO",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			},
+			"17": {
+				"logicalId": "motionTrackingSensitivity",
+				"name": "Sensibilité suivi mvt",
+				"type": "info",
+				"subtype": "numeric",
+				"isVisible": 1,
+				"isHistorized": 0,
+				"generic_type": "GENERIC_INFO",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			},
+			"18": {
+				"logicalId": "motionDetectionRange",
+				"name": "Type détection mouvement",
+				"type": "info",
+				"subtype": "numeric",
+				"isVisible": 1,
+				"isHistorized": 0,
+				"generic_type": "GENERIC_INFO",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			},
+			"19": {
 				"logicalId": "lightSettingsEnable",
 				"name": "Paramètres Flash",
 				"type": "info",
@@ -337,7 +389,7 @@
 					"mobile": "line"
 				}
 			},
-			"16": {
+			"20": {
 				"logicalId": "lightSettingsBrightnessManual",
 				"name": "Luminosité flash",
 				"type": "info",
@@ -350,7 +402,55 @@
 					"mobile": "line"
 				}
 			},
-			"17": {
+			"21": {
+				"logicalId": "lightSettingsColorTemperatureManual",
+				"name": "Température couleur",
+				"type": "info",
+				"subtype": "numeric",
+				"isVisible": 1,
+				"isHistorized": 0,
+				"generic_type": "GENERIC_INFO",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			},
+			"22": {
+				"logicalId": "motionDetectionRange:set",
+				"name": "Type de détection Mvt",
+				"type": "action",
+				"subtype": "slider",
+				"isVisible": 1,
+				"generic_type": "CAMERA_PRESET",
+				"configuration": {
+					"params": "[#slider#]",
+					"minValue": 0,
+					"maxValue": 2
+				}
+			},
+			"23": {
+				"logicalId": "motionTracking:on",
+				"name": "Activer le tracking de mvt",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"generic_type": "CAMERA_PRESET",
+				"display": {
+					"icon": "<i class=\"jeedom-on\"></i>"
+				}
+			},
+			"24": {
+				"logicalId": "motionTracking:off",
+				"name": "Désactiver le tracking de mvt",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"generic_type": "CAMERA_PRESET",
+				"display": {
+					"icon": "<i class=\"jeedom-on\"></i>"
+				}
+			},
+			"25": {
 				"logicalId": "enabled:on",
 				"name": "Activer la Caméra",
 				"type": "action",
@@ -361,7 +461,7 @@
 					"icon": "<i class=\"jeedom-on\"></i>"
 				}
 			},
-			"18": {
+			"26": {
 				"logicalId": "enabled:off",
 				"name": "Désactiver la Caméra",
 				"type": "action",
@@ -372,7 +472,7 @@
 					"icon": "<i class=\"jeedom-off\"></i>"
 				}
 			},
-			"19": {
+			"27": {
 				"logicalId": "motionDetection:on",
 				"name": "Activer la détection de Mouvement",
 				"type": "action",
@@ -383,7 +483,7 @@
 					"icon": "<i class=\"loisir-runner5\"></i>"
 				}
 			},
-			"20": {
+			"28": {
 				"logicalId": "motionDetection:off",
 				"name": "Désactiver la détection de Mouvement",
 				"type": "action",
@@ -394,7 +494,7 @@
 					"icon": "<i class=\"fas fa-running\"></i>"
 				}
 			},
-			"21": {
+			"29": {
 				"logicalId": "statusLed:on",
 				"name": "Activer la LED",
 				"type": "action",
@@ -405,7 +505,7 @@
 					"icon": "<i class=\"jeedom-lumiere-on\"></i>"
 				}
 			},
-			"22": {
+			"30": {
 				"logicalId": "statusLed:off",
 				"name": "Désactiver la LED",
 				"type": "action",
@@ -416,7 +516,7 @@
 					"icon": "<i class=\"jeedom-lumiere-off\"></i>"
 				}
 			},
-			"23": {
+			"31": {
 				"logicalId": "autoNightvision:on",
 				"name": "Activer vision nocturne",
 				"type": "action",
@@ -424,7 +524,7 @@
 				"isVisible": 1,
 				"generic_type": "CAMERA_PRESET"
 			},
-			"24": {
+			"32": {
 				"logicalId": "autoNightvision:off",
 				"name": "Désactiver vision nocturne",
 				"type": "action",
@@ -432,7 +532,7 @@
 				"isVisible": 1,
 				"generic_type": "CAMERA_PRESET"
 			},
-			"25": {
+			"33": {
 				"logicalId": "speaker:on",
 				"name": "Activer haut-parleur",
 				"type": "action",
@@ -443,7 +543,7 @@
 					"icon": "<i class=\"fas fa-volume-up\"></i>"
 				}
 			},
-			"26": {
+			"34": {
 				"logicalId": "speaker:off",
 				"name": "Désactiver haut-parleur",
 				"type": "action",
@@ -454,7 +554,7 @@
 					"icon": "<i class=\"fas fa-volume-mute\"></i>"
 				}
 			},
-			"27": {
+			"35": {
 				"logicalId": "microphone:on",
 				"name": "Activer micro",
 				"type": "action",
@@ -465,7 +565,7 @@
 					"icon": "<i class=\"fas fa-microphone\"></i>"
 				}
 			},
-			"28": {
+			"36": {
 				"logicalId": "microphone:off",
 				"name": "Désactiver micro",
 				"type": "action",
@@ -476,7 +576,7 @@
 					"icon": "<i class=\"fas fa-microphone-slash\"></i>"
 				}
 			},
-			"29": {
+			"37": {
 				"logicalId": "audioRecording:on",
 				"name": "Activer enregistrement audio",
 				"type": "action",
@@ -487,7 +587,7 @@
 					"icon": "<i class=\"jeedomapp-circlevalidation\"></i>"
 				}
 			},
-			"30": {
+			"38": {
 				"logicalId": "audioRecording:off",
 				"name": "Désactiver enregistrement audio",
 				"type": "action",
@@ -498,7 +598,7 @@
 					"icon": "<i class=\"jeedomapp-circlestop\"></i>"
 				}
 			},
-			"31": {
+			"39": {
 				"logicalId": "speakerVolume:set",
 				"name": "Volume Son",
 				"type": "action",
@@ -511,7 +611,7 @@
 					"maxValue": 100
 				}
 			},
-			"32": {
+			"40": {
 				"logicalId": "motionDetectionSensitivity:set",
 				"name": "Sensibilité détection",
 				"type": "action",
@@ -524,7 +624,7 @@
 					"maxValue": 7
 				}
 			},
-			"33": {
+			"41": {
 				"logicalId": "notificationType:set",
 				"name": "Types de notification",
 				"type": "action",
@@ -536,7 +636,7 @@
 					"listValue": "1|Efficient;2|Include thumbnail;3|Full effect"
 				}
 			},
-			"34": {
+			"42": {
 				"logicalId": "light:on",
 				"name": "Allumer Flash",
 				"type": "action",
@@ -547,7 +647,7 @@
 					"icon": "<i class=\"jeedom-lumiere-on\"></i>"
 				}
 			},
-			"35": {
+			"43": {
 				"logicalId": "light:off",
 				"name": "Eteindre Flash",
 				"type": "action",
@@ -558,7 +658,7 @@
 					"icon": "<i class=\"jeedom-lumiere-off\"></i>"
 				}
 			},
-			"36": {
+			"44": {
 				"logicalId": "lightSettingsEnable:on",
 				"name": "Activer Flash",
 				"type": "action",
@@ -569,7 +669,7 @@
 					"icon": "<i class=\"jeedom-on\"></i>"
 				}
 			},
-			"37": {
+			"45": {
 				"logicalId": "lightSettingsEnable:off",
 				"name": "Desactiver Flash",
 				"type": "action",
@@ -580,7 +680,7 @@
 					"icon": "<i class=\"jeedom-off\"></i>"
 				}
 			},
-			"38": {
+			"46": {
 				"logicalId": "lightSettingsBrightnessManual:set",
 				"name": "Réglage Luminosité Flash",
 				"type": "action",
@@ -590,6 +690,19 @@
 				"configuration": {
 					"params": "[#slider#]",
 					"minValue": 0,
+					"maxValue": 100
+				}
+			},
+			"47": {
+				"logicalId": "lightSettingsColorTemperatureManual:set",
+				"name": "Réglage Température couleur",
+				"type": "action",
+				"subtype": "slider",
+				"isVisible": 1,
+				"generic_type": "LIGHT_SLIDER",
+				"configuration": {
+					"params": "[#slider#]",
+					"minValue": 1,
 					"maxValue": 100
 				}
 			}

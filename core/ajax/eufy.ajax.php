@@ -35,23 +35,24 @@ try {
     	ajax::success();
     }
     if (init('action') == 'installEufy') {
-	eufy::setupEufy('install');
+	eufy::setupContainer('install');
 	ajax::success();
     }
     if (init('action') == 'uninstallEufy') {
-        eufy::setupEufy('uninstall'); 
+        eufy::setupContainer('uninstall'); 
         ajax::success();
     }
     if (init('action') == 'startEufy') {
-        eufy::setupEufy('start');
-        ajax::success();
+        eufy::setupContainer('start');
+        ajaxws::success();
     }
     if (init('action') == 'stopEufy') {
-        eufy::setupEufy('stop');
+        eufy::setupContainer('stop');
         ajax::success();
     }
     if (init('action') == 'testEufy') {
-        eufy::checkContainer();
+	eufy::checkContainer();
+        eufy::testService();
         ajax::success();
     }
     throw new Exception(__('Aucune méthode correspondante à', __FILE__) . ' : ' . init('action'));
