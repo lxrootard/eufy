@@ -13,13 +13,15 @@
 - T8030 Homebase 3
 - T8113 Camera 2C 
 - T8114 Camera 2
+- T8140 Camera 2 Pro
 - T8142 Camera 2C Pro
+- T8160 Camera 3
 - T8161 Camera 3C
 - T8210 Battery Doorbell. RTSP not supported
 - T8400 Indoor Cam
+- T8410 Indoor Cam Pan&Tilt
 - T8423 Floodlight 8423 
 - T8424 Floodlight Cam 2
-- T8410 Indoor Cam Pan&Tilt
 - T8441 Outdoor Cam Pro
 - T8910 Motion Sensor. `motionDetection` events not working, 
 see [this thread](https://github.com/fuatakgun/eufy_security/issues/22)
@@ -61,6 +63,9 @@ help:
 Also see the [Jeedom community blog](https://community.jeedom.com/t/integration-de-materiel-eufy/76603) 
 
 ## ChangeLog
+* v1.6 [lxrootard](https://github.com/lxrootard)
+<br> simplified config files, type on 3 chars
+<br> added support for T8140, T8160
 * v1.5 [lxrootard](https://github.com/lxrootard)
 <br> improved container readiness checking. Added support for fixed T8142 and T8423
 * v1.4 [lxrootard](https://github.com/lxrootard)

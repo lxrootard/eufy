@@ -183,7 +183,9 @@ class eufy extends eqLogic {
         log::add(__CLASS__, 'debug', 'Device already exists: ' . $device->name . ' #' . $device->serialNumber);
 
       try {
-          $commandsConfig = eufyCmd::getCommandsFileContent(__DIR__ . '/../config/devices/' . $device->model . '.json');
+	  $fname=substr($device->model, 0, 4) . 'x';
+	  log::add(__CLASS__, 'debug', '>>> createCommandsFromConfig, file: ' . $fname);
+          $commandsConfig = eufyCmd::getCommandsFileContent(__DIR__ . '/../config/devices/' . $fname . '.json');
 	  for ($i=0; $i < count($commandsConfig); $i++)
           	$eqLogic->createCommandsFromConfig($commandsConfig[$i], $jsonObjArray[$deviceId], $commandsConfig[$i]['interface']);
       }
@@ -216,7 +218,7 @@ class eufy extends eqLogic {
 	}
   }
 
-  public static function updateDeviceInfo($serialNumber, $property, $value) 
+  public static function updateDeviceInfo($serialNumber, $property, $value)
   {
     $eqLogic = eqLogic::byLogicalId($serialNumber, __CLASS__);
     if (! isset($eqLogic)) {
@@ -230,12 +232,45 @@ class eufy extends eqLogic {
 		 $eqLogic->save();
 	}
     }
+    if ($property == 'battery')
+       $eqLogic->batteryStatus($value);
+    if ($property == 'picture')
+       $value = $eqLogic->extractPicture((array)$value);
+
     $cmd = $eqLogic->getCmd('info', $property);
     if (eufy::sendEvent($cmd, $value)) {
         log::add(__CLASS__, 'debug', 'device info updated, property: '. $property);
-	if ($property == 'battery')
-		$eqLogic->batteryStatus($value);
     }
+  }
+
+  public function extractPicture($a)
+  {
+  //  log::add(__CLASS__, 'debug', 'array: '. json_encode($a));
+    $imgRoot= '/data/tmp/';
+  //  $img = $this->getConfiguration('serialNumber') . date("d-m-Y.H:i"). '.jpg';
+    $img = $this->getConfiguration('serialNumber') . '.jpg';
+
+    $dirName = __DIR__ . '/../..' . $imgRoot;
+    mkdir ($dirName,0755,true);
+    $fname = $dirName . $img;
+    $urlRoot = '/plugins/eufy';
+    $bytes = $a['data']['data'];
+ //   log::add(__CLASS__, 'debug', 'img file: ' . $img);
+//    log::add(__CLASS__, 'debug', 'fname: ' . $fname);
+
+    if (is_array($bytes)) {
+//	log::add(__CLASS__, 'debug', 'pic size: '. count($bytes));
+	$f = fopen($fname,"wb+");
+	$data='';
+	foreach ($bytes as $b) {
+        	$data = pack("C*",$b);
+        	fwrite ($f, $data);
+	}
+    	fclose ($f);
+	return $urlRoot . $imgRoot. $img;
+    }
+    else
+	return $urlRoot . '/data/no_snapshot.png';
   }
 
   public static function sendEvent($cmd, $value) {
@@ -466,10 +501,9 @@ class eufy extends eqLogic {
 	return $online ;
   }
 
-  // test service
   public static function testService() {
-	$host = config::byKey('containerIP', __CLASS__);
-	$port = config::byKey('containerPort', __CLASS__);
+	$host = config::byKey('containerip', __CLASS__);
+	$port = config::byKey('containerport', __CLASS__);
         if ((! isset($host)) or (! isset($port))) {
                 $host="127.0.0.1";
                 $port="3000";

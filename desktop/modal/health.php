@@ -39,8 +39,9 @@ $eqLogics = eufy::byType('eufy');
 	<tbody>
 <?php
 foreach ($eqLogics as $eqLogic) {
-	if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('eufyModel') . '.png')) {
-		$image = '<img src="plugins/eufy/core/config/devices/' . $eqLogic->getConfiguration('eufyModel') . '.png' . '" height="55" width="55" />';
+	$iname = substr($eqLogic->getConfiguration('eufyModel'), 0, 5);
+	if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $iname . '.png')) {
+		$image = '<img src="plugins/eufy/core/config/devices/' . $iname . '.png' . '" height="55" width="55" />';
 	} else {
 		$image = '<img src="' . $plugin->getPathImgIcon() . '" height="55" width="55" />';
 	}

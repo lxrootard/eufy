@@ -247,7 +247,7 @@
 				}
 			},
 			"10": {
-				"logicalId": "pictureUrl",
+				"logicalId": "picture",
 				"name": "URL snapshot",
 				"type": "info",
 				"subtype": "string",
