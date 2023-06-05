@@ -13,8 +13,11 @@
 <h2>Tested devices</h2>
 
 <ul>
+<li>T8001 Homebase</li>
+<li>T8002 Homebase E </li>
 <li>T8010 Homebase 2</li>
 <li>T8030 Homebase 3</li>
+<li>T8111 Camera</li>
 <li>T8113 Camera 2C </li>
 <li>T8114 Camera 2</li>
 <li>T8140 Camera 2 Pro</li>
@@ -62,6 +65,8 @@ optional arguments:
 <h2>Troubleshooting</h2>
 
 <ul>
+<li>Container install failed or container communication indicator is red
+<br> Verify docker is working properly before installing the plugin</li>
 <li>The daemon doesn't start
 <br> Make sure both container and Cloud communication indicators are green in the Configuration section </li>
 <li>Synchronization failed, devices are not found
@@ -71,17 +76,22 @@ optional arguments:
 <h2>Known issues</h2>
 
 <ul>
+<li>Image snapshot is not implemented but refresh doesn't happen due to a <a href="https://github.com/bropat/eufy-security-ws/issues/217">bug</a></li>
 <li>2FA is not supported yet, please use a secondary account with 2FA disabled</li>
 <li>P2P streaming is not supported, use RTSP when available instead
 <p>
-Also see the <a href="https://community.jeedom.com/t/integration-de-materiel-eufy/76603">Jeedom community blog</a> </li>
+Also search for <code>#plugin-eufy</code> or see the <a href="https://community.jeedom.com/t/plugin-eufy/102453">Eufy plugin</a> 
+thread in the Jeedom community blog</li>
 </ul>
 
 <h2>ChangeLog</h2>
 
 <ul>
+<li>v1.7 <a href="https://github.com/lxrootard">lxrootard</a>
+<br> added support for T8001, T8111</li>
 <li>v1.6 <a href="https://github.com/lxrootard">lxrootard</a>
 <br> simplified config files, type on 3 chars
+<br> added support for snapshots 
 <br> added support for T8140, T8160</li>
 <li>v1.5 <a href="https://github.com/lxrootard">lxrootard</a>
 <br> improved container readiness checking. Added support for fixed T8142 and T8423</li>

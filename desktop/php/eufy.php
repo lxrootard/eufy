@@ -39,10 +39,11 @@ $eqLogics = eqLogic::byType($plugin->getId());
             <?php
             foreach ($eqLogics as $eqLogic) {
                 $opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
+		$iname = substr($eqLogic->getConfiguration('eufyModel'), 0, 5);
                 echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '">';
 
-                if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('eufyModel') . '.png'))
-			echo '<img src="plugins/eufy/core/config/devices/' . $eqLogic->getConfiguration('eufyModel') . '.png"/>';
+                if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $iname . '.png'))
+			echo '<img src="plugins/eufy/core/config/devices/' . $iname . '.png"/>';
 		else
                 	echo '<img src="' . $eqLogic->getImage() . '"/>';
                 echo "<br>";

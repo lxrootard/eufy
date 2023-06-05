@@ -9,8 +9,11 @@
 - User Documentation [(fr)](docs/fr_FR/index.md)
 
 ## Tested devices
+- T8001 Homebase
+- T8002 Homebase E 
 - T8010 Homebase 2
 - T8030 Homebase 3
+- T8111 Camera
 - T8113 Camera 2C 
 - T8114 Camera 2
 - T8140 Camera 2 Pro
@@ -51,20 +54,27 @@ help:
 	-u URL, --url URL     eufy service URL, default 127.0.0.1:3000
 
 ## Troubleshooting
+* Container install failed or container communication indicator is red
+<br> Verify docker is working properly before installing the plugin
 * The daemon doesn't start
 <br> Make sure both container and Cloud communication indicators are green in the Configuration section 
 * Synchronization failed, devices are not found
 <br> Quotes are not supported in equipment names
 
 ## Known issues
+* Image snapshot is not implemented but refresh doesn't happen due to a [bug](https://github.com/bropat/eufy-security-ws/issues/217)
 * 2FA is not supported yet, please use a secondary account with 2FA disabled
 * P2P streaming is not supported, use RTSP when available instead
 <p>
-Also see the [Jeedom community blog](https://community.jeedom.com/t/integration-de-materiel-eufy/76603) 
+Also search for `#plugin-eufy` or see the [Eufy plugin](https://community.jeedom.com/t/plugin-eufy/102453) 
+thread in the Jeedom community blog
 
 ## ChangeLog
+* v1.7 [lxrootard](https://github.com/lxrootard)
+ <br> added support for T8001, T8111
 * v1.6 [lxrootard](https://github.com/lxrootard)
 <br> simplified config files, type on 3 chars
+<br> added support for snapshots 
 <br> added support for T8140, T8160
 * v1.5 [lxrootard](https://github.com/lxrootard)
 <br> improved container readiness checking. Added support for fixed T8142 and T8423
