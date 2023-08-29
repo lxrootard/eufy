@@ -17,14 +17,19 @@ Install the plugin and its dependencies first.
 <br>Note: This action does NOT install the `eufy-security-ws` image.
 <br>Choose either local or remote docker mode:
 #### 1. Local mode
-Local mode requires docker already installed. 
+Local mode requires docker already installed and configured.
+<br>If it's not the case install the `docker management` official plugin or from the command line:
+
+`$ apt-get install docker.io`
+
+Post-installation setup:
 
 - Install/uninstall Eufy: install/uninstall `eufy-security-ws` image
 - Start/stop Eufy: start/stop the `eufy-security-ws` container
 - Device name: Eufy `TRUSTED_DEVICE_NAME` used to connect to Cloud server
 - User/password: `Eufy-WS` Cloud service credentials
 
-#### 2. Remote mode
+#### 2. Remote mode (expert)
 Assumes an already running `eufy-security-ws` container.
 <br>Optionally you can copy and use the `resources/eufyctl.sh` script to install and test the `eufy-security-ws` image maneually on a remote server:
 
@@ -62,11 +67,22 @@ Note: for now only some devices have been tested. If your device is not supporte
 Lists the recognized devices and their status. 
 
 ### Equipments
-![Equipments](../images/eufy4.png)
+![Base](../images/eufy4.png)
+![Camera](../images/eufy5.png)
 
+### Enabling snapshots
+The `URL snapshot` command contains the server's picture URL
+<br> You can use my [ImageViewer](https://github.com/lxrootard/widgets_v4) widget
+<br> Enable picture notifications in your devices parameters from the Eufy app or the snapshots won't refresh
+ 
 ### RTSP video stream
 The RTSP stream can be accessed with the [Camera](https://doc.jeedom.com/en_US/plugins/security/camera) plugin
-<br>Check the URL [here](https://camlytics.com/camera/eufy) depending your model
+<br>On battery-powered cams it needs to be activated/deactivated using the equipment commands.
+<br>The IP is the one from the base and `live0...liven` indicate the camera number, see the screenshot below:
+
+![RTSP video stream](../images/camera_plugin.jpg)
+
+<br>Check the URL  depending your model [here](https://camlytics.com/camera/eufy)
 
 ### Bugs and troubleshooting
 See [here](../../README.md#Troubleshooting)

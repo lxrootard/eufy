@@ -23,7 +23,12 @@
 
 <h4>1. Mode local</h4>
 
-<p>L'installation du mode local a pour prérequis docker déjà installé et configuré</p>
+<p>L'installation du mode local a pour prérequis docker déjà installé et configuré.
+<br>Si ce n'est pas le cas installer le plugin officiel docker management ou en ligne de commande:</p>
+
+<p><code>$ apt-get install docker.io</code></p>
+
+<p>Configuration post-installation:</p>
 
 <ul>
 <li>Installer/désinstaller Eufy: installer/désinstaller l'image <code>eufy-security-ws</code></li>
@@ -32,9 +37,9 @@
 <li>User/password: identifiants du service Cloud <code>Eufy-WS</code></li>
 </ul>
 
-<h4>2. Mode distant</h4>
+<h4>2. Mode distant (expert)</h4>
 
-<p>Le container <code>eufy-security-ws</code> doit déjà être installé.
+<p>Le container <code>eufy-security-ws</code> doit déjà être installé sur un docker distant.
 <br>Vous pouvez copier et utiliser le script <code>resources/eufyctl.sh</code> pour installer et tester manuellement l'image <code>eufy-security-ws</code> sur un serveur distant:</p>
 
 <p><code>eufyctl.sh install|uninstall|status|test|stop|start &lt;device&gt; &lt;login&gt; &lt;passwd&gt; [ port ]</code></p>
@@ -78,12 +83,24 @@
 
 <h3>Equipements</h3>
 
-<p><img src="../images/eufy4.png" alt="Equipments" title="" /></p>
+<p><img src="../images/eufy4.png" alt="Equipments" title="" />
+<img src="../images/eufy5.png" alt="Equipments" title="" /></p>
+
+<h3>Snapshots</h3>
+
+<p>La commande <code>URL snaphot</code> contient l'URL de l'image sur le serveur
+<br> Vous pouvez utiliser mon widget <a href="https://github.com/lxrootard/widgets_v4">ImageViewer</a>
+<br> Pensez à activer les notifications d'image dans les paramètres de vos devices depuis l'application Eufy sans quoi les snapshots ne seront pas mis à jour</p>
 
 <h3>Video stream RTSP</h3>
 
 <p>Le flux RTSP fonctionne dans le plugin <a href="https://doc.jeedom.com/fr_FR/plugins/security/camera">Camera</a>
-<br>Voir <a href="https://camlytics.com/camera/eufy">ici</a> selon votre modèle</p>
+<br>Sur les caméras à batterie il doit être activé/désactivé via les commandes de l'équipement.
+<br>L'IP est celle de la base et <code>live0..liven</code> indiquent le numéro de la caméra, cf ce screenshot:</p>
+
+<p><img src="../images/camera_plugin.jpg" alt="Video stream RTSP" title="" /></p>
+
+<p><br>Voir <a href="https://camlytics.com/camera/eufy">ici</a> selon votre modèle</p>
 
 <h3>Bugs et dépannage</h3>
 

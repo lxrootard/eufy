@@ -189,7 +189,7 @@
 				"logicalId": "speakerVolume",
 				"name": "Volume",
 				"type": "info",
-				"subtype": "string",
+				"subtype": "numeric",
 				"isVisible": 1,
 				"isHistorized": 0,
 				"generic_type": "GENERIC_INFO",
@@ -566,7 +566,7 @@
 				"generic_type": "CAMERA_PRESET",
 				"configuration": {
 					"switch": "status",
-					"listValue": "90|Low;92|Medium;93|High"
+					"listValue": "90|Low;95|Medium;100|High"
 				}
 			}
 		}

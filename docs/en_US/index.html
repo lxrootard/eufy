@@ -23,7 +23,12 @@
 
 <h4>1. Local mode</h4>
 
-<p>Local mode requires docker already installed. </p>
+<p>Local mode requires docker already installed and configured.
+<br>If it's not the case install the <code>docker management</code> official plugin or from the command line:</p>
+
+<p><code>$ apt-get install docker.io</code></p>
+
+<p>Post-installation setup:</p>
 
 <ul>
 <li>Install/uninstall Eufy: install/uninstall <code>eufy-security-ws</code> image</li>
@@ -32,7 +37,7 @@
 <li>User/password: <code>Eufy-WS</code> Cloud service credentials</li>
 </ul>
 
-<h4>2. Remote mode</h4>
+<h4>2. Remote mode (expert)</h4>
 
 <p>Assumes an already running <code>eufy-security-ws</code> container.
 <br>Optionally you can copy and use the <code>resources/eufyctl.sh</code> script to install and test the <code>eufy-security-ws</code> image maneually on a remote server:</p>
@@ -78,12 +83,24 @@
 
 <h3>Equipments</h3>
 
-<p><img src="../images/eufy4.png" alt="Equipments" title="" /></p>
+<p><img src="../images/eufy4.png" alt="Base" title="" />
+<img src="../images/eufy5.png" alt="Camera" title="" /></p>
+
+<h3>Enabling snapshots</h3>
+
+<p>The <code>URL snapshot</code> command contains the server's picture URL
+<br> You can use my <a href="https://github.com/lxrootard/widgets_v4">ImageViewer</a> widget
+<br> Enable picture notifications in your devices parameters from the Eufy app or the snapshots won't refresh</p>
 
 <h3>RTSP video stream</h3>
 
 <p>The RTSP stream can be accessed with the <a href="https://doc.jeedom.com/en_US/plugins/security/camera">Camera</a> plugin
-<br>Check the URL <a href="https://camlytics.com/camera/eufy">here</a> depending your model</p>
+<br>On battery-powered cams it needs to be activated/deactivated using the equipment commands.
+<br>The IP is the one from the base and <code>live0...liven</code> indicate the camera number, see the screenshot below:</p>
+
+<p><img src="../images/camera_plugin.jpg" alt="RTSP video stream" title="" /></p>
+
+<p><br>Check the URL  depending your model <a href="https://camlytics.com/camera/eufy">here</a></p>
 
 <h3>Bugs and troubleshooting</h3>
 

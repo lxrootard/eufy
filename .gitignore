@@ -10,5 +10,6 @@ Thumbs.db
 docs/_site/
 docs/Gemfile.lock
 docs/.sass-cache/
+data/tmp/
 .remote-sync.json
 .vscode

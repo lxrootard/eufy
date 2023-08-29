@@ -159,7 +159,7 @@ def on_open(ws):
 		time.sleep(1)
 		_websocket.send("{\"command\": \"start_listening\"}") # start listening events
 		time.sleep(1)
-		_websocket.send("{\"command\": \"set_api_schema\", \"schemaVersion\": 17}") # Set API schema
+		_websocket.send("{\"command\": \"set_api_schema\", \"schemaVersion\": 19}") # Set API schema
 		time.sleep(1)
 	Thread(target=run).start()
 
@@ -213,6 +213,7 @@ def parseEventMessage(msg):
 	if evtMsg['event'] == 'property changed':
 		logging.debug('Event property changed received')
 		_jeedomCom.send_change_immediate({'type': 'event', 'source': evtMsg['source'], 'serialNumber': evtMsg['serialNumber'], 'property': evtMsg['name'], 'value': evtMsg['value']})
+#	logging.warning('Unsupported Event message received')
 
 def parseVersionMessage(msg):
 	logging.debug('Version message received')

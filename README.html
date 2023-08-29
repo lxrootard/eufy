@@ -71,12 +71,14 @@ optional arguments:
 <br> Make sure both container and Cloud communication indicators are green in the Configuration section </li>
 <li>Synchronization failed, devices are not found
 <br> Quotes are not supported in equipment names</li>
+<li>Cam snapshots don't update
+<br> Enable snapshots in the Eufy app: Device > Parameters > Notification</li>
 </ul>
 
 <h2>Known issues</h2>
 
 <ul>
-<li>Image snapshot is not implemented but refresh doesn't happen due to a <a href="https://github.com/bropat/eufy-security-ws/issues/217">bug</a></li>
+<li>Image snapshot is implemented but refresh doesn't happen due to a <a href="https://github.com/bropat/eufy-security-ws/issues/217">bug</a></li>
 <li>2FA is not supported yet, please use a secondary account with 2FA disabled</li>
 <li>P2P streaming is not supported, use RTSP when available instead
 <p>
@@ -87,6 +89,9 @@ thread in the Jeedom community blog</li>
 <h2>ChangeLog</h2>
 
 <ul>
+<li>v1.8 <a href="https://github.com/lxrootard">lxrootard</a>
+<br> support of cam snapshots
+<br> documentation update</li>
 <li>v1.7 <a href="https://github.com/lxrootard">lxrootard</a>
 <br> added support for T8001, T8111</li>
 <li>v1.6 <a href="https://github.com/lxrootard">lxrootard</a>

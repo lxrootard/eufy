@@ -232,18 +232,22 @@ class eufy extends eqLogic {
 		 $eqLogic->save();
 	}
     }
+    $cmd = $eqLogic->getCmd('info', $property);
     if ($property == 'battery')
        $eqLogic->batteryStatus($value);
-    if ($property == 'picture')
-       $value = $eqLogic->extractPicture((array)$value);
-
-    $cmd = $eqLogic->getCmd('info', $property);
+    if ($property == 'picture') {
+       $s1=cache::byKey('eufy::'.$serialNumber)->getValue();
+       $value = $eqLogic->extractPicture((array)$value,$serialNumber);
+       $s2=cache::byKey('eufy::'.$serialNumber)->getValue();
+//       log::add(__CLASS__, 'debug', 'old pic size:' .$s1. ', new pic size: '. $s2);
+       if ($s1 == $s2) return;
+    }
     if (eufy::sendEvent($cmd, $value)) {
         log::add(__CLASS__, 'debug', 'device info updated, property: '. $property);
     }
   }
 
-  public function extractPicture($a)
+  public function extractPicture($a,$serialNumber)
   {
   //  log::add(__CLASS__, 'debug', 'array: '. json_encode($a));
     $imgRoot= '/data/tmp/';
@@ -260,6 +264,7 @@ class eufy extends eqLogic {
 
     if (is_array($bytes)) {
 //	log::add(__CLASS__, 'debug', 'pic size: '. count($bytes));
+	cache::set('eufy::' . $serialNumber, count($bytes));
 	$f = fopen($fname,"wb+");
 	$data='';
 	foreach ($bytes as $b) {
@@ -267,7 +272,7 @@ class eufy extends eqLogic {
         	fwrite ($f, $data);
 	}
     	fclose ($f);
-	return $urlRoot . $imgRoot. $img;
+	return $urlRoot . $imgRoot . $img . '?ts=' . @filemtime($fname);
     }
     else
 	return $urlRoot . '/data/no_snapshot.png';
@@ -275,7 +280,8 @@ class eufy extends eqLogic {
 
   public static function sendEvent($cmd, $value) {
     if (is_object($cmd))
-    	if ($cmd->execCmd() != $cmd->formatValue($value)) {
+	if (($cmd->getLogicalId() == 'picture') ||
+		($cmd->execCmd() != $cmd->formatValue($value))) {
       		$cmd->event($value, null);
       		return true;
         }

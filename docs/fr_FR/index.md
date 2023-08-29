@@ -17,15 +17,20 @@ Installer le plugin et ses dépendances.
 <br>Note: L'installation des dépendances n'installe PAS l'image `eufy-security-ws`.
 <br>Vous avez le choix entre les modes local et distant pour docker:
 #### 1. Mode local
-L'installation du mode local a pour prérequis docker déjà installé et configuré
+L'installation du mode local a pour prérequis docker déjà installé et configuré.
+<br>Si ce n'est pas le cas installer le plugin officiel docker management ou en ligne de commande:
+
+`$ apt-get install docker.io`
+
+Configuration post-installation:
 
 - Installer/désinstaller Eufy: installer/désinstaller l'image `eufy-security-ws`
 - Démarrer/arrêter Eufy: démarrer/arrêter le container `eufy-security-ws`
 - Device: paramètre Eufy-WS `TRUSTED_DEVICE_NAME` utilisé pour se connecter au serveur Cloud Eufy
 - User/password: identifiants du service Cloud `Eufy-WS`
 
-#### 2. Mode distant
-Le container `eufy-security-ws` doit déjà être installé.
+#### 2. Mode distant (expert)
+Le container `eufy-security-ws` doit déjà être installé sur un docker distant.
 <br>Vous pouvez copier et utiliser le script `resources/eufyctl.sh` pour installer et tester manuellement l'image `eufy-security-ws` sur un serveur distant:
 
 `eufyctl.sh install|uninstall|status|test|stop|start <device> <login> <passwd> [ port ]`
@@ -63,9 +68,21 @@ Liste et statut des devices reconnus
 
 ### Equipements
 ![Equipments](../images/eufy4.png)
+![Equipments](../images/eufy5.png)
+
+### Snapshots
+La commande `URL snaphot` contient l'URL de l'image sur le serveur
+<br> Vous pouvez utiliser mon widget [ImageViewer](https://github.com/lxrootard/widgets_v4)
+<br> Pensez à activer les notifications d'image dans les paramètres de vos devices depuis l'application Eufy sans quoi les snapshots ne seront pas mis à jour
+
 
 ### Video stream RTSP
 Le flux RTSP fonctionne dans le plugin [Camera](https://doc.jeedom.com/fr_FR/plugins/security/camera)
+<br>Sur les caméras à batterie il doit être activé/désactivé via les commandes de l'équipement.
+<br>L'IP est celle de la base et `live0..liven` indiquent le numéro de la caméra, cf ce screenshot:
+
+![Video stream RTSP](../images/camera_plugin.jpg)
+
 <br>Voir [ici](https://camlytics.com/camera/eufy) selon votre modèle
 
 ### Bugs et dépannage
