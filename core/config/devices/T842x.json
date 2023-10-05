@@ -189,7 +189,7 @@
 				"name": "URL snapshot",
 				"type": "info",
 				"subtype": "string",
-				"isVisible": 0,
+				"isVisible": 1,
 				"isHistorized": 0,
 				"generic_type": "CAMERA_URL",
 				"template": {

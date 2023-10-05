@@ -55,17 +55,10 @@ def read_socket():
 			logging.debug("eufyd stations: " + str(_stations))
 			logging.debug("eufyd devices: " + str(_devices))
 			_jeedomCom.send_change_immediate({'type': 'sync', 'stations': str(_stations),'devices': str(_devices)})
-# 		setProperty
-		if "name" in message and "value" in message:
-			jsonMsg = "{\"command\": \"" + message['command'] + "\", \"serialNumber\": \"" + message['serialNumber'] + "\", \"name\": \"" + message['name'] + "\", \"value\": \"" + message['value'] + "\"}"
-			logging.debug("eufyd set property name/value: " + jsonMsg)
-			_serialNumber = message['serialNumber']
-			_websocket.send(jsonMsg)
-			time.sleep(1)
 			return
 #		other commands
 		try:
-			jsonMsg = "{\"command\": \"" + message['command'] + "\", \"serialNumber\": \"" + message['serialNumber'] + "\"}"
+			jsonMsg = json.dumps(message)
 			logging.debug("eufyd command: " + jsonMsg)
 			_serialNumber = message['serialNumber']
 			_websocket.send(jsonMsg)
@@ -140,7 +133,7 @@ def on_message(ws, msg):
 
 	if jsonMsg['type'] == 'result':
 		parseResultMessage(jsonMsg)
-	
+
 	if jsonMsg['type'] == 'event':
 		parseEventMessage(jsonMsg)
 
@@ -168,7 +161,6 @@ def updatePresence(msg):
 	if msg['success']:
 		_jeedomCom.send_change_immediate({'type': 'event', 'subtype': 'properties', 'serialNumber': _serialNumber, 'property': 'present', 'value': True})
 	else:
-#		logging.debug('***  msg[success] is FALSE ')
 		if "errorCode" in msg:
 			if msg['errorCode'] == 'device_not_found':
 				_jeedomCom.send_change_immediate({'type': 'event', 'subtype': 'properties', 'serialNumber': _serialNumber, 'property': 'present', 'value': False})

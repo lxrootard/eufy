@@ -251,7 +251,7 @@
 				"name": "URL snapshot",
 				"type": "info",
 				"subtype": "string",
-				"isVisible": 0,
+				"isVisible": 1,
 				"isHistorized": 0,
 				"generic_type": "CAMERA_URL",
 				"template": {
@@ -603,6 +603,61 @@
 				"configuration": {
 					"switch": "status",
 					"listValue": "1|Efficient;2|Include thumbnail;3|Full effect"
+				}
+			},
+			"41": {
+				"logicalId": "direction:pan_and_tilt:0",
+				"name": "Rotate360",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"generic_type": "CAMERA_PRESET",
+				"display": {
+					"icon": "<i class=\"fas fa-redo\"></i>"
+				}
+			},
+			"42": {
+				"logicalId": "direction:pan_and_tilt:1",
+				"name": "Left",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"generic_type": "CAMERA_LEFT",
+				"display": {
+					"icon": "<i class=\"fas fa-chevron-left\"></i>"
+				}
+			},
+			"43": {
+				"logicalId": "direction:pan_and_tilt:2",
+				"name": "Right",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"generic_type": "CAMERA_RIGHT",
+				"display": {
+					"icon": "<i class=\"fas fa-chevron-right\"></i>"
+                                 }
+			},
+			"44": {
+				"logicalId": "direction:pan_and_tilt:3",
+				"name": "Up",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"generic_type": "CAMERA_UP",
+				"display": {
+					"icon": "<i class=\"fas fa-chevron-up\"></i>"
+				}
+			},
+			"45": {
+				"logicalId": "direction:pan_and_tilt:4",
+				"name": "Down",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"generic_type": "CAMERA_DOWN",
+				"display": {
+					"icon": "<i class=\"fas fa-chevron-down\"></i>"
 				}
 			}
 		}

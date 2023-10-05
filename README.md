@@ -57,21 +57,28 @@ help:
 * Container install failed or container communication indicator is red
 <br> Verify docker is working properly before installing the plugin
 * The daemon doesn't start
-<br> Make sure both container and Cloud communication indicators are green in the Configuration section 
+<br> Make sure both container and Cloud communication indicators are green in the Configuration section
+<br> Check your container with the `test_eufy` script as described above
 * Synchronization failed, devices are not found
 <br> Quotes are not supported in equipment names
+* Incompatible schema error, commands not working
+<br> Make sure to update the Eufy container to the latest release
+* Some actions change the corresponding property but there's no change on the device (eg flash on/off)
+<br> These are not actions but device settings that will only impact its behavior for the next detection 
+(eg the flash will light at the next event)
 * Cam snapshots don't update
 <br> Enable snapshots in the Eufy app: Device > Parameters > Notification
 
 ## Known issues
-* Image snapshot is implemented but refresh doesn't happen due to a [bug](https://github.com/bropat/eufy-security-ws/issues/217)
+* Some commands don't [work as expected](https://github.com/bropat/eufy-security-ws/issues/212) on some devices
 * 2FA is not supported yet, please use a secondary account with 2FA disabled
 * P2P streaming is not supported, use RTSP when available instead
 <p>
-Also search for `#plugin-eufy` or see the [Eufy plugin](https://community.jeedom.com/t/plugin-eufy/102453) 
-thread in the Jeedom community blog
+Also search for `#plugin-eufy` in the [Jeedom community blog](https://community.jeedom.com)
 
 ## ChangeLog
+* v1.9 [lxrootard](https://github.com/lxrootard)
+<br> support of pan & tilt commands (T8140)
 * v1.8 [lxrootard](https://github.com/lxrootard)
 <br> support of cam snapshots
 <br> documentation update

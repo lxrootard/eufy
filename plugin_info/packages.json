@@ -5,6 +5,8 @@
     "python3-pip" : {}
   },
   "pip3": {
+    "pyudev" : {},
+    "pyserial" : {},
     "websocket-client" : {}
   },
   "npm": {

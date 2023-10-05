@@ -290,7 +290,7 @@ class eufy extends eqLogic {
 
   public function createCommandsFromConfig(array $commands, $values, $itf) {
         $link_cmds = array();
-//      log::add(__CLASS__, 'debug', '>>> createCommandsFromConfig, interface: ' . $itf);
+      log::add(__CLASS__, 'debug', '>>> createCommandsFromConfig, interface: ' . $itf);
 	$itfnames = $this->getConfiguration('interfaces');
 
 	if (! is_object($itfnames))
@@ -634,6 +634,9 @@ class eufyCmd extends cmd {
         $enable = preg_replace("/:on$/", "", $cmd);
         $disable = preg_replace("/:off$/", "", $cmd);
         $set = preg_replace("/:set.*$/", "", $cmd);
+	$str = preg_replace("/:[0-9]/","",$cmd);
+	$prop = preg_replace("/:.*/","", $str);
+	$action = preg_replace("/.*:/","", $str);
 	$value = preg_replace("/[^0-9.]/","", $cmd);
 
   	if ($enable != $cmd)
@@ -641,17 +644,20 @@ class eufyCmd extends cmd {
    	else if ($disable != $cmd)
                 $params = array('command' => $itf . '.set_property', 'serialNumber' => $serialNumber, 'name' => $disable, 'value' => 'False');
 	else if ($set != $cmd) {
-//        	log::add('eufy', 'debug', '>>>> $value: ' . $value);
 		if ($value == "")
 			$value = $_options['slider']; // slider
 		if (! isset($value))
 			$value = $_options['select']; // combo list
                 $params = array('command' => $itf . '.set_property', 'serialNumber' => $serialNumber, 'name' => $set, 'value' => $value);
 	}
-        else  // other commands
-		$params = array('command' => $itf . '.' . $set, 'serialNumber' => $serialNumber);
+	else if ($value != "") {
+		if (is_numeric($value)) $value = intval($value);
+		$params = array('command' => $itf . '.' . $action , 'serialNumber' => $serialNumber, $prop => $value);
+	}
+	else // action command without parms
+		$params = array('command' => $itf . '.' . $action, 'serialNumber' => $serialNumber);
 
-  // 	log::add('eufy', 'debug', 'cmd::execute send to daemon: ' . json_encode($params));
+   	log::add('eufy', 'debug', 'cmd::execute send to daemon: ' . json_encode($params));
         eufy::sendToDaemon($params);
  //     $eqLogic->checkAndUpdateCmd($info, true);
     }
