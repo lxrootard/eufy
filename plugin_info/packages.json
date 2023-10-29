@@ -2,12 +2,20 @@
   "pre-install": {
   },
   "apt": {
-    "python3-pip" : {}
+    "python3" : {},
+    "python3-pip" : {},
+    "python3-pyudev" : {},
+    "python3-requests" : {},
+    "python3-setuptools" : {},
+    "python3-dev" : {}
   },
   "pip3": {
-    "pyudev" : {},
-    "pyserial" : {},
-    "websocket-client" : {}
+    "wheel" : {"reinstall" : true},
+    "requests" : {"reinstall" : true},
+    "pyudev" : {"reinstall" : true},
+    "six" : {"reinstall" : true},
+    "pyserial" : {"reinstall" : true},
+    "websocket-client" : {"reinstall" : true}
   },
   "npm": {
   },

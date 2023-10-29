@@ -22,7 +22,7 @@ else:
 ws = create_connection("ws://" + url)
 
 if not args.nolog:
-	print ('\n*** Create connexion to ' + url + '***')
+	print ('\n*** Create connexion to ' + url + ' ***')
 	print(ws.recv())
 	print ('\n*** Start listening ***')
 else:

@@ -5,7 +5,7 @@ usage()
  echo "usage: "`basename $0`" install|uninstall|status|test|stop|start <device> <login> <passwd> [ port ]" 
 }
 port=3000
-options=''
+options=' --log-driver local --log-opt max-size=10m'
 options2=' --restart=unless-stopped'
 pstype=`uname -m|grep arm`
 dir=`dirname $0`

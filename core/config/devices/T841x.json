@@ -659,7 +659,19 @@
 				"display": {
 					"icon": "<i class=\"fas fa-chevron-down\"></i>"
 				}
+			},
+			"46": {
+				"logicalId": "direction:pan_and_tilt:4",
+				"name": "Calibrate",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"generic_type": "CAMERA_PRESET",
+				"display": {
+					"icon": "<i class=\"fas fa-expand-arrows-alt\"></i>"
+				}
 			}
+
 		}
 	}
 ]

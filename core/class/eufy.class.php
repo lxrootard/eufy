@@ -521,7 +521,7 @@ class eufy extends eqLogic {
         $python='python3';
         $script =  __DIR__ . '/../../resources/test_eufy.py';
         $rc = shell_exec(system::getCmdSudo() . $python . ' ' . $script . ' -n -u ' . $h . ':' . $p .' 2>&1');
-        //log::add(__CLASS__, 'debug', '*** Test result '. $rc);
+        // log::add(__CLASS__, 'debug', '*** Test result '. $rc);
         $online = False;
         $jsonObj = json_decode($rc);
         if (is_object($jsonObj))

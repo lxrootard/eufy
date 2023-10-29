@@ -34,6 +34,7 @@ Other Eufy models should also work but might not be recognized incompletely or r
 <br>See the full list [here](https://bropat.github.io/eufy-security-client/#/supported_devices)
 <br>If your model is not listed above please send me the results of these commands:
 
+    $ cd /var/www/html/plugins/eufy
     $ python3 resources/test_eufy.py -s station_serial
 
 and/or (depending on your model):
@@ -62,7 +63,8 @@ help:
 * Synchronization failed, devices are not found
 <br> Quotes are not supported in equipment names
 * Incompatible schema error, commands not working
-<br> Make sure to update the Eufy container to the latest release
+<br> Make sure you're using the latest `eufy-security-ws` release. 
+If you've upgraded the plugin uninstall/reinstall the image and restart the container.
 * Some actions change the corresponding property but there's no change on the device (eg flash on/off)
 <br> These are not actions but device settings that will only impact its behavior for the next detection 
 (eg the flash will light at the next event)
@@ -73,39 +75,43 @@ help:
 * Some commands don't [work as expected](https://github.com/bropat/eufy-security-ws/issues/212) on some devices
 * 2FA is not supported yet, please use a secondary account with 2FA disabled
 * P2P streaming is not supported, use RTSP when available instead
-<p>
-Also search for `#plugin-eufy` in the [Jeedom community blog](https://community.jeedom.com)
+
+Also check the [Jeedom community blog](https://community.jeedom.com/tag/plugin-eufy)
+tag: `#plugin-eufy`
 
 ## ChangeLog
+* v2.0 [lxrootard](https://github.com/lxrootard)
+<br> - Added calibrate command for pan & tilt cams (T841x)
+<br> - Fixed a dependency issue
 * v1.9 [lxrootard](https://github.com/lxrootard)
-<br> support of pan & tilt commands (T8140)
+<br> - Support of pan & tilt commands (T841x)
 * v1.8 [lxrootard](https://github.com/lxrootard)
-<br> support of cam snapshots
-<br> documentation update
+<br> - Support of cam snapshots
+<br> - Documentation update
 * v1.7 [lxrootard](https://github.com/lxrootard)
- <br> added support for T8001, T8111
+<br> - Added support for T8001, T8111
 * v1.6 [lxrootard](https://github.com/lxrootard)
-<br> simplified config files, type on 3 chars
-<br> added support for snapshots 
-<br> added support for T8140, T8160
+<br> - Simplified config files, type on 3 chars
+<br> - Added support for snapshots 
+<br> - Added support for T8140, T8160
 * v1.5 [lxrootard](https://github.com/lxrootard)
-<br> improved container readiness checking. Added support for fixed T8142 and T8423
+<br> - Improved container readiness checking. Added support for fixed T8142 and T8423
 * v1.4 [lxrootard](https://github.com/lxrootard)
-<br> fixed serialNumber error at startup
+<br> - Fixed serialNumber error at startup
 * v1.3 [lxrootard](https://github.com/lxrootard)
-<br> added support for model name + sendEvent bug fix
+<br> - Added support for model name + sendEvent bug fix
 * v1.2 [lxrootard](https://github.com/lxrootard)
-<br> added support for T8424, T8441, T8910. fixed T8210
+<br> - Added support for T8424, T8441, T8910. fixed T8210
 * v1.1 [lxrootard](https://github.com/lxrootard)
-<br> fix install script permissions
+<br> - Fix install script permissions
 * v1.0 [lxrootard](https://github.com/lxrootard)
-<br> fix dependencies install
+<br> - Fix dependencies install
 * v0.9 [lxrootard](https://github.com/lxrootard)
-<br> metadata for market publication
+<br> - Metadata for market publication
 * v0.8 [lxrootard](https://github.com/lxrootard)
-<br> minor json fixes and icon enhancements
+<br> - Minor json fixes and icon enhancements
 * v0.7 [lxrootard](https://github.com/lxrootard)
-<br> added support for T8400 and T8161
+<br> - Added support for T8400 and T8161
 * v0.6 [lxrootard](https://github.com/lxrootard)
 <br> - Changed json format
 <br> - Added T8030 suport
@@ -135,6 +141,7 @@ Also search for `#plugin-eufy` in the [Jeedom community blog](https://community.
 * v0 [a.berton](https://github.com/alexandreberton)
 
 ## Todo
+* Implement p2p streaming
 * Improve error checking
 
 ## Credits
