@@ -410,7 +410,10 @@
 				"type": "action",
 				"subtype": "other",
 				"isVisible": 1,
-				"generic_type": "CAMERA_PRESET"
+				"generic_type": "CAMERA_PRESET",
+				"display": {
+					"icon": "<i class=\"fas fa-moon\"></i>"
+				}
 			},
 			"37": {
 				"logicalId": "autoNightvision:off",
@@ -418,7 +421,10 @@
 				"type": "action",
 				"subtype": "other",
 				"isVisible": 1,
-				"generic_type": "CAMERA_PRESET"
+				"generic_type": "CAMERA_PRESET",
+				"display": {
+					"icon": "<i class=\"far fa-moon\"></i>"
+				}
 			},
 			"38": {
 				"logicalId": "chimeHomebase:on",

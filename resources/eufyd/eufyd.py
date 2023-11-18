@@ -60,7 +60,8 @@ def read_socket():
 		try:
 			jsonMsg = json.dumps(message)
 			logging.debug("eufyd command: " + jsonMsg)
-			_serialNumber = message['serialNumber']
+			if "serialNumber" in message:
+				_serialNumber = message['serialNumber']
 			_websocket.send(jsonMsg)
 			time.sleep(1)
 			return

@@ -80,6 +80,10 @@ Also check the [Jeedom community blog](https://community.jeedom.com/tag/plugin-e
 tag: `#plugin-eufy`
 
 ## ChangeLog
+* v2.1 [lxrootard](https://github.com/lxrootard)
+<br> - Fixed update issue for dual interface devices
+<br> - Container logs debug level management
+<br> - json files updates
 * v2.0 [lxrootard](https://github.com/lxrootard)
 <br> - Added calibrate command for pan & tilt cams (T841x)
 <br> - Fixed a dependency issue

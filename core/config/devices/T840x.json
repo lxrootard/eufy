@@ -285,7 +285,7 @@
 			},
 			"13": {
 				"logicalId": "notificationType",
-				"name": "Type ntification",
+				"name": "Type notification",
 				"type": "info",
 				"subtype": "numeric",
 				"isVisible": 0,
@@ -489,17 +489,23 @@
 				"logicalId": "autoNightvision:on",
 				"name": "Activer vision nocturne",
 				"type": "action",
-				"subtype": "select",
+				"subtype": "other",
 				"isVisible": 1,
-				"generic_type": "CAMERA_PRESET"
+				"generic_type": "CAMERA_PRESET",
+				"display": {
+					"icon": "<i class=\"fas fa-moon\"></i>"
+				}
 			},
 			"31": {
 				"logicalId": "autoNightvision:off",
 				"name": "Désactiver vision nocturne",
 				"type": "action",
-				"subtype": "select",
+				"subtype": "other",
 				"isVisible": 1,
-				"generic_type": "CAMERA_PRESET"
+				"generic_type": "CAMERA_PRESET",
+				"display": {
+					"icon": "<i class=\"far fa-moon\"></i>"
+				}
 			},
 			"32": {
 				"logicalId": "speaker:on",

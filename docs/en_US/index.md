@@ -67,8 +67,9 @@ Note: for now only some devices have been tested. If your device is not supporte
 Lists the recognized devices and their status. 
 
 ### Equipments
-![Base](../images/eufy4.png)
-![Camera](../images/eufy5.png)
+![Equipments](../images/eufy4.png)
+![Equipments](../images/eufy5.png)
+![Equipments](../images/eufy6.png)
 
 ### Enabling snapshots
 The `URL snapshot` command contains the server's picture URL

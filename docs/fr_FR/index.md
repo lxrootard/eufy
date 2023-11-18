@@ -69,6 +69,7 @@ Liste et statut des devices reconnus
 ### Equipements
 ![Equipments](../images/eufy4.png)
 ![Equipments](../images/eufy5.png)
+![Equipments](../images/eufy6.png)
 
 ### Snapshots
 La commande `URL snaphot` contient l'URL de l'image sur le serveur

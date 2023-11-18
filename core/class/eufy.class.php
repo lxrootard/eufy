@@ -95,6 +95,10 @@ class eufy extends eqLogic {
         return false;
     }
     sleep(3);
+
+    $level = log::getLogLevel(__CLASS__) > 100 ? 'error' : 'debug' ;
+    $params = array('command' => 'driver.set_log_level', 'level' => $level);
+    eufy::sendToDaemon($params);
     eufy::initModelTypes();
     eufy::refreshAllDevices();
 
@@ -290,10 +294,8 @@ class eufy extends eqLogic {
 
   public function createCommandsFromConfig(array $commands, $values, $itf) {
         $link_cmds = array();
-      log::add(__CLASS__, 'debug', '>>> createCommandsFromConfig, interface: ' . $itf);
 	$itfnames = $this->getConfiguration('interfaces');
-
-	if (! is_object($itfnames))
+	if (empty($itfnames))
 		$itfnames = array();
 	if (! in_array($itf, $itfnames))
 		array_push($itfnames, $itf);
