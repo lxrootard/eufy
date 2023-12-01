@@ -509,26 +509,38 @@ class eufy extends eqLogic {
 	return $online ;
   }
 
-  public static function testService() {
+
+  public static function testContainer($option)
+  {
 	$host = config::byKey('containerip', __CLASS__);
 	$port = config::byKey('containerport', __CLASS__);
-        if ((! isset($host)) or (! isset($port))) {
-                $host="127.0.0.1";
-                $port="3000";
-        }
-        $h = "'" . $host . "'";
-        $p = "'" . $port . "'";
+	if ((! isset($host)) or (! isset($port))) {
+		$host="127.0.0.1";
+		$port="3000";
+	}
+	$h = "'" . $host . "'";
+	$p = "'" . $port . "'";
+	// log::add(__CLASS__, 'debug',  '>>> Testing EufyWS service on '. $host . ':' . $port);
+	$python='python3';
+	$script =  __DIR__ . '/../../resources/test_eufy.py ';
+	$rc = shell_exec(system::getCmdSudo() . $python . ' ' . $script . $option . ' -u ' . $h . ':' . $p .' 2>&1');
+	// log::add(__CLASS__, 'debug', '*** Test result '. $rc);
+	return json_decode($rc);
+  }
 
-        // log::add(__CLASS__, 'debug',  '>>> Testing EufyWS service on '. $host . ':' . $port);
-        $python='python3';
-        $script =  __DIR__ . '/../../resources/test_eufy.py';
-        $rc = shell_exec(system::getCmdSudo() . $python . ' ' . $script . ' -n -u ' . $h . ':' . $p .' 2>&1');
-        // log::add(__CLASS__, 'debug', '*** Test result '. $rc);
+  public static function testService() {
+ 	$jsonObj = eufy::testContainer("-v");
+	$version = '';
+        if (is_object($jsonObj))
+		$version = $jsonObj->serverVersion;
+	log::add(__CLASS__, 'debug', 'eufy-security-ws image version: ' .   $version);
+	cache::set('eufy::version',$version);
+
+	$jsonObj = eufy::testContainer("-t");
         $online = False;
-        $jsonObj = json_decode($rc);
         if (is_object($jsonObj))
                 $online = $jsonObj->result->state->driver->connected;
-        log::add(__CLASS__, 'debug', 'EufyWS service on '. $host . ':' . $port . ' online: ' . $online);
+	log::add(__CLASS__, 'debug', 'eufy-security-ws service online: ' . $online);
         cache::set('eufy::online', $online);
 	return $online;
   }

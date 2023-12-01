@@ -13,10 +13,11 @@
 	"14": "Camera 2 Pro",
 	"15": "Camera 2c Pro",
 	"16": "Battery Doorbell 2",
-	"19": "Camera 3",
-        "19": "Camera 3C",
+	"18": "HomeBase3 S380",
+	"19": "Camera3 S330",
+	"23": "Camera 3C S300",
 	"30": "Indoor Camera",
-	"31": "Indoor Camera PT",
+	"31": "Indoor Camera PT E220",
 	"32": "Solo Camera",
 	"33": "Solo Camera Pro",
 	"34": "Indoor Camera 1080",
@@ -39,7 +40,9 @@
 	"60": "Solo Camera Spotlight 1080p",
 	"61": "Solo Camera Spotlight 2k",
 	"62": "Solo Camera Spotlight Solar",
+	"63": "Solo Camera S220",
 	"90": "SmartDrop, Smart Delivery Box",
 	"91": "Video Doorbell Dual",
-	"93": "Video Doorbell Dual (Wired)"
+	"93": "Video Doorbell Dual (Wired)",
+	"151": "Wired Wall Light Cam S100"
 }

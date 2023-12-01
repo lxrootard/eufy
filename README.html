@@ -20,16 +20,18 @@
 <li>T8111 Camera</li>
 <li>T8113 Camera 2C </li>
 <li>T8114 Camera 2</li>
-<li>T8140 Camera 2 Pro</li>
+<li>T8134 S220 (requires image v1.7.0+)</li>
+<li>T8140 S221 Camera 2 Pro</li>
 <li>T8142 Camera 2C Pro</li>
 <li>T8160 Camera 3</li>
 <li>T8161 Camera 3C</li>
-<li>T8210 Battery Doorbell. RTSP not supported</li>
+<li>T8210 Battery Doorbell (RTSP not supported)</li>
 <li>T8400 Indoor Cam</li>
 <li>T8410 Indoor Cam Pan&amp;Tilt</li>
 <li>T8423 Floodlight 8423 </li>
 <li>T8424 Floodlight Cam 2</li>
 <li>T8441 Outdoor Cam Pro</li>
+<li>T84A1 Wired Wall Light Cam S100</li>
 <li>T8910 Motion Sensor. <code>motionDetection</code> events not working, 
 see <a href="https://github.com/fuatakgun/eufy_security/issues/22">this thread</a></li>
 </ul>
@@ -38,28 +40,21 @@ see <a href="https://github.com/fuatakgun/eufy_security/issues/22">this thread</
 
 <p>Other Eufy models should also work but might not be recognized incompletely or require a config file.
 <br>See the full list <a href="https://bropat.github.io/eufy-security-client/#/supported_devices">here</a>
-<br>If your model is not listed above please send me the results of these commands:</p>
+<br>If your model is not listed above or some controls are missing please send me the results of these commands:</p>
 
 <pre><code>$ cd /var/www/html/plugins/eufy
-$ python3 resources/test_eufy.py -s station_serial
+$ python3 resources/test_eufy.py -d device_serial
 </code></pre>
 
-<p>and/or (depending on your model):</p>
+<p>where <code>device_serial</code> is your device serial number, starting by <code>Txxx</code>
+<br>
+Help: 
+    $ python3 resources/test<em>eufy.py -h
+    usage: test</em>eufy.py [-h] [-d DEVICE] [-u URL]</p>
 
-<pre><code>$ python3 resources/test_eufy.py -d device_serial
-</code></pre>
-
-<p>help: </p>
-
-<pre><code>$ python3 resources/test_eufy.py -h
-usage: test_eufy.py [-h] [-s STATION] [-d DEVICE] [-u URL]
-
-optional arguments:
+<pre><code>optional arguments:
 -h, --help            show this help message and exit
--s STATION, --station STATION
-                    station serial number
--d DEVICE, --device DEVICE
-                    device serial number
+-d DEVICE, --device DEVICE  device serial number
 -u URL, --url URL     eufy service URL, default 127.0.0.1:3000
 </code></pre>
 
@@ -74,13 +69,14 @@ optional arguments:
 <li>Synchronization failed, devices are not found
 <br> Quotes are not supported in equipment names</li>
 <li>Incompatible schema error, commands not working
-<br> Make sure you're using the latest <code>eufy-security-ws</code> release. 
-If you've upgraded the plugin uninstall/reinstall the image and restart the container.</li>
+<br> Make sure you're using the latest <code>eufy-security-ws</code> <a href="https://github.com/bropat/eufy-security-ws/releases">release</a>.
+<br> Your container version is displayed in the plugin config page when hitting the <code>Tester</code> button.
+<br> If you've upgraded the plugin uninstall/reinstall the image and restart the container.</li>
 <li>Some actions change the corresponding property but there's no change on the device (eg flash on/off)
 <br> These are not actions but device settings that will only impact its behavior for the next detection 
 (eg the flash will light at the next event)</li>
 <li>Cam snapshots don't update
-<br> Enable snapshots in the Eufy app: Device > Parameters > Notification</li>
+<br> Enable snapshots in the Eufy app: <code>Device &gt; Parameters &gt; Notification</code></li>
 </ul>
 
 <h2>Known issues</h2>
@@ -97,6 +93,10 @@ tag: <code>#plugin-eufy</code></p>
 <h2>ChangeLog</h2>
 
 <ul>
+<li>v2.2 <a href="https://github.com/lxrootard">lxrootard</a>
+<br> - Added support for T84A1 and T8134 + T842x fix
+<br> - Added container version display in config page
+<br> - Reworked eufy_test.py script</li>
 <li>v2.1 <a href="https://github.com/lxrootard">lxrootard</a>
 <br> - Fixed update issue for dual interface devices
 <br> - Container logs debug level management
@@ -139,7 +139,7 @@ tag: <code>#plugin-eufy</code></p>
 <li>v0.5 <a href="https://github.com/lxrootard">lxrootard</a>
 <br> - Fix to sync for devices supporting both Station and Device interface </li>
 <li>v0.4 <a href="https://github.com/lxrootard">lxrootard</a>
-<br> - Added new infos and commands for T8010 T8113 T8114 T8210 T8210 and T8210 devices</li>
+<br> - Added new infos and commands for T8010 T8113 T8114 and T8210 devices</li>
 <li>v0.3 <a href="https://github.com/lxrootard">lxrootard</a>
 <br> - Added generic support for integer command values, lists and sliders
 <br> - Added support for T8410 and T8210 devices

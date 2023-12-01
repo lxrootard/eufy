@@ -40,7 +40,9 @@ Assumes an already running `eufy-security-ws` container.
 - Docker Port: `eufy-security-ws` container port, 3000 by default
 - Test communication: Check connexion to `eufy-security-ws` container
 
-Note: The Eufy daemon won't start if the `eufy-security-ws` container can't connect to the Eufy Cloud service
+Notes: 
+- The Eufy daemon won't start if the `eufy-security-ws` container can't connect to the Eufy Cloud service
+- The `Version` field displays the container version 
 
 ####  4. Connectivity issues
 If something goes wrong first run:

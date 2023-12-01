@@ -55,7 +55,7 @@
 				"name": "Alarme On",
 				"type": "action",
 				"subtype": "other",
-				"isVisible": 0,
+				"isVisible": 1,
 				"generic_type": "SIREN_ON",
 				"display": {
 					"icon": "<i class=\"fas fa-bell\"></i>"
@@ -66,7 +66,7 @@
 				"name": "Alarme Off",
 				"type": "action",
 				"subtype": "other",
-				"isVisible": 0,
+				"isVisible": 1,
 				"generic_type": "SIREN_OFF",
 				"display": {
 					"icon": "<i class=\"fas fa-bell-slash\"></i>"
@@ -135,6 +135,18 @@
 				"subtype": "other",
 				"isVisible": 0,
 				"generic_type": "ALARM_MODE"
+			},
+			"14": {
+				"logicalId": "guardMode:set",
+				"name": "Sélection mode",
+				"type": "action",
+				"subtype": "select",
+				"isVisible": 1,
+				"generic_type": "CAMERA_PRESET",
+				"configuration": {
+					"switch": "status",
+					"listValue": "63|Disarmed;1|Home;4|Nuit;0|Absent;3|Alarm;5|Voyage"
+				}
 			}
 		}
 	},
@@ -172,159 +184,6 @@
 				"generic_type": "PRESENCE"
 			},
 			"3": {
-				"logicalId": "personName",
-				"name": "Identification",
-				"type": "info",
-				"subtype": "string",
-				"isVisible": 0,
-				"isHistorized": 0,
-				"generic_type": "GENERIC_INFO",
-				"template": {
-					"dashboard": "line",
-					"mobile": "line"
-				}
-			},
-			"4": {
-				"logicalId": "picture",
-				"name": "URL snapshot",
-				"type": "info",
-				"subtype": "string",
-				"isVisible": 1,
-				"isHistorized": 0,
-				"generic_type": "CAMERA_URL",
-				"template": {
-					"dashboard": "line",
-					"mobile": "line"
-				}
-			},
-			"5": {
-				"logicalId": "statusLed",
-				"name": "Etat LED",
-				"type": "info",
-				"subtype": "binary",
-				"isVisible": 1,
-				"generic_type": "CAMERA_RECORD_STATE",
-				"template": {
-					"dashboard": "line",
-					"mobile": "line"
-				}
-			},
-			"6": {
-				"logicalId": "motionDetection",
-				"name": "Détection de mouvement",
-				"type": "info",
-				"subtype": "binary",
-				"isVisible": 1,
-				"generic_type": "GENERIC_INFO",
-				"template": {
-					"dashboard": "line",
-					"mobile": "line"
-				}
-			},
-			"7": {
-				"logicalId": "notificationType",
-				"name": "Type notification",
-				"type": "info",
-				"subtype": "numeric",
-				"isVisible": 0,
-				"generic_type": "GENERIC_INFO",
-				"template": {
-					"dashboard": "line",
-					"mobile": "line"
-				}
-			},
-			"8": {
-				"logicalId": "motionDetectionSensitivity",
-				"name": "Sensibilité détection mvt",
-				"type": "info",
-				"subtype": "numeric",
-				"isVisible": 1,
-				"isHistorized": 0,
-				"generic_type": "GENERIC_INFO",
-				"template": {
-					"dashboard": "line",
-					"mobile": "line"
-				}
-			},
-			"9": {
-				"logicalId": "speaker",
-				"name": "Haut-parleur",
-				"type": "info",
-				"subtype": "binary",
-				"isVisible": 1,
-				"isHistorized": 0,
-				"generic_type": "GENERIC_INFO",
-				"template": {
-					"dashboard": "line",
-					"mobile": "line"
-				}
-			},
-			"10": {
-				"logicalId": "speakerVolume",
-				"name": "Volume",
-				"type": "info",
-				"subtype": "numeric",
-				"isVisible": 1,
-				"isHistorized": 0,
-				"generic_type": "GENERIC_INFO",
-				"template": {
-					"dashboard": "line",
-					"mobile": "line"
-				}
-			},
-			"11": {
-				"logicalId": "microphone",
-				"name": "Micro",
-				"type": "info",
-				"subtype": "binary",
-				"isVisible": 1,
-				"isHistorized": 0,
-				"generic_type": "GENERIC_INFO",
-				"template": {
-					"dashboard": "line",
-					"mobile": "line"
-				}
-			},
-			"12": {
-				"logicalId": "audioRecording",
-				"name": "Enregistrement audio",
-				"type": "info",
-				"subtype": "binary",
-				"isVisible": 1,
-				"isHistorized": 0,
-				"generic_type": "GENERIC_INFO",
-				"template": {
-					"dashboard": "line",
-					"mobile": "line"
-				}
-			},
-			"13": {
-				"logicalId": "autoNightvision",
-				"name": "Vision nocturne",
-				"type": "info",
-				"subtype": "binary",
-				"isVisible": 1,
-				"isHistorized": 0,
-				"generic_type": "GENERIC_INFO",
-				"template": {
-					"dashboard": "line",
-					"mobile": "line"
-				}
-			},
-			"14": {
-				"logicalId": "light",
-				"name": "Flash",
-				"type": "info",
-				"subtype": "binary",
-				"isVisible": 1,
-				"isHistorized": 0,
-				"generic_type": "GENERIC_INFO",
-				"template": {
-					"dashboard": "line",
-					"mobile": "line"
-				}
-			},
-			"15": {
 				"logicalId": "wifiRSSI",
 				"name": "Signal Wifi",
 				"type": "info",
@@ -338,49 +197,36 @@
 					"mobile": "line"
 				}
 			},
-			"16": {
-				"logicalId": "motionTracking",
-				"name": "Tracking mouvement",
-				"type": "info",
-				"subtype": "binary",
-				"isVisible": 1,
-				"generic_type": "GENERIC_INFO",
-				"template": {
-					"dashboard": "line",
-					"mobile": "line"
-				}
-			},
-			"17": {
-				"logicalId": "motionTrackingSensitivity",
-				"name": "Sensibilité suivi mvt",
+			"4": {
+				"logicalId": "battery",
+				"name": "Batterie",
 				"type": "info",
 				"subtype": "numeric",
 				"isVisible": 1,
-				"isHistorized": 0,
-				"generic_type": "GENERIC_INFO",
+				"unite": "%",
+				"generic_type": "BATTERY",
 				"template": {
 					"dashboard": "line",
 					"mobile": "line"
 				}
 			},
-			"18": {
-				"logicalId": "motionDetectionRange",
-				"name": "Portée détection mouvement",
+			"5": {
+				"logicalId": "state",
+				"name": "Etat",
 				"type": "info",
-				"subtype": "numeric",
-				"isVisible": 1,
-				"isHistorized": 0,
-				"generic_type": "GENERIC_INFO",
+				"subtype": "string",
+				"isVisible": 0,
+				"generic_type": "ALARM_STATE",
 				"template": {
 					"dashboard": "line",
 					"mobile": "line"
 				}
 			},
-			"19": {
-				"logicalId": "lightSettingsEnable",
-				"name": "Paramètres Flash",
+			"6": {
+				"logicalId": "personName",
+				"name": "Identification",
 				"type": "info",
-				"subtype": "binary",
+				"subtype": "string",
 				"isVisible": 0,
 				"isHistorized": 0,
 				"generic_type": "GENERIC_INFO",
@@ -389,9 +235,46 @@
 					"mobile": "line"
 				}
 			},
-			"20": {
-				"logicalId": "lightSettingsBrightnessManual",
-				"name": "Luminosité flash",
+			"7": {
+				"logicalId": "picture",
+				"name": "URL snapshot",
+				"type": "info",
+				"subtype": "string",
+				"isVisible": 1,
+				"isHistorized": 0,
+				"generic_type": "CAMERA_URL",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			},
+			"8": {
+				"logicalId": "statusLed",
+				"name": "Etat LED",
+				"type": "info",
+				"subtype": "binary",
+				"isVisible": 1,
+				"generic_type": "CAMERA_RECORD_STATE",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			},
+			"9": {
+				"logicalId": "motionDetection",
+				"name": "Détection de mouvement",
+				"type": "info",
+				"subtype": "binary",
+				"isVisible": 1,
+				"generic_type": "GENERIC_INFO",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			},
+			"10": {
+				"logicalId": "motionDetectionSensitivity",
+				"name": "Sensibilité détection mvt",
 				"type": "info",
 				"subtype": "numeric",
 				"isVisible": 1,
@@ -402,9 +285,22 @@
 					"mobile": "line"
 				}
 			},
-			"21": {
-				"logicalId": "lightSettingsColorTemperatureManual",
-				"name": "Température couleur",
+			"11": {
+				"logicalId": "speaker",
+				"name": "Haut-parleur",
+				"type": "info",
+				"subtype": "binary",
+				"isVisible": 1,
+				"isHistorized": 0,
+				"generic_type": "GENERIC_INFO",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			},
+			"12": {
+				"logicalId": "speakerVolume",
+				"name": "Volume",
 				"type": "info",
 				"subtype": "numeric",
 				"isVisible": 1,
@@ -415,11 +311,11 @@
 					"mobile": "line"
 				}
 			},
-			"22": {
-				"logicalId": "motionDetectionType",
-				"name": "Type de détection mvt",
+			"13": {
+				"logicalId": "microphone",
+				"name": "Micro",
 				"type": "info",
-				"subtype": "numeric",
+				"subtype": "binary",
 				"isVisible": 1,
 				"isHistorized": 0,
 				"generic_type": "GENERIC_INFO",
@@ -428,286 +324,73 @@
 					"mobile": "line"
 				}
 			},
-			"23": {
-				"logicalId": "motionDetectionType:set",
-				"name": "Type détection mouvement",
-				"type": "action",
-				"subtype": "select",
+			"14": {
+				"logicalId": "audioRecording",
+				"name": "Enregistrement audio",
+				"type": "info",
+				"subtype": "binary",
 				"isVisible": 1,
-				"generic_type": "CAMERA_PRESET",
-				"configuration": {
-					"switch": "status",
-					"listValue": "0|Humans;2|All"
+				"isHistorized": 0,
+				"generic_type": "GENERIC_INFO",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
 				}
 			},
-			"24": {
-				"logicalId": "motionDetectionRange:set",
-				"name": "Type de détection Mvt",
-				"type": "action",
-				"subtype": "slider",
+			"15": {
+				"logicalId": "autoNightvision",
+				"name": "Vision nocturne",
+				"type": "info",
+				"subtype": "binary",
 				"isVisible": 1,
-				"generic_type": "CAMERA_PRESET",
-                                "configuration": {
-                                        "switch": "status",
-                                        "listValue": "0|Standard;1|Advanced;2|Automatic"
+				"isHistorized": 0,
+				"generic_type": "GENERIC_INFO",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
 				}
 			},
-			"25": {
-				"logicalId": "direction:pan_and_tilt:0",
-				"name": "Rotate360",
-				"type": "action",
-				"subtype": "other",
-				"isVisible": 1,
-				"generic_type": "CAMERA_PRESET",
-				"display": {
-					"icon": "<i class=\"fas fa-redo\"></i>"
+			"16": {
+				"logicalId": "watermark",
+				"name": "Filigrane",
+				"type": "info",
+				"subtype": "numeric",
+				"isVisible": 0,
+				"generic_type": "GENERIC_INFO",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
 				}
 			},
-			"26": {
-				"logicalId": "direction:pan_and_tilt:1",
-				"name": "Left",
-				"type": "action",
-				"subtype": "other",
-				"isVisible": 1,
-				"generic_type": "CAMERA_LEFT",
-				"display": {
-					"icon": "<i class=\"fas fa-chevron-left\"></i>"
-				}
-			},
-			"27": {
-				"logicalId": "direction:pan_and_tilt:2",
-				"name": "Right",
-				"type": "action",
-				"subtype": "other",
-				"isVisible": 1,
-				"generic_type": "CAMERA_RIGHT",
-				"display": {
-					"icon": "<i class=\"fas fa-chevron-right\"></i>"
-				}
-			},
-			"28": {
-				"logicalId": "direction:pan_and_tilt:3",
-				"name": "Up",
-				"type": "action",
-				"subtype": "other",
-				"isVisible": 1,
-				"generic_type": "CAMERA_UP",
-				"display": {
-					"icon": "<i class=\"fas fa-chevron-up\"></i>"
-				}
-			},
-			"29": {
-				"logicalId": "direction:pan_and_tilt:4",
-				"name": "Down",
-				"type": "action",
-				"subtype": "other",
-				"isVisible": 1,
-				"generic_type": "CAMERA_DOWN",
-				"display": {
-					"icon": "<i class=\"fas fa-chevron-down\"></i>"
-				}
-			},
-			"30": {
-				"logicalId": "calibrate",
-				"name": "Calibrage",
-				"type": "action",
-				"subtype": "other",
-				"isVisible": 1,
-				"generic_type": "CAMERA_PRESET",
-				"display": {
-					"icon": "<i class=\"fas fa-expand-arrows-alt\"></i>"
-				}
-			},
-			"31": {
-				"logicalId": "motionTracking:on",
-				"name": "Activer le tracking de mvt",
-				"type": "action",
-				"subtype": "other",
-				"isVisible": 1,
-				"generic_type": "CAMERA_PRESET",
-				"display": {
-					"icon": "<i class=\"jeedom-on\"></i>"
-				}
-			},
-			"32": {
-				"logicalId": "motionTracking:off",
-				"name": "Désactiver le tracking de mvt",
-				"type": "action",
-				"subtype": "other",
-				"isVisible": 1,
-				"generic_type": "CAMERA_PRESET",
-				"display": {
-					"icon": "<i class=\"jeedom-on\"></i>"
-				}
-			},
-			"33": {
-				"logicalId": "enabled:on",
-				"name": "Activer la Caméra",
-				"type": "action",
-				"subtype": "other",
-				"isVisible": 1,
-				"generic_type": "CAMERA_PRESET",
-				"display": {
-					"icon": "<i class=\"jeedom-on\"></i>"
-				}
-			},
-			"34": {
-				"logicalId": "enabled:off",
-				"name": "Désactiver la Caméra",
-				"type": "action",
-				"subtype": "other",
-				"isVisible": 1,
-				"generic_type": "CAMERA_PRESET",
-				"display": {
-					"icon": "<i class=\"jeedom-off\"></i>"
-				}
-			},
-			"35": {
-				"logicalId": "motionDetection:on",
-				"name": "Activer la détection de Mouvement",
-				"type": "action",
-				"subtype": "other",
-				"isVisible": 1,
-				"generic_type": "CAMERA_PRESET",
-				"display": {
-					"icon": "<i class=\"loisir-runner5\"></i>"
-				}
-			},
-			"36": {
-				"logicalId": "motionDetection:off",
-				"name": "Désactiver la détection de Mouvement",
-				"type": "action",
-				"subtype": "other",
-				"isVisible": 1,
-				"generic_type": "CAMERA_PRESET",
-				"display": {
-					"icon": "<i class=\"fas fa-running\"></i>"
-				}
-			},
-			"37": {
-				"logicalId": "statusLed:on",
-				"name": "Activer la LED",
-				"type": "action",
-				"subtype": "other",
-				"isVisible": 1,
-				"generic_type": "CAMERA_PRESET",
-				"display": {
-					"icon": "<i class=\"jeedom-lumiere-on\"></i>"
-				}
-			},
-			"38": {
-				"logicalId": "statusLed:off",
-				"name": "Désactiver la LED",
-				"type": "action",
-				"subtype": "other",
-				"isVisible": 1,
-				"generic_type": "CAMERA_PRESET",
-				"display": {
-					"icon": "<i class=\"jeedom-lumiere-off\"></i>"
-				}
-			},
-			"39": {
+			"17": {
 				"logicalId": "autoNightvision:on",
 				"name": "Activer vision nocturne",
 				"type": "action",
-				"subtype": "other",
+				"subtype": "select",
 				"isVisible": 1,
-				"generic_type": "CAMERA_PRESET",
-				"display": {
-					"icon": "<i class=\"fas fa-moon\"></i>"
-				}
+				"generic_type": "CAMERA_PRESET"
 			},
-			"40": {
+			"18": {
 				"logicalId": "autoNightvision:off",
 				"name": "Désactiver vision nocturne",
 				"type": "action",
-				"subtype": "other",
+				"subtype": "select",
 				"isVisible": 1,
-				"generic_type": "CAMERA_PRESET",
-				"display": {
-					"icon": "<i class=\"far fa-moon\"></i>"
-				}
+				"generic_type": "CAMERA_PRESET"
 			},
-			"41": {
-				"logicalId": "speaker:on",
-				"name": "Activer haut-parleur",
+			"19": {
+				"logicalId": "watermark:set",
+				"name": "Options Filigrane",
 				"type": "action",
-				"subtype": "other",
-				"isVisible": 1,
+				"subtype": "select",
+				"isVisible": 0,
 				"generic_type": "CAMERA_PRESET",
-				"display": {
-					"icon": "<i class=\"fas fa-volume-up\"></i>"
-				}
-			},
-			"42": {
-				"logicalId": "speaker:off",
-				"name": "Désactiver haut-parleur",
-				"type": "action",
-				"subtype": "other",
-				"isVisible": 1,
-				"generic_type": "CAMERA_PRESET",
-				"display": {
-					"icon": "<i class=\"fas fa-volume-mute\"></i>"
-				}
-			},
-			"43": {
-				"logicalId": "microphone:on",
-				"name": "Activer micro",
-				"type": "action",
-				"subtype": "other",
-				"isVisible": 1,
-				"generic_type": "CAMERA_PRESET",
-				"display": {
-					"icon": "<i class=\"fas fa-microphone\"></i>"
-				}
-			},
-			"44": {
-				"logicalId": "microphone:off",
-				"name": "Désactiver micro",
-				"type": "action",
-				"subtype": "other",
-				"isVisible": 1,
-				"generic_type": "CAMERA_PRESET",
-				"display": {
-					"icon": "<i class=\"fas fa-microphone-slash\"></i>"
-				}
-			},
-			"45": {
-				"logicalId": "audioRecording:on",
-				"name": "Activer enregistrement audio",
-				"type": "action",
-				"subtype": "other",
-				"isVisible": 1,
-				"generic_type": "CAMERA_PRESET",
-				"display": {
-					"icon": "<i class=\"jeedomapp-circlevalidation\"></i>"
-				}
-			},
-			"46": {
-				"logicalId": "audioRecording:off",
-				"name": "Désactiver enregistrement audio",
-				"type": "action",
-				"subtype": "other",
-				"isVisible": 1,
-				"generic_type": "CAMERA_PRESET",
-				"display": {
-					"icon": "<i class=\"jeedomapp-circlestop\"></i>"
-				}
-			},
-			"47": {
-				"logicalId": "speakerVolume:set",
-				"name": "Volume Son",
-				"type": "action",
-				"subtype": "slider",
-				"isVisible": 1,
-				"generic_type": "SET_VOLUME",
 				"configuration": {
-					"params": "[#slider#]",
-					"minValue": 0,
-					"maxValue": 100
+					"switch": "status",
+					"listValue": "0|Off;1|Timestamp;2|Timestamp+Logo"
 				}
 			},
-			"48": {
+			"20": {
 				"logicalId": "motionDetectionSensitivity:set",
 				"name": "Sensibilité détection",
 				"type": "action",
@@ -720,86 +403,161 @@
 					"maxValue": 7
 				}
 			},
-			"49": {
-				"logicalId": "notificationType:set",
-				"name": "Types de notification",
+			"21": {
+				"logicalId": "enabled:on",
+				"name": "Activer la Caméra",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"generic_type": "CAMERA_PRESET",
+				"display": {
+					"icon": "<i class=\"jeedom-on\"></i>"
+				}
+			},
+			"22": {
+				"logicalId": "enabled:off",
+				"name": "Désactiver la Caméra",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"generic_type": "CAMERA_PRESET",
+				"display": {
+					"icon": "<i class=\"jeedom-off\"></i>"
+				}
+			},
+			"23": {
+				"logicalId": "motionDetection:on",
+				"name": "Activer la détection de Mouvement",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"generic_type": "CAMERA_PRESET",
+				"display": {
+					"icon": "<i class=\"loisir-runner5\"></i>"
+				}
+			},
+			"24": {
+				"logicalId": "motionDetection:off",
+				"name": "Désactiver la détection de Mouvement",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"generic_type": "CAMERA_PRESET",
+				"display": {
+					"icon": "<i class=\"fas fa-running\"></i>"
+				}
+			},
+			"25": {
+				"logicalId": "statusLed:on",
+				"name": "Activer la LED",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"generic_type": "CAMERA_PRESET",
+				"display": {
+					"icon": "<i class=\"jeedom-lumiere-on\"></i>"
+				}
+			},
+			"26": {
+				"logicalId": "statusLed:off",
+				"name": "Désactiver la LED",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"generic_type": "CAMERA_PRESET",
+				"display": {
+					"icon": "<i class=\"jeedom-lumiere-off\"></i>"
+				}
+			},
+			"27": {
+				"logicalId": "speaker:on",
+				"name": "Activer haut-parleur",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"generic_type": "CAMERA_PRESET",
+				"display": {
+					"icon": "<i class=\"fas fa-volume-up\"></i>"
+				}
+			},
+			"28": {
+				"logicalId": "speaker:off",
+				"name": "Désactiver haut-parleur",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"generic_type": "CAMERA_PRESET",
+				"display": {
+					"icon": "<i class=\"fas fa-volume-mute\"></i>"
+				}
+			},
+			"29": {
+				"logicalId": "microphone:on",
+				"name": "Activer micro",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"generic_type": "CAMERA_PRESET",
+				"display": {
+					"icon": "<i class=\"fas fa-microphone\"></i>"
+				}
+			},
+			"30": {
+				"logicalId": "microphone:off",
+				"name": "Désactiver micro",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"generic_type": "CAMERA_PRESET",
+				"display": {
+					"icon": "<i class=\"fas fa-microphone-slash\"></i>"
+				}
+			},
+			"31": {
+				"logicalId": "audioRecording:on",
+				"name": "Activer enregistrement audio",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"generic_type": "CAMERA_PRESET",
+				"display": {
+					"icon": "<i class=\"jeedomapp-circlevalidation\"></i>"
+				}
+			},
+			"32": {
+				"logicalId": "audioRecording:off",
+				"name": "Désactiver enregistrement audio",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"generic_type": "CAMERA_PRESET",
+				"display": {
+					"icon": "<i class=\"jeedomapp-circlestop\"></i>"
+				}
+			},
+			"33": {
+				"logicalId": "speakerVolume:set",
+				"name": "Volume alarme",
 				"type": "action",
 				"subtype": "select",
 				"isVisible": 1,
 				"generic_type": "CAMERA_PRESET",
 				"configuration": {
 					"switch": "status",
-					"listValue": "1|Efficient;2|Include thumbnail;3|Full effect"
+					"listValue": "90|Low;92|Medium;93|High"
 				}
 			},
-			"50": {
-				"logicalId": "light:on",
-				"name": "Allumer Flash",
-				"type": "action",
-				"subtype": "other",
-				"isVisible": 1,
-				"generic_type": "LIGHT_ON",
-				"display": {
-					"icon": "<i class=\"jeedom-lumiere-on\"></i>"
-				}
-			},
-			"51": {
-				"logicalId": "light:off",
-				"name": "Eteindre Flash",
-				"type": "action",
-				"subtype": "other",
-				"isVisible": 1,
-				"generic_type": "LIGHT_OFF",
-				"display": {
-					"icon": "<i class=\"jeedom-lumiere-off\"></i>"
-				}
-			},
-			"52": {
-				"logicalId": "lightSettingsEnable:on",
-				"name": "Activer Flash",
-				"type": "action",
-				"subtype": "other",
-				"isVisible": 1,
-				"generic_type": "LIGHT_ON",
-				"display": {
-					"icon": "<i class=\"jeedom-on\"></i>"
-				}
-			},
-			"53": {
-				"logicalId": "lightSettingsEnable:off",
-				"name": "Desactiver Flash",
-				"type": "action",
-				"subtype": "other",
-				"isVisible": 1,
-				"generic_type": "LIGHT_OFF",
-				"display": {
-					"icon": "<i class=\"jeedom-off\"></i>"
-				}
-			},
-			"54": {
-				"logicalId": "lightSettingsBrightnessManual:set",
-				"name": "Réglage Luminosité Flash",
+			"34": {
+				"logicalId": "motionDetectionSensitivity:set",
+				"name": "Sensibilité détection",
 				"type": "action",
 				"subtype": "slider",
 				"isVisible": 1,
-				"generic_type": "LIGHT_SLIDER",
-				"configuration": {
-					"params": "[#slider#]",
-					"minValue": 0,
-					"maxValue": 100
-				}
-			},
-			"55": {
-				"logicalId": "lightSettingsColorTemperatureManual:set",
-				"name": "Réglage Température couleur",
-				"type": "action",
-				"subtype": "slider",
-				"isVisible": 1,
-				"generic_type": "LIGHT_SLIDER",
+				"generic_type": "CAMERA_PRESET",
 				"configuration": {
 					"params": "[#slider#]",
 					"minValue": 1,
-					"maxValue": 100
+					"maxValue": 7
 				}
 			}
 		}

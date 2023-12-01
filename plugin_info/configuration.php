@@ -95,6 +95,17 @@ $deamonRunning = eufy::deamonRunning();
                         <i class="fas fa-sync"></i> {{Tester}}</a>
             </div>
         </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label tooltips" style="position:relative;top:-5px;">{{Version}}
+                <sup><i class="fas fa-question-circle tooltips" title="{{Version du container Eufy}}"></i></sup>
+            </label>
+            <div class="col-md-7">
+		<span class="col-sm-1 label">
+              		<?php echo cache::byKey('eufy::version')->getValue(); ?>
+		</span>
+            </div>
+        </div>
+
     </div>
 
     <div class="col-lg-6"> 

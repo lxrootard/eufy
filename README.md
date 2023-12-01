@@ -16,42 +16,38 @@
 - T8111 Camera
 - T8113 Camera 2C 
 - T8114 Camera 2
-- T8140 Camera 2 Pro
+- T8134 S220 (requires image v1.7.0+)
+- T8140 S221 Camera 2 Pro
 - T8142 Camera 2C Pro
 - T8160 Camera 3
 - T8161 Camera 3C
-- T8210 Battery Doorbell. RTSP not supported
+- T8210 Battery Doorbell (RTSP not supported)
 - T8400 Indoor Cam
 - T8410 Indoor Cam Pan&Tilt
 - T8423 Floodlight 8423 
 - T8424 Floodlight Cam 2
 - T8441 Outdoor Cam Pro
+- T84A1 Wired Wall Light Cam S100
 - T8910 Motion Sensor. `motionDetection` events not working, 
 see [this thread](https://github.com/fuatakgun/eufy_security/issues/22)
 
 ## Untested devices
 Other Eufy models should also work but might not be recognized incompletely or require a config file.
 <br>See the full list [here](https://bropat.github.io/eufy-security-client/#/supported_devices)
-<br>If your model is not listed above please send me the results of these commands:
+<br>If your model is not listed above or some controls are missing please send me the results of these commands:
 
     $ cd /var/www/html/plugins/eufy
-    $ python3 resources/test_eufy.py -s station_serial
-
-and/or (depending on your model):
-
     $ python3 resources/test_eufy.py -d device_serial
 
-help: 
-
+where `device_serial` is your device serial number, starting by `Txxx`
+<br>
+Help: 
     $ python3 resources/test_eufy.py -h
-    usage: test_eufy.py [-h] [-s STATION] [-d DEVICE] [-u URL]
+    usage: test_eufy.py [-h] [-d DEVICE] [-u URL]
 
     optional arguments:
 	-h, --help            show this help message and exit
-	-s STATION, --station STATION
-                        station serial number
-	-d DEVICE, --device DEVICE
-                        device serial number
+	-d DEVICE, --device DEVICE  device serial number
 	-u URL, --url URL     eufy service URL, default 127.0.0.1:3000
 
 ## Troubleshooting
@@ -63,13 +59,14 @@ help:
 * Synchronization failed, devices are not found
 <br> Quotes are not supported in equipment names
 * Incompatible schema error, commands not working
-<br> Make sure you're using the latest `eufy-security-ws` release. 
-If you've upgraded the plugin uninstall/reinstall the image and restart the container.
+<br> Make sure you're using the latest `eufy-security-ws` [release](https://github.com/bropat/eufy-security-ws/releases).
+<br> Your container version is displayed in the plugin config page when hitting the `Tester` button.
+<br> If you've upgraded the plugin uninstall/reinstall the image and restart the container.
 * Some actions change the corresponding property but there's no change on the device (eg flash on/off)
 <br> These are not actions but device settings that will only impact its behavior for the next detection 
 (eg the flash will light at the next event)
 * Cam snapshots don't update
-<br> Enable snapshots in the Eufy app: Device > Parameters > Notification
+<br> Enable snapshots in the Eufy app: `Device > Parameters > Notification`
 
 ## Known issues
 * Some commands don't [work as expected](https://github.com/bropat/eufy-security-ws/issues/212) on some devices
@@ -80,6 +77,10 @@ Also check the [Jeedom community blog](https://community.jeedom.com/tag/plugin-e
 tag: `#plugin-eufy`
 
 ## ChangeLog
+* v2.2 [lxrootard](https://github.com/lxrootard)
+<br> - Added support for T84A1 and T8134 + T842x fix
+<br> - Added container version display in config page
+<br> - Reworked eufy_test.py script
 * v2.1 [lxrootard](https://github.com/lxrootard)
 <br> - Fixed update issue for dual interface devices
 <br> - Container logs debug level management
@@ -122,7 +123,7 @@ tag: `#plugin-eufy`
 * v0.5 [lxrootard](https://github.com/lxrootard)
 <br> - Fix to sync for devices supporting both Station and Device interface 
 * v0.4 [lxrootard](https://github.com/lxrootard)
-<br> - Added new infos and commands for T8010 T8113 T8114 T8210 T8210 and T8210 devices
+<br> - Added new infos and commands for T8010 T8113 T8114 and T8210 devices
 * v0.3 [lxrootard](https://github.com/lxrootard)
 <br> - Added generic support for integer command values, lists and sliders
 <br> - Added support for T8410 and T8210 devices

@@ -40,7 +40,9 @@ Le container `eufy-security-ws` doit déjà être installé sur un docker distan
 - Port Docker: port du container `eufy-security-ws`, 3000 par défaut
 - Tester: Vérifier la présence du container `eufy-security-ws` et sa connexion au service Cloud Eufy
 
-Note: Le daemon Eufy ne démarrera pas si le container `eufy-security-ws` ne peut pas se connecter au service Cloud Eufy
+Notes: 
+- Le daemon Eufy ne démarrera pas si le container `eufy-security-ws` ne peut pas se connecter au service Cloud Eufy
+- La version du container est indiquée dans le champ `Version`
 
 ####  4. Soucis de connexion
 En cas de problème vérifier la connexion avec le container via la commande suivante:
