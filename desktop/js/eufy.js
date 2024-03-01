@@ -75,7 +75,6 @@ function addCmdToTable(_cmd) {
   })
 }
 
-
 $('#bt_syncEufy').on('click', function () {
   $.ajax({
       type: "POST",
@@ -116,3 +115,19 @@ $("#table_cmd").sortable({
   tolerance: "intersect",
   forcePlaceholderSize: true
 })
+
+setTimeout(() => {
+  $('.eqLogicAction[data-action=returnToThumbnailDisplay]').removeAttr('href').off('click').on('click', function(event) {
+    // contournement du plugin.template du core
+    // force un load page lors du click sur returnToThumbnailDisplay
+    event.preventDefault()
+    jeedomUtils.loadPage('index.php?v=d&m=eufy&p=eufy', false)
+  })
+}, "500");
+
+function printEqLogic(_eqLogic) {
+  // lance une tempo pour laisser le temps au core d'executer tous les addCmdToTable
+  setTimeout(() => {
+    $('table.tablesorter').trigger('update') // update de tablesorter
+  }, "1000");
+}

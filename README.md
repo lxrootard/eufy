@@ -24,12 +24,13 @@
 - T8210 Battery Doorbell (RTSP not supported)
 - T8400 Indoor Cam
 - T8410 Indoor Cam Pan&Tilt
-- T8423 Floodlight 8423 
+- T8423 Floodlight Cam 2 Pro
 - T8424 Floodlight Cam 2
 - T8441 Outdoor Cam Pro
 - T84A1 Wired Wall Light Cam S100
 - T8910 Motion Sensor. `motionDetection` events not working, 
 see [this thread](https://github.com/fuatakgun/eufy_security/issues/22)
+- T8960 Keypad
 
 ## Untested devices
 Other Eufy models should also work but might not be recognized incompletely or require a config file.
@@ -41,7 +42,8 @@ Other Eufy models should also work but might not be recognized incompletely or r
 
 where `device_serial` is your device serial number, starting by `Txxx`
 <br>
-Help: 
+Help:
+
     $ python3 resources/test_eufy.py -h
     usage: test_eufy.py [-h] [-d DEVICE] [-u URL]
 
@@ -77,19 +79,25 @@ Also check the [Jeedom community blog](https://community.jeedom.com/tag/plugin-e
 tag: `#plugin-eufy`
 
 ## ChangeLog
+* v2.3 [lxrootard](https://github.com/lxrootard)
+<br> - Added color support for capable devices (eg T84A1). Waiting for 
+[fix](https://github.com/bropat/eufy-security-ws/issues/293)
+<br> - Added support for T8960
+<br> - Added commands filter in equipment view. thanks @phpvarious
+<br> - Minor optimisations
 * v2.2 [lxrootard](https://github.com/lxrootard)
 <br> - Added support for T84A1 and T8134 + T842x fix
 <br> - Added container version display in config page
-<br> - Reworked eufy_test.py script
+<br> - Improved eufy_test.py script
 * v2.1 [lxrootard](https://github.com/lxrootard)
 <br> - Fixed update issue for dual interface devices
 <br> - Container logs debug level management
 <br> - json files updates
 * v2.0 [lxrootard](https://github.com/lxrootard)
-<br> - Added calibrate command for pan & tilt cams (T841x)
+<br> - Added calibrate command for pan & tilt cams (eg T8410)
 <br> - Fixed a dependency issue
 * v1.9 [lxrootard](https://github.com/lxrootard)
-<br> - Support of pan & tilt commands (T841x)
+<br> - Support of pan & tilt commands for capable devices (eg T8410)
 * v1.8 [lxrootard](https://github.com/lxrootard)
 <br> - Support of cam snapshots
 <br> - Documentation update

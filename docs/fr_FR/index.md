@@ -80,13 +80,16 @@ La commande `URL snaphot` contient l'URL de l'image sur le serveur
 
 
 ### Video stream RTSP
-Le flux RTSP fonctionne dans le plugin [Camera](https://doc.jeedom.com/fr_FR/plugins/security/camera)
-<br>Sur les caméras à batterie il doit être activé/désactivé via les commandes de l'équipement.
-<br>L'IP est celle de la base et `live0..liven` indiquent le numéro de la caméra, cf ce screenshot:
+Le flux RTSP fonctionne dans le plugin [Camera](https://doc.jeedom.com/fr_FR/plugins/security/camera) ou une application comme VLC
+<br>Sur les caméras à batterie il doit être activé/désactivé via les commandes de l'équipement `start_rtsp` et `stop_rtsp`.
+<br>Selon les devices le login/passwd est celui du compte Eufy ou celui généré par l'application sur la page
+`Paramètres > General > Stockage > NAS(RTSP)`
+<br>L'IP est celle de la base ou celle de la caméra 
+<br>`live0..liven` indiquent le numéro de la caméra, cf ce screenshot:
 
 ![Video stream RTSP](../images/camera_plugin.jpg)
 
-<br>Voir [ici](https://camlytics.com/camera/eufy) selon votre modèle
+<br>Voir [ici](https://camlytics.com/camera/eufy) et [la](https://support.eufy.com/s/article/Using-NAS-Storage-Step-by-Step) selon votre modèle
 
 ### Bugs et dépannage
 Voir [ici](../../README.md#Troubleshooting)

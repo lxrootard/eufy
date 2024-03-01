@@ -210,6 +210,9 @@ class eufy extends eqLogic {
 
   public function refreshDevice()
   {
+	if (! $this->getIsEnable())
+	  return;
+
 	$name = $this->getConfiguration('eufyName');
         $serialNumber= $this->getConfiguration('serialNumber');
         log::add(__CLASS__, 'debug', 'Refresh device: ' . $name .' #'. $serialNumber);
@@ -229,6 +232,12 @@ class eufy extends eqLogic {
 	log::add(__CLASS__, 'error', $serialNumber . ': eqLogic not found');
 	return;
     }
+    if (! $eqLogic->getIsEnable())
+	return;
+
+    //log::add(__CLASS__, 'info', 'eufy::updateDeviceInfo serialNumber: '. $serialNumber . ', property: '
+    //	. $property . ', value: ' . $value);
+
     if ($property == 'type') {
 	$types = cache::byKey('eufy::modelTypes')->getValue();
 	if (isset($types)) {
@@ -246,9 +255,26 @@ class eufy extends eqLogic {
 //       log::add(__CLASS__, 'debug', 'old pic size:' .$s1. ', new pic size: '. $s2);
        if ($s1 == $s2) return;
     }
+    if ($cmd->getGeneric_type() == 'LIGHT_COLOR')
+       $value = eufy::rgb2hex($value);
+
     if (eufy::sendEvent($cmd, $value)) {
         log::add(__CLASS__, 'debug', 'device info updated, property: '. $property);
     }
+  }
+
+  public static function hex2rgb($hex) {
+    $r = hexdec(substr($hex, 1, 2));
+    $g = hexdec(substr($hex, 3, 2));
+    $b = hexdec(substr($hex, 5, 2));
+    return array('red'=>$r, 'green'=>$g, 'blue'=>$b);
+  }
+
+  public static function rgb2hex ($json) {
+    $a = json_decode($json,true);
+    return '#' . sprintf('%02d',dechex($a['red']))
+        . sprintf('%02d',dechex($a['green']))
+        . sprintf('%02d',dechex($a['blue']));
   }
 
   public function extractPicture($a,$serialNumber)
@@ -333,7 +359,7 @@ class eufy extends eqLogic {
 
   public function createCommand ($cmdDef, $itf)
   {
-        log::add(__CLASS__, 'debug', 'createCommand: '. $cmdDef["logicalId"] . '/' . $cmdDef["name"] . ', interface: ' . $itf);
+        log::add(__CLASS__, 'info', 'createCommand: '. $cmdDef["logicalId"] . '/' . $cmdDef["name"] . ', interface: ' . $itf);
 	$cmd = new eufyCmd();
         $cmd->setLogicalId($cmdDef["logicalId"]);
         $cmd->setEqLogic_id($this->getId());
@@ -348,8 +374,8 @@ class eufy extends eqLogic {
         	foreach ($cmdDef['template'] as $key => $value)
                 	$cmd->setTemplate($key, $value);
 
-        $cmd->setType($cmdDef["type"]);
-        $cmd->setSubType($cmdDef["subtype"]);
+	$cmd->setType($cmdDef["type"]);
+	$cmd->setSubType($cmdDef["subtype"]);
 
         if(isset($cmdDef["generic_type"]))
         	$cmd->setGeneric_type($cmdDef["generic_type"]);
@@ -660,6 +686,10 @@ class eufyCmd extends cmd {
 	else if ($set != $cmd) {
 		if ($value == "")
 			$value = $_options['slider']; // slider
+		if ($value == "") {
+			$value = $_options['color']; // couleur
+			$value = eufy::hex2rgb($value);
+		}
 		if (! isset($value))
 			$value = $_options['select']; // combo list
                 $params = array('command' => $itf . '.set_property', 'serialNumber' => $serialNumber, 'name' => $set, 'value' => $value);

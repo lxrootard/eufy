@@ -10,12 +10,12 @@
     "python3-dev" : {}
   },
   "pip3": {
-    "wheel" : {"reinstall" : true},
-    "requests" : {"reinstall" : true},
-    "pyudev" : {"reinstall" : true},
-    "six" : {"reinstall" : true},
-    "pyserial" : {"reinstall" : true},
-    "websocket-client" : {"reinstall" : true}
+    "wheel" : {},
+    "requests" : {},
+    "pyudev" : {},
+    "six" : {},
+    "pyserial" : {},
+    "websocket-client" : {}
   },
   "npm": {
   },

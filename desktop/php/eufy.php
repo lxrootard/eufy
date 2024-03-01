@@ -169,15 +169,15 @@ $eqLogics = eqLogic::byType($plugin->getId());
             </div>
             <div role="tabpanel" class="tab-pane" id="commandtab">
                 <div class="table-responsive">
-                    <table id="table_cmd" class="table table-bordered table-condensed">
+                  <table id="table_cmd" class="table table-bordered table-condensed tablesorter">
                         <thead>
                             <tr>
-                                <th>{{Nom}}</th>
-                                <th></th>
-                                <th>{{Type}}</th>
-                                <th>{{Paramètres}}</th>
-                                <th>{{Options}}</th>
-                                <th>{{Actions}}</th>
+                                <th>{{Id}}</th>
+				<! -- ajout cible pour filtrer sur les inputs -->
+                                <th data-sortable="true" data-sorter="inputs">{{Nom}}</th>
+                                <th data-sorter="select-text">{{Type}}</th>
+                                <th data-sorter="false" data-filter="false">{{Options}}</th>
+                                <th data-sorter="false" data-filter="false">{{Actions}}</th>
                             </tr>
                         </thead>
                         <tbody>
