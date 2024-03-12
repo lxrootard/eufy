@@ -79,6 +79,9 @@ Also check the [Jeedom community blog](https://community.jeedom.com/tag/plugin-e
 tag: `#plugin-eufy`
 
 ## ChangeLog
+* v2.4 [lxrootard](https://github.com/lxrootard)
+<br> - upgrade to v21 schema version for `eufy-security-ws` v1.8 support
+<br> - Bugfix for list values 
 * v2.3 [lxrootard](https://github.com/lxrootard)
 <br> - Added color support for capable devices (eg T84A1). Waiting for 
 [fix](https://github.com/bropat/eufy-security-ws/issues/293)

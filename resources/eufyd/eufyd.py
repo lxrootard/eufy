@@ -153,7 +153,7 @@ def on_open(ws):
 		time.sleep(1)
 		_websocket.send("{\"command\": \"start_listening\"}") # start listening events
 		time.sleep(1)
-		_websocket.send("{\"command\": \"set_api_schema\", \"schemaVersion\": 19}") # Set API schema
+		_websocket.send("{\"command\": \"set_api_schema\", \"schemaVersion\": 21}") # Set API schema
 		time.sleep(1)
 	Thread(target=run).start()
 

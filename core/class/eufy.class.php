@@ -684,14 +684,14 @@ class eufyCmd extends cmd {
    	else if ($disable != $cmd)
                 $params = array('command' => $itf . '.set_property', 'serialNumber' => $serialNumber, 'name' => $disable, 'value' => 'False');
 	else if ($set != $cmd) {
-		if ($value == "")
+		if ($value == '')
 			$value = $_options['slider']; // slider
-		if ($value == "") {
+		if ($value == '')
+			$value = $_options['select']; // combo list
+		if ($value == '') {
 			$value = $_options['color']; // couleur
 			$value = eufy::hex2rgb($value);
 		}
-		if (! isset($value))
-			$value = $_options['select']; // combo list
                 $params = array('command' => $itf . '.set_property', 'serialNumber' => $serialNumber, 'name' => $set, 'value' => $value);
 	}
 	else if ($value != "") {
