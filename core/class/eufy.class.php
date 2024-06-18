@@ -234,6 +234,9 @@ class eufy extends eqLogic {
     }
     if (! $eqLogic->getIsEnable())
 	return;
+    $cmd = $eqLogic->getCmd('info', $property);
+    if (is_null($cmd) || (! $cmd))
+        return;
 
     //log::add(__CLASS__, 'info', 'eufy::updateDeviceInfo serialNumber: '. $serialNumber . ', property: '
     //	. $property . ', value: ' . $value);
@@ -245,7 +248,6 @@ class eufy extends eqLogic {
 		 $eqLogic->save();
 	}
     }
-    $cmd = $eqLogic->getCmd('info', $property);
     if ($property == 'battery')
        $eqLogic->batteryStatus($value);
     if ($property == 'picture') {

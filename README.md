@@ -20,6 +20,7 @@
 - T8140 S221 Camera 2 Pro
 - T8142 Camera 2C Pro
 - T8160 Camera 3
+- T8170 SoloCam S340
 - T8161 Camera 3C
 - T8210 Battery Doorbell (RTSP not supported)
 - T8400 Indoor Cam
@@ -79,8 +80,11 @@ Also check the [Jeedom community blog](https://community.jeedom.com/tag/plugin-e
 tag: `#plugin-eufy`
 
 ## ChangeLog
+* v2.5 [lxrootard](https://github.com/lxrootard)
+<br> - Added support for T8170
+<br> - Bugfix
 * v2.4 [lxrootard](https://github.com/lxrootard)
-<br> - upgrade to v21 schema version for `eufy-security-ws` v1.8 support
+<br> - Upgrade schema version to v21 for `eufy-security-ws` v1.8 support
 <br> - Bugfix for list values 
 * v2.3 [lxrootard](https://github.com/lxrootard)
 <br> - Added color support for capable devices (eg T84A1). Waiting for 

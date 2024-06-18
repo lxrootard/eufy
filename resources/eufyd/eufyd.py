@@ -47,7 +47,7 @@ def read_socket():
 		if message['apikey'] != _apikey:
 			logging.error("Invalid apikey from socket : " + str(message))
 			return
-		logging.debug("read_socket msg=" + str(message))
+#		logging.debug("read_socket msg=" + str(message))
 		if "command" not in message:
 			return
 # 		sync
