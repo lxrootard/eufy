@@ -21,7 +21,7 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
 class eufy extends eqLogic {
 
   public static function deamonRunning() {
-		return true;
+	return true;
   }
 
   public static function deamon_info() {
@@ -460,39 +460,6 @@ class eufy extends eqLogic {
   public function postRemove() {
   }
 
-  /*
-  * Permet de crypter/décrypter automatiquement des champs de configuration des équipements
-  * Exemple avec le champ "Mot de passe" (password)
-  public function decrypt() {
-    $this->setConfiguration('password', utils::decrypt($this->getConfiguration('password')));
-  }
-  public function encrypt() {
-    $this->setConfiguration('password', utils::encrypt($this->getConfiguration('password')));
-  }
-  */
-
-  /*
-  * Permet de modifier l'affichage du widget (également utilisable par les commandes)
-  public function toHtml($_version = 'dashboard') {}
-  */
-
-  /*
-  * Permet de déclencher une action avant modification d'une variable de configuration du plugin
-  * Exemple avec la variable "param3"
-  public static function preConfig_param3( $value ) {
-    // do some checks or modify on $value
-    return $value;
-  }
-  */
-
-  /*
-  * Permet de déclencher une action après modification d'une variable de configuration du plugin
-  * Exemple avec la variable "param3"
-  public static function postConfig_param3($value) {
-    // no return value
-  }
-  */
-
  // vérif si container up&running
   public static function checkContainer()
   {
@@ -573,78 +540,129 @@ class eufy extends eqLogic {
 	return $online;
   }
 
+        // @Mips
+        public static function executeAsync(string $_method, $_option = null, $_date = 'now') {
+                if (!method_exists(__CLASS__, $_method))
+                        throw new InvalidArgumentException("Method provided for executeAsync does not exist: {$_method}");
+
+                $cron = new cron();
+                $cron->setClass(__CLASS__);
+                $cron->setFunction($_method);
+                if (isset($_option))
+                        $cron->setOption($_option);
+
+                $cron->setOnce(1);
+                $scheduleTime = strtotime($_date);
+                $cron->setSchedule(cron::convertDateToCron($scheduleTime));
+                $cron->save();
+                if ($scheduleTime <= strtotime('now')) {
+                        $cron->run();
+			log::add(__CLASS__, 'debug', "Task '{$_method}' executed now");
+                } else
+                        log::add(__CLASS__, 'debug', "Task '{$_method}' scheduled at {$_date}");
+        }
+
+
+  // init yaml file
+  public static function handleYaml ($action)
+  {
+        $path= realpath(__DIR__ . '/../..');
+        $store_dir = $path . '/data/store';
+        $yaml = 'docker-compose.yml';
+        $file = $store_dir . '/' . $yaml ;
+
+	if($action == 'install') {
+		$device = config::byKey('devicename', __CLASS__);
+		$user = config::byKey('username', __CLASS__);
+		$passwd = config::byKey('password', __CLASS__);
+		$port = config::byKey('containerport', __CLASS__);
+		if (empty($device))
+                	throw new Exception(__('Nom du device non renseigné', __FILE__));
+                else if (empty($user) or empty($passwd))
+                        throw new Exception(__('Login ou password non renseignés', __FILE__));
+        	if (empty($port))
+                	$port = '3000';
+
+		$compose = file_get_contents($path . '/resources/' . $yaml);
+		$compose = str_replace('#store#', $store_dir, $compose);
+		$compose = str_replace('#device#', $device, $compose);
+		$compose = str_replace('#user#', $user, $compose);
+		$compose = str_replace('#password#', $passwd, $compose);
+		$compose = str_replace('#port#', $port, $compose);
+    		mkdir ($store_dir,0755,true);
+		file_put_contents($file, $compose);
+	} else if ($action == 'uninstall') {
+		shell_exec(system::getCmdSudo() . ' rm -f '. $yaml);
+	}
+	return $file;
+  }
+
+  public static function installContainer() {
+	try {
+ 	 	if (config::byKey('eufy::opInProgress', __CLASS__, '') == 1)
+			throw new Exception(__('Installation du container déjà en cours, merci de patienter', __FILE__));
+		config::save('eufy::opInProgress', 1, __CLASS__);
+		eufy::setupContainer('install');
+		config::save('eufy::opInProgress', 0, __CLASS__);
+         } catch (Exception $e) {
+		config::save('eufy::opInProgress', 0, __CLASS__);
+	        event::add('jeedom::alert', array('level' => 'warning', 'page' => 'eufy',
+               	'message' => __($e->getMessage(), __FILE__)));
+	 }
+  }
+
   // install | uninstall
   public static function setupContainer($action)
   {
-	$device = "'" . config::byKey('devicename', __CLASS__) . "'";
-        $user = "'" . config::byKey('username', __CLASS__) . "'";
-	$passwd = "'" . config::byKey('password', __CLASS__) . "'";
-	$port = config::byKey('containerport', __CLASS__);
+	$msg = $action . ' du conteneur eufy merci de patienter';
+	log::add('eufy', 'info', "Début de l'opération " . $action . '_container');
+	event::add('jeedom::alert', array('level' => 'info', 'page' => 'eufy',
+       		'message' => __($msg, __FILE__)));
+	$eufy = 'bropat/eufy-security-ws';
+	$yaml = eufy::handleYaml($action);
 
-	$log = __DIR__ . '/../../../../log/eufy_service_setup';
-        $script =  __DIR__ . '/../../resources/eufyctl.sh' ;
-	$msg = 'Lancement du service Eufy: ' . $action ;
+        if (shell_exec(system::getCmdSudo() . ' which docker | wc -l') == 0)
+         	throw new Exception(__('Docker non installé', __FILE__));
 
-        log::add(__CLASS__, 'warning', $msg);
-
-        if ($action == 'install') {
-		if (empty($device))
-                	throw new Exception(__('Nom du device non renseigné', __FILE__));
-		else if (empty($user) or empty($passwd))
-			throw new Exception(__('Login ou password non renseignés', __FILE__));
+	if (shell_exec(system::getCmdSudo() . ' which docker-compose | wc -l') == 0)
+                throw new Exception(__('docker-compose non installé', __FILE__));
+	$cid  = shell_exec(system::getCmdSudo() . " docker ps -a | grep -i eufy|awk '{ print $1 }'");
+	$image = shell_exec(system::getCmdSudo() . ' docker images | grep ' . $eufy);
+	log::add('eufy', 'debug','container id: '. $cid);
+	switch ($action) {
+	   case 'install':
+		if ($cid != "")
+			throw new Exception(__("Le container n'est pas arrêté", __FILE__));
+		if ($image != "")
+			 throw new Exception(__("L'image est déjà installée", __FILE__));
+		shell_exec(system::getCmdSudo() . ' docker pull ' . $eufy);
+		break;
+	   case 'start':
+		if ($image == "")
+			throw new Exception(__("L'image n'est pas installée", __FILE__));
+		if ($cid != "")
+                        throw new Exception(__('Le container est déjà démarré', __FILE__));
+		$cid = shell_exec(system::getCmdSudo() . ' docker compose -f '. $yaml .' up -d');
+		log::add('eufy', 'debug','container id: '. $cid);
+		break;
+	   case 'stop':
+		if ($cid == "")
+			throw new Exception(__("Le container n'est pas démarré", __FILE__));
+		shell_exec(system::getCmdSudo() . ' docker compose -f '. $yaml .' down');
+		break;
+	   case 'uninstall':
+		if ($cid != "")
+			throw new Exception(__("Le container n'est pas arrêté", __FILE__));
+		shell_exec(system::getCmdSudo() . ' docker rmi '. $eufy);
 	}
-	if (empty($port))
-		$port = '3000';
-
-        if (shell_exec(system::getCmdSudo() . 'test -f ' . $script) != 0)
-                throw new Exception(__('Script non trouvé: ' . $script, __FILE__));
-
-    	if (shell_exec(system::getCmdSudo() . ' which docker | wc -l') == 0)
-		throw new Exception(__('Docker non installé', __FILE__));
-
-	event::add('jeedom::alert', array('level' => 'warning', 'page' => 'plugin', 
-		'message' => __($msg, __FILE__) ));
-
-	$cmdline = $script . ' ' . $action . ' ' . $device . ' ' . $user . ' ' . $passwd . ' ' . $port;
-        log::add(__CLASS__, 'debug',  'cmdline: ' . $cmdline);
-
-	shell_exec($cmdline . ' > ' . $log);
-
-	$result = shell_exec('grep OK '. $log);
-	log::add(__CLASS__, 'debug', 'result= '. $result);
-
-	if (is_null($result)) {
-               $msg=$action . ': Echec vérifier la log';
-                event::add('jeedom::alert', array('level' => 'error', 'page' => 'plugin',
-                'message' => __($msg, __FILE__)));
-	} else {
-		$msg=$action . ': Succès';
-                event::add('jeedom::alert', array('level' => 'warning', 'page' => 'plugin',
-                'message' => __($msg, __FILE__)));
-	}
-        log::add(__CLASS__, 'warning', $msg);
+	log::add('eufy', 'info', "Fin de l'opération " . $action . '_container');
+	event::add('jeedom::alert', array('level' => 'info', 'page' => 'eufy',
+		'message' => __("Opération " . $action . " terminée", __FILE__)));
   }
 }
 
 
 class eufyCmd extends cmd {
-  /*     * *************************Attributs****************************** */
-
-  /*
-  public static $_widgetPossibility = array();
-  */
-
-  /*     * ***********************Methode static*************************** */
-
-
-  /*     * *********************Methode d'instance************************* */
-
-  /*
-  * Permet d'empêcher la suppression des commandes même si elles ne sont pas dans la nouvelle configuration de l'équipement envoyé en JS
-  public function dontRemoveCmd() {
-    return true;
-  }
-  */
 
  /* helper */
   public static function getCommandsFileContent(string $filePath) {

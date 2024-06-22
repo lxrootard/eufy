@@ -1,0 +1,35 @@
+#!/bin/bash
+#
+# Connect 2 eufy-security-client:
+# $ docker exec -it <container_id> /bin/sh
+# $ node /usr/src/app/dist/bin/client.js
+#
+#set -x
+image='bropat/eufy-security-ws'
+store=`dirname $0`/../data/store
+
+container_id=`sudo docker ps -a | grep -i $image|awk '{ print $1 }'`
+[ ! -f $store/docker-compose.yml ] && echo 'eufy image not installed, yaml file not found' && exit 1;
+case $1 in
+        start)
+        	echo 'starting image' $image
+		docker compose -f $store/docker-compose.yml up -d ;;
+        stop)
+                [ "$container_id" == "" ] && echo $image 'not running' && exit 1;
+                echo 'stopping container ' $container_id
+		docker compose -f $store/docker-compose.yml down ;;
+        status)
+                echo "image: " `sudo docker images |grep $image`
+                [ "$container_id" == "" ] && container_id='not running' ;
+                echo "container: " $container_id ;;
+	logs)
+		[ "$container_id" == "" ] && echo $image 'not running' && exit 1;
+		docker logs $container_id ;;
+        restart)
+                $0 stop
+                $0 start ;;
+        *)
+                echo "usage: $0 {start|stop|restart|status|logs}"
+                exit 1 ;;
+esac
+

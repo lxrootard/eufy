@@ -16,37 +16,47 @@
 Install the plugin and its dependencies first.
 <br>Note: This action does NOT install the `eufy-security-ws` image.
 <br>Choose either local or remote docker mode:
-#### 1. Local mode
-Local mode requires docker already installed and configured.
-<br>If it's not the case install the `docker management` official plugin or from the command line:
 
-`$ apt-get install docker.io`
+#### 1. Common parameters
+- Docker IP: `eufy-security-ws` container host IP, 127.0.0.1 by default
+- Docker Port: `eufy-security-ws` container port, 3000 by default
+- Test communication: Check connexion to `eufy-security-ws` container
+
+Notes:
+- The Eufy daemon won't start if the `eufy-security-ws` container can't connect to the Eufy Cloud service
+- The `Version` field displays the container version
+
+#### 2. Local mode
+Local mode requires docker already installed and configured.
+<br>If it's not the case install the `docker management` official plugin or from the command line
+see the [docker webpage](https://docs.docker.com/engine/install/debian)
+
+Extra parameters:
+- Device: name of your phone in the Eufy app, used to connect the Eufy Cloud server
+- User and password: it's strongly advised to create a dedicated user
 
 Post-installation setup:
 
 - Install/uninstall Eufy: install/uninstall `eufy-security-ws` image
 - Start/stop Eufy: start/stop the `eufy-security-ws` container
-- Device name: Eufy `TRUSTED_DEVICE_NAME` used to connect to Cloud server
-- User/password: `Eufy-WS` Cloud service credentials
 
-#### 2. Remote mode (expert)
-Assumes an already running `eufy-security-ws` container.
-<br>Optionally you can copy and use the `resources/eufyctl.sh` script to install and test the `eufy-security-ws` image maneually on a remote server:
+#### 3. Local mode using the command line (expert)
+You can also use the `resources/eufy` script to install and manage the `eufy-security-ws` image from the command line:
 
-`eufyctl.sh install|uninstall|status|test|stop|start <device> <login> <passwd> [ port ]`
- 
-####  3. Common parameters
-- Docker IP: `eufy-security-ws` container host IP, 127.0.0.1 by default
-- Docker Port: `eufy-security-ws` container port, 3000 by default
-- Test communication: Check connexion to `eufy-security-ws` container
+`eufy install|uninstall|status|stop|start|logs` 
 
-Notes: 
-- The Eufy daemon won't start if the `eufy-security-ws` container can't connect to the Eufy Cloud service
-- The `Version` field displays the container version 
+#### 4. Remote mode (expert)
 
-####  4. Connectivity issues
+Here are the files to adapt and copy on the remote docker:
+
+```
+resources/data/store/docker-compose.yaml
+resources/data/store/eufy
+```
+
+####  5. Connectivity issues
 If something goes wrong first run:
-<br>`resources/eufyctl.sh test`
+<br>`python3 resources/test_eufy.py`
 <br>
 <br> you should get something like this:
 

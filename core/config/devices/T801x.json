@@ -98,7 +98,57 @@
 					"mobile": "line"
 				}
 			},
-			"8": {
+                        "8": {
+                                "logicalId": "alarmType",
+                                "name": "Type d alarme",
+                                "type": "info",
+                                "subtype": "numeric",
+                                "isVisible": 0,
+                                "generic_type": "GENERIC_INFO",
+                                "template": {
+                                        "dashboard": "line",
+                                        "mobile": "line"
+                                }
+                        },
+                        "9": {
+                                "logicalId": "promptVolume",
+                                "name": "Volume Prompt",
+                                "type": "info",
+                                "subtype": "numeric",
+                                "isVisible": 1,
+                                "generic_type": "GENERIC_INFO",
+                                "template": {
+                                        "dashboard": "line",
+                                        "mobile": "line"
+                                }
+                        },
+			"10": {
+				"logicalId": "sdCapacity",
+				"name": "Capacité SD",
+				"type": "info",
+				"subtype": "numeric",
+				"isVisible": 1,
+				"unite": "Mb",
+				"generic_type": "GENERIC_INFO",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			},
+			"11": {
+				"logicalId": "sdCapacityAvailable",
+				"name": "Capacité SD disponible",
+				"type": "info",
+				"subtype": "numeric",
+				"isVisible": 1,
+				"unite": "Mb",
+				"generic_type": "GENERIC_INFO",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			},
+			"12": {
 				"logicalId": "alarmVolume:set",
 				"name": "Réglage volume",
 				"type": "action",
@@ -111,7 +161,7 @@
 					"maxValue": 26
 				}
 			},
-			"9": {
+			"13": {
 				"logicalId": "alarmTone:set",
 				"name": "Tonalités alarme",
 				"type": "action",
@@ -123,7 +173,7 @@
 					"listValue": "1|Sound 1;2|Sound 2"
 				}
 			},
-			"10": {
+			"14": {
 				"logicalId": "guardMode:set:0",
 				"name": "Away",
 				"type": "action",
@@ -131,7 +181,7 @@
 				"isVisible": 1,
 				"generic_type": "ALARM_MODE"
 			},
-			"11": {
+			"15": {
 				"logicalId": "guardMode:set:1",
 				"name": "Home",
 				"type": "action",
@@ -139,7 +189,7 @@
 				"isVisible": 1,
 				"generic_type": "ALARM_MODE"
 			},
-			"12": {
+			"16": {
 				"logicalId": "guardMode:set:63",
 				"name": "Disarmed",
 				"type": "action",
@@ -147,7 +197,7 @@
 				"isVisible": 1,
 				"generic_type": "ALARM_MODE"
 			},
-			"13": {
+			"17": {
 				"logicalId": "guardMode:set:2",
 				"name": "Scheduled",
 				"type": "action",
@@ -155,7 +205,7 @@
 				"isVisible": 0,
 				"generic_type": "ALARM_MODE"
 			},
-			"14": {
+			"18": {
 				"logicalId": "guardMode:set:47",
 				"name": "Geofencing",
 				"type": "action",
@@ -163,7 +213,7 @@
 				"isVisible": 0,
 				"generic_type": "ALARM_MODE"
 			},
-			"15": {
+			"19": {
 				"logicalId": "guardMode:set:3",
 				"name": "Custom1",
 				"type": "action",
@@ -171,7 +221,7 @@
 				"isVisible": 1,
 				"generic_type": "ALARM_MODE"
 			},
-			"16": {
+			"20": {
 				"logicalId": "guardMode:set:4",
 				"name": "Custom2",
 				"type": "action",
@@ -179,7 +229,7 @@
 				"isVisible": 0,
 				"generic_type": "ALARM_MODE"
 			},
-			"17": {
+			"21": {
 				"logicalId": "guardMode:set:5",
 				"name": "Custom3",
 				"type": "action",
@@ -187,7 +237,7 @@
 				"isVisible": 0,
 				"generic_type": "ALARM_MODE"
 			},
-			"18": {
+			"22": {
 				"logicalId": "chime",
 				"name": "Carillon",
 				"type": "action",
@@ -198,7 +248,7 @@
 					"icon": "<i class=\"fas fa-concierge-bell\"></i>"
 				}
 			},
-			"19": {
+			"23": {
 				"logicalId": "reboot",
 				"name": "Reboot",
 				"type": "action",
@@ -209,7 +259,7 @@
 					"icon": "<i class=\"kiko-reload-arrow\"></i>"
 				}
 			},
-			"20": {
+			"24": {
 				"logicalId": "trigger_alarm",
 				"name": "Alarme On",
 				"type": "action",
@@ -220,7 +270,7 @@
 					"icon": "<i class=\"fas fa-bell\"></i>"
 				}
 			},
-			"21": {
+			"25": {
 				"logicalId": "reset_alarm",
 				"name": "Alarme Off",
 				"type": "action",
@@ -230,7 +280,34 @@
 				"display": {
 					"icon": "<i class=\"fas fa-bell-slash\"></i>"
 				}
-			}
+			},
+                        "26": {
+                                "logicalId": "alarmType:set",
+                                "name": "Réglage type d alarme",
+                                "type": "action",
+                                "subtype": "slider",
+                                "isVisible": 0,
+                                "generic_type": "CAMERA_PRESET",
+                                "configuration": {
+                                        "params": "[#slider#]",
+                                        "minValue": 0,
+                                        "maxValue": 13
+                                }
+                        },
+                        "27": {
+                                "logicalId": "promptVolume:set",
+                                "name": "Réglage volume prompt",
+                                "type": "action",
+                                "subtype": "slider",
+                                "isVisible": 1,
+                                "generic_type": "SET_VOLUME",
+                                "configuration": {
+                                        "params": "[#slider#]",
+                                        "minValue": 0,
+                                        "maxValue": 26
+                                }
+                        }
+
 		}
 	}
 ]

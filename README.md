@@ -80,6 +80,9 @@ Also check the [Jeedom community blog](https://community.jeedom.com/tag/plugin-e
 tag: `#plugin-eufy`
 
 ## ChangeLog
+* v2.6 [lxrootard](https://github.com/lxrootard)
+<br> - Added new commands for T801x
+<br> - New installer using `docker-compose`
 * v2.5 [lxrootard](https://github.com/lxrootard)
 <br> - Added support for T8170
 <br> - Bugfix

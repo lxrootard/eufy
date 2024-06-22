@@ -1,4 +1,5 @@
 core/config/common.config.php
+data/store
 .project
 .DS_Store
 Thumbs.db

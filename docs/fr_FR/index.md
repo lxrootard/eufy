@@ -16,37 +16,48 @@
 Installer le plugin et ses dépendances.
 <br>Note: L'installation des dépendances n'installe PAS l'image `eufy-security-ws`.
 <br>Vous avez le choix entre les modes local et distant pour docker:
-#### 1. Mode local
-L'installation du mode local a pour prérequis docker déjà installé et configuré.
-<br>Si ce n'est pas le cas installer le plugin officiel docker management ou en ligne de commande:
 
-`$ apt-get install docker.io`
+#### 1. Paramètres communs
+- IP Docker: adresse IP du container `eufy-security-ws`, 127.0.0.1 par défaut
+- Port Docker: port du container `eufy-security-ws`, 3000 par défaut
+- Tester: Vérifier la présence du container `eufy-security-ws` et sa connexion au service Cloud Eufy
+
+Notes:
+- Le daemon Eufy ne démarrera pas si le container `eufy-security-ws` ne peut pas se connecter au service Cloud Eufy
+- La version du container est indiquée dans le champ `Version`
+
+#### 2. Mode local
+L'installation du mode local a pour prérequis docker déjà installé et configuré.
+<br>Si ce n'est pas le cas installer le plugin officiel docker management ou en ligne de commande 
+cf le [site officiel](https://docs.docker.com/engine/install/debian)
+
+Paramètres:
+- Device: nom de votre téléphone dans l'app Eufy, utilisé pour se connecter au serveur Cloud Eufy
+- Utilisateur et mot de passe: il est conseillé de créer un utilisateur dédié
 
 Configuration post-installation:
 
 - Installer/désinstaller Eufy: installer/désinstaller l'image `eufy-security-ws`
 - Démarrer/arrêter Eufy: démarrer/arrêter le container `eufy-security-ws`
-- Device: paramètre Eufy-WS `TRUSTED_DEVICE_NAME` utilisé pour se connecter au serveur Cloud Eufy
-- User/password: identifiants du service Cloud `Eufy-WS`
 
-#### 2. Mode distant (expert)
-Le container `eufy-security-ws` doit déjà être installé sur un docker distant.
-<br>Vous pouvez copier et utiliser le script `resources/eufyctl.sh` pour installer et tester manuellement l'image `eufy-security-ws` sur un serveur distant:
+#### 3. Mode local en ligne de commande (expert)
+Vous pouvez aussi utiliser le script `resources/eufy` pour installer et gérer l'image `eufy-security-ws`
+en ligne de commande:
 
-`eufyctl.sh install|uninstall|status|test|stop|start <device> <login> <passwd> [ port ]`
- 
-####  3. Paramètres communs
-- IP Docker: adresse IP du container `eufy-security-ws`, 127.0.0.1 par défaut
-- Port Docker: port du container `eufy-security-ws`, 3000 par défaut
-- Tester: Vérifier la présence du container `eufy-security-ws` et sa connexion au service Cloud Eufy
+`eufy install|uninstall|status|stop|start|logs`
 
-Notes: 
-- Le daemon Eufy ne démarrera pas si le container `eufy-security-ws` ne peut pas se connecter au service Cloud Eufy
-- La version du container est indiquée dans le champ `Version`
+#### 4. Mode distant (expert)
 
-####  4. Soucis de connexion
+Voici les fichiers à adapter et copier sur le docker distant:
+
+```
+resources/data/store/docker-compose.yaml
+resources/data/store/eufy
+```
+
+####  5. Soucis de connexion
 En cas de problème vérifier la connexion avec le container via la commande suivante:
-<br>`resources/eufyctl.sh test`
+<br>`python3 resources/test_eufy.py`
 <br>
 <br> Vous devriez obtenir l'output suivant:
 
@@ -55,7 +66,6 @@ En cas de problème vérifier la connexion avec le container via la commande sui
 ```
 
 Note: `connected` et `pushConnected` doivent être à `true`
-<br>Voir également la log `eufy_service_setup` 
 
 ### Synchronisation
 ![Configuration](../images/eufy2.png)

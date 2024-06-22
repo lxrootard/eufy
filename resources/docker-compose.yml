@@ -1,0 +1,23 @@
+services:
+  eufy-security-ws:
+    container_name: eufy
+    image: bropat/eufy-security-ws
+#    network_mode: host
+    privileged: true
+    restart: unless-stopped
+    environment:
+      - TRUSTED_DEVICE_NAME=#device#
+      - USERNAME=#user#
+      - PASSWORD=#password#
+      - COUNTRY=FR
+      - LANGUAGE=fr
+    volumes:
+      - #store#:/data
+    ports:
+      - #port#:3000 # port for websocket interface
+    healthcheck:
+      test: 'cat #store#/data/persistent.json | awk "/cloud_token/{ print $$0 }" || exit 1'
+      interval: 1m
+      timeout: 1s
+      start_period: 5s
+      retries: 3

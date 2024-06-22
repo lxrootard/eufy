@@ -35,7 +35,8 @@ try {
     	ajax::success();
     }
     if (init('action') == 'installEufy') {
-	eufy::setupContainer('install');
+	eufy::executeAsync ('installContainer');
+	// eufy::setupContainer('install');
 	ajax::success();
     }
     if (init('action') == 'uninstallEufy') {
@@ -44,7 +45,7 @@ try {
     }
     if (init('action') == 'startEufy') {
         eufy::setupContainer('start');
-        ajaxws::success();
+        ajax::success();
     }
     if (init('action') == 'stopEufy') {
         eufy::setupContainer('stop');
