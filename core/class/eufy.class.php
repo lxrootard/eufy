@@ -20,8 +20,18 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
 
 class eufy extends eqLogic {
 
-  public static function deamonRunning() {
-	return true;
+  public static function dependancy_end() {
+    $mode = config::byKey('eufy_mode', __CLASS__);
+    log::add(__CLASS__, 'info', "Configuration du container, mode sélectionné: " . $mode);
+    if ($mode == 'local') {
+    	if (shell_exec(system::getCmdSudo() . ' which docker | wc -l') == 0)
+		throw new Exception(__('Docker non installé', __FILE__));
+
+    	$compose_version=shell_exec(system::getCmdSudo() . " docker compose version|sed 's:.*version ::g'");
+    	if ($compose_version == "")
+		throw new Exception(__('plugin docker compose non installé', __FILE__));
+    	eufy::updateYaml();
+    }
   }
 
   public static function deamon_info() {
@@ -307,7 +317,7 @@ class eufy extends eqLogic {
 	return $urlRoot . $imgRoot . $img . '?ts=' . @filemtime($fname);
     }
     else
-	return $urlRoot . '/data/no_snapshot.png';
+	return $urlRoot . '/resources/no_snapshot.png';
   }
 
   public static function sendEvent($cmd, $value) {
@@ -564,36 +574,33 @@ class eufy extends eqLogic {
 
 
   // init yaml file
-  public static function handleYaml ($action)
+  public static function updateYaml ()
   {
         $path= realpath(__DIR__ . '/../..');
         $store_dir = $path . '/data/store';
         $yaml = 'docker-compose.yml';
-        $file = $store_dir . '/' . $yaml ;
+        $file = $path . '/data/' . $yaml ;
 
-	if($action == 'install') {
-		$device = config::byKey('devicename', __CLASS__);
-		$user = config::byKey('username', __CLASS__);
-		$passwd = config::byKey('password', __CLASS__);
-		$port = config::byKey('containerport', __CLASS__);
-		if (empty($device))
-                	throw new Exception(__('Nom du device non renseigné', __FILE__));
-                else if (empty($user) or empty($passwd))
-                        throw new Exception(__('Login ou password non renseignés', __FILE__));
-        	if (empty($port))
-                	$port = '3000';
+	log::add('eufy', 'debug', "Mise à jour du fichier yaml " . $file);
+	$device = config::byKey('devicename', __CLASS__);
+	$user = config::byKey('username', __CLASS__);
+	$passwd = config::byKey('password', __CLASS__);
+	$port = config::byKey('containerport', __CLASS__);
+	if (empty($device))
+               	throw new Exception(__('Nom du device non renseigné', __FILE__));
+	else if (empty($user) or empty($passwd))
+ 		throw new Exception(__('Login ou password non renseignés', __FILE__));
+        if (empty($port))
+               	$port = '3000';
 
-		$compose = file_get_contents($path . '/resources/' . $yaml);
-		$compose = str_replace('#store#', $store_dir, $compose);
-		$compose = str_replace('#device#', $device, $compose);
-		$compose = str_replace('#user#', $user, $compose);
-		$compose = str_replace('#password#', $passwd, $compose);
-		$compose = str_replace('#port#', $port, $compose);
-    		mkdir ($store_dir,0755,true);
-		file_put_contents($file, $compose);
-	} else if ($action == 'uninstall') {
-		shell_exec(system::getCmdSudo() . ' rm -f '. $yaml);
-	}
+	$compose = file_get_contents($path . '/resources/' . $yaml);
+	$compose = str_replace('#store#', $store_dir, $compose);
+	$compose = str_replace('#device#', $device, $compose);
+	$compose = str_replace('#user#', $user, $compose);
+	$compose = str_replace('#password#', $passwd, $compose);
+	$compose = str_replace('#port#', $port, $compose);
+    	mkdir ($store_dir,0755,true);
+	file_put_contents($file, $compose);
 	return $file;
   }
 
@@ -605,9 +612,10 @@ class eufy extends eqLogic {
 		eufy::setupContainer('install');
 		config::save('eufy::opInProgress', 0, __CLASS__);
          } catch (Exception $e) {
+		log::add('eufy', 'debug', "Erreur en cours d'installation: " . $e->getMessage());
 		config::save('eufy::opInProgress', 0, __CLASS__);
-	        event::add('jeedom::alert', array('level' => 'warning', 'page' => 'eufy',
-               	'message' => __($e->getMessage(), __FILE__)));
+	        event::add('jeedom::alert', array('level' => 'error', 'page' => 'eufy',
+               	'message' => $e->getMessage()));
 	 }
   }
 
@@ -617,15 +625,9 @@ class eufy extends eqLogic {
 	$msg = $action . ' du conteneur eufy merci de patienter';
 	log::add('eufy', 'info', "Début de l'opération " . $action . '_container');
 	event::add('jeedom::alert', array('level' => 'info', 'page' => 'eufy',
-       		'message' => __($msg, __FILE__)));
+       		'message' => $msg));
 	$eufy = 'bropat/eufy-security-ws';
-	$yaml = eufy::handleYaml($action);
-
-        if (shell_exec(system::getCmdSudo() . ' which docker | wc -l') == 0)
-         	throw new Exception(__('Docker non installé', __FILE__));
-
-	if (shell_exec(system::getCmdSudo() . ' which docker-compose | wc -l') == 0)
-                throw new Exception(__('docker-compose non installé', __FILE__));
+	$yaml = eufy::updateYaml();
 	$cid  = shell_exec(system::getCmdSudo() . " docker ps -a | grep -i eufy|awk '{ print $1 }'");
 	$image = shell_exec(system::getCmdSudo() . ' docker images | grep ' . $eufy);
 	log::add('eufy', 'debug','container id: '. $cid);
@@ -642,22 +644,30 @@ class eufy extends eqLogic {
 			throw new Exception(__("L'image n'est pas installée", __FILE__));
 		if ($cid != "")
                         throw new Exception(__('Le container est déjà démarré', __FILE__));
+	        if (!file_exists($yaml))
+                	throw new Exception(__('Fichier yaml non trouvé', __FILE__));
+
 		$cid = shell_exec(system::getCmdSudo() . ' docker compose -f '. $yaml .' up -d');
 		log::add('eufy', 'debug','container id: '. $cid);
 		break;
 	   case 'stop':
 		if ($cid == "")
 			throw new Exception(__("Le container n'est pas démarré", __FILE__));
+                if (!file_exists($yaml))
+                        throw new Exception(__('Fichier yaml non trouvé', __FILE__));
+
 		shell_exec(system::getCmdSudo() . ' docker compose -f '. $yaml .' down');
 		break;
 	   case 'uninstall':
 		if ($cid != "")
 			throw new Exception(__("Le container n'est pas arrêté", __FILE__));
 		shell_exec(system::getCmdSudo() . ' docker rmi '. $eufy);
+                log::add('eufy', 'debug', "Suppression du fichier " . $yaml);
+                shell_exec(system::getCmdSudo() . ' rm -f '. $yaml);
 	}
 	log::add('eufy', 'info', "Fin de l'opération " . $action . '_container');
 	event::add('jeedom::alert', array('level' => 'info', 'page' => 'eufy',
-		'message' => __("Opération " . $action . " terminée", __FILE__)));
+		'message' => "Opération " . $action . " terminée"));
   }
 }
 

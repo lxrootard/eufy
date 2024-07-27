@@ -16,7 +16,7 @@ services:
     ports:
       - #port#:3000 # port for websocket interface
     healthcheck:
-      test: 'cat #store#/data/persistent.json | awk "/cloud_token/{ print $$0 }" || exit 1'
+      test: 'cat #store#/persistent.json | awk "/cloud_token/{ print $$0 }" || exit 1'
       interval: 1m
       timeout: 1s
       start_period: 5s

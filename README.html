@@ -17,6 +17,7 @@
 <li>T8002 Homebase E </li>
 <li>T8010 Homebase 2</li>
 <li>T8030 Homebase 3</li>
+<li>T81A0 Solar Wall Light Cam S120</li>
 <li>T8111 Camera</li>
 <li>T8113 Camera 2C </li>
 <li>T8114 Camera 2</li>
@@ -41,7 +42,7 @@ see <a href="https://github.com/fuatakgun/eufy_security/issues/22">this thread</
 <h2>Untested devices</h2>
 
 <p>Other Eufy models should also work but might not be recognized incompletely or require a config file.
-<br>See the full list <a href="https://bropat.github.io/eufy-security-client/#/supported_devices">here</a>
+See the full list <a href="https://bropat.github.io/eufy-security-client/#/supported_devices">here</a>
 <br>If your model is not listed above or some controls are missing please send me the results of these commands:</p>
 
 <pre><code>$ cd /var/www/html/plugins/eufy
@@ -64,13 +65,26 @@ optional arguments:
 <h2>Troubleshooting</h2>
 
 <ul>
+<li>Docker or docker compose not found
+<br> <code>docker</code> and the <code>docker compose</code> plugin must be installed and working properly before installing the plugin.
+See the <a href="https://docs.docker.com/compose/install/linux">docker official documentation</a>
+<code>
+docker --version
+docker compose version
+</code></li>
 <li>Container install failed or container communication indicator is red
-<br> Verify docker is working properly before installing the plugin</li>
+<br>Check the container status using the script in <code>resources</code> :
+<code>
+eufy status # check the image and container status
+eufy info # check the image container status (extended info)
+eufy test # check if the container is connected to the eufy cloud
+eufy logs # get the container logs
+</code></li>
 <li>The daemon doesn't start
 <br> Make sure both container and Cloud communication indicators are green in the Configuration section
-<br> Check your container with the <code>test_eufy</code> script as described above</li>
+<br> Check your container with the <code>eufy test</code> command as described above</li>
 <li>Synchronization failed, devices are not found
-<br> Quotes are not supported in equipment names</li>
+<br> Apostrophes and quotes are not supported in equipment names</li>
 <li>Incompatible schema error, commands not working
 <br> Make sure you're using the latest <code>eufy-security-ws</code> <a href="https://github.com/bropat/eufy-security-ws/releases">release</a>.
 <br> Your container version is displayed in the plugin config page when hitting the <code>Tester</code> button.
@@ -96,6 +110,10 @@ tag: <code>#plugin-eufy</code></p>
 <h2>ChangeLog</h2>
 
 <ul>
+<li>v2.7 <a href="https://github.com/lxrootard">lxrootard</a>
+<br> - Fix in the installation procedure
+<br> - eufy script improvements
+<br> - Added support for T81A0</li>
 <li>v2.6 <a href="https://github.com/lxrootard">lxrootard</a>
 <br> - Added new commands for T801x
 <br> - New installer using <code>docker-compose</code></li>

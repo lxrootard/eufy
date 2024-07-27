@@ -13,13 +13,14 @@
 ### Configuration
 ![Configuration](../images/eufy3.png)
 
-Install the plugin and its dependencies first.
+Install the plugin and its dependencies.
+<br>Choose either local or remote docker mode.
+<br>Don't forget to save the configuration BEFORE launching the dependencies installation.
 <br>Note: This action does NOT install the `eufy-security-ws` image.
-<br>Choose either local or remote docker mode:
 
 #### 1. Common parameters
-- Docker IP: `eufy-security-ws` container host IP, 127.0.0.1 by default
-- Docker Port: `eufy-security-ws` container port, 3000 by default
+- Docker IP: `eufy-security-ws` container host IP, `127.0.0.1` by default
+- Docker Port: `eufy-security-ws` container port, `3000` by default
 - Test communication: Check connexion to `eufy-security-ws` container
 
 Notes:
@@ -27,9 +28,10 @@ Notes:
 - The `Version` field displays the container version
 
 #### 2. Local mode
-Local mode requires docker already installed and configured.
-<br>If it's not the case install the `docker management` official plugin or from the command line
-see the [docker webpage](https://docs.docker.com/engine/install/debian)
+Local mode requires `docker` and the `docker compose` plugin already installed and configured.
+<br>If it's not the case install the `docker management` official plugin or from the command line.
+see the [docker webpage](https://docs.docker.com/engine/install/debian) for details.
+<br>For more information see [here](../../README.md#Troubleshooting)
 
 Extra parameters:
 - Device: name of your phone in the Eufy app, used to connect the Eufy Cloud server
@@ -41,22 +43,25 @@ Post-installation setup:
 - Start/stop Eufy: start/stop the `eufy-security-ws` container
 
 #### 3. Local mode using the command line (expert)
-You can also use the `resources/eufy` script to install and manage the `eufy-security-ws` image from the command line:
+Once the dependencies are installed you can also use the `eufy` script found in `resources` to install,check 
+and manage the `eufy-security-ws` image from the command line:
 
-`eufy install|uninstall|status|stop|start|logs` 
+`eufy start|stop|restart|status|info|test|logs` 
 
 #### 4. Remote mode (expert)
 
 Here are the files to adapt and copy on the remote docker:
 
 ```
-resources/data/store/docker-compose.yaml
-resources/data/store/eufy
+resources/docker-compose.yaml
+resources/eufy
 ```
 
 ####  5. Connectivity issues
-If something goes wrong first run:
-<br>`python3 resources/test_eufy.py`
+If something goes wrong first run the `eufy` script available in `resources`:
+<br>`eufy test`
+<br>Or:
+<br>`python3 resources/test_eufy.py -u server:port`
 <br>
 <br> you should get something like this:
 
@@ -65,13 +70,12 @@ If something goes wrong first run:
 ```
 
 Note that `connected` and `pushConnected` need to be `true`
-<br>Also see see `eufy_service_setup` log 
 
 ### Synchronization
 ![Configuration](../images/eufy2.png)
 
-Note: for now only some devices have been tested. If your device is not supported you can send me the outputs from the `resources/test_eufy.py`
-<br>Please see [here](../../README.md#Tested) for details.
+Note: for now only some devices have been tested. If your device is not supported you can send me the output 
+from the `test_eufy.py` program. Please see [here](../../README.md#Tested) for details.
 
 ### Health
 ![Configuration](../images/eufy1.png)

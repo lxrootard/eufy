@@ -23,8 +23,6 @@ if (!isConnect()) {
   include_file('desktop', '404', 'php');
   die();
 }
-
-$deamonRunning = eufy::deamonRunning();
 ?>
 
 <form class="form-horizontal">
@@ -36,7 +34,7 @@ $deamonRunning = eufy::deamonRunning();
          	<sup><i class="fas fa-question-circle tooltips" title="{{Mode du service Eufy}}"></i></sup>
            </label>
            <div class="col-lg-4">
-           	<select class="configKey form-control" data-l1key="mode">
+           	<select class="configKey form-control" data-l1key="eufy_mode">
              		<option value="local">{{docker local}}</option>
              		<option value="remote">{{docker distant}}</option>
            	</select>
@@ -125,7 +123,7 @@ $deamonRunning = eufy::deamonRunning();
   </fieldset>
 </form>
 <script>
-$('.configKey[data-l1key=mode]').off('change').on('change', function() {
+$('.configKey[data-l1key=eufy_mode]').off('change').on('change', function() {
     $('.eufyMode').hide()
     $('.eufyMode.' + $(this).value()).show()
 })

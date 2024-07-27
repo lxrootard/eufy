@@ -13,6 +13,7 @@
 - T8002 Homebase E 
 - T8010 Homebase 2
 - T8030 Homebase 3
+- T81A0 Solar Wall Light Cam S120
 - T8111 Camera
 - T8113 Camera 2C 
 - T8114 Camera 2
@@ -35,7 +36,7 @@ see [this thread](https://github.com/fuatakgun/eufy_security/issues/22)
 
 ## Untested devices
 Other Eufy models should also work but might not be recognized incompletely or require a config file.
-<br>See the full list [here](https://bropat.github.io/eufy-security-client/#/supported_devices)
+See the full list [here](https://bropat.github.io/eufy-security-client/#/supported_devices)
 <br>If your model is not listed above or some controls are missing please send me the results of these commands:
 
     $ cd /var/www/html/plugins/eufy
@@ -54,13 +55,26 @@ Help:
 	-u URL, --url URL     eufy service URL, default 127.0.0.1:3000
 
 ## Troubleshooting
+* Docker or docker compose not found
+<br> `docker` and the `docker compose` plugin must be installed and working properly before installing the plugin.
+See the [docker official documentation](https://docs.docker.com/compose/install/linux)
+```
+docker --version
+docker compose version
+```
 * Container install failed or container communication indicator is red
-<br> Verify docker is working properly before installing the plugin
+<br>Check the container status using the script in `resources` :
+```
+eufy status # check the image and container status
+eufy info # check the image container status (extended info)
+eufy test # check if the container is connected to the eufy cloud
+eufy logs # get the container logs
+```
 * The daemon doesn't start
 <br> Make sure both container and Cloud communication indicators are green in the Configuration section
-<br> Check your container with the `test_eufy` script as described above
+<br> Check your container with the `eufy test` command as described above
 * Synchronization failed, devices are not found
-<br> Quotes are not supported in equipment names
+<br> Apostrophes and quotes are not supported in equipment names
 * Incompatible schema error, commands not working
 <br> Make sure you're using the latest `eufy-security-ws` [release](https://github.com/bropat/eufy-security-ws/releases).
 <br> Your container version is displayed in the plugin config page when hitting the `Tester` button.
@@ -80,6 +94,10 @@ Also check the [Jeedom community blog](https://community.jeedom.com/tag/plugin-e
 tag: `#plugin-eufy`
 
 ## ChangeLog
+* v2.7 [lxrootard](https://github.com/lxrootard)
+<br> - Fix in the installation procedure
+<br> - eufy script improvements
+<br> - Added support for T81A0
 * v2.6 [lxrootard](https://github.com/lxrootard)
 <br> - Added new commands for T801x
 <br> - New installer using `docker-compose`

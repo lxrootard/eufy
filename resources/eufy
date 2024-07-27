@@ -6,22 +6,29 @@
 #
 #set -x
 image='bropat/eufy-security-ws'
-store=`dirname $0`/../data/store
+eufyfile=$(realpath "$0")
+data=$(dirname "$eufyfile")/../data
+res=$(dirname "$eufyfile")/../resources
 
 container_id=`sudo docker ps -a | grep -i $image|awk '{ print $1 }'`
-[ ! -f $store/docker-compose.yml ] && echo 'eufy image not installed, yaml file not found' && exit 1;
+[ ! -f $data/docker-compose.yml ] && echo 'eufy image not installed, yaml file not found' && exit 1;
 case $1 in
         start)
         	echo 'starting image' $image
-		docker compose -f $store/docker-compose.yml up -d ;;
+		docker compose -f $data/docker-compose.yml up -d ;;
         stop)
                 [ "$container_id" == "" ] && echo $image 'not running' && exit 1;
                 echo 'stopping container ' $container_id
-		docker compose -f $store/docker-compose.yml down ;;
+		docker compose -f $data/docker-compose.yml down ;;
         status)
                 echo "image: " `sudo docker images |grep $image`
                 [ "$container_id" == "" ] && container_id='not running' ;
-                echo "container: " $container_id ;;
+		echo "container: " $container_id ;;
+	info)
+		docker ps -a|grep $container_id ;;
+	test)
+		echo "test du container " $container_id
+		python3 $res/test_eufy.py ;;
 	logs)
 		[ "$container_id" == "" ] && echo $image 'not running' && exit 1;
 		docker logs $container_id ;;
@@ -29,7 +36,7 @@ case $1 in
                 $0 stop
                 $0 start ;;
         *)
-                echo "usage: $0 {start|stop|restart|status|logs}"
+                echo "usage: $0 {start|stop|restart|status|info|test|logs}"
                 exit 1 ;;
 esac
 

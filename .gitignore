@@ -1,5 +1,5 @@
 core/config/common.config.php
-data/store
+data/
 .project
 .DS_Store
 Thumbs.db
@@ -9,4 +9,3 @@ Thumbs.db
 *.new
 .remote-sync.json
 .vscode
-data/tmp
