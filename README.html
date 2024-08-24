@@ -66,12 +66,9 @@ optional arguments:
 
 <ul>
 <li>Docker or docker compose not found
-<br> <code>docker</code> and the <code>docker compose</code> plugin must be installed and working properly before installing the plugin.
-See the <a href="https://docs.docker.com/compose/install/linux">docker official documentation</a>
-<code>
-docker --version
-docker compose version
-</code></li>
+<br> <code>docker</code> prerequisites are now installed automatically using the <code>dependencies</code> button when the mode is set to <code>local</code></li>
+<li>debian12: <code>python_venv</code> is now installed automatically when the mode is set to <code>local</code></li>
+<li>Pi3 32bit latest image version not found: since <code>v1.8.0 armv7</code>  binary is not updated anymore, use <code>v1.7.1</code> </li>
 <li>Container install failed or container communication indicator is red
 <br>Check the container status using the script in <code>resources</code> :
 <code>
@@ -110,6 +107,11 @@ tag: <code>#plugin-eufy</code></p>
 <h2>ChangeLog</h2>
 
 <ul>
+<li>v2.8 <a href="https://github.com/lxrootard">lxrootard</a>
+<br> - Support for debian12
+<br> - Automatic docker prerequisites installation
+<br> - Improved eufy image management logging
+<br> - Added command motionDetectionType for T844x</li>
 <li>v2.7 <a href="https://github.com/lxrootard">lxrootard</a>
 <br> - Fix in the installation procedure
 <br> - eufy script improvements

@@ -19,14 +19,17 @@
 
 <p>Installer le plugin et ses dépendances.
 <br>Vous avez le choix entre les modes local et distant pour docker.
-<br>Ne pas oublier de sauver la configuration AVANT de lancer les dépendances.
-<br>Note: L'installation des dépendances n'installe PAS l'image <code>eufy-security-ws</code>.</p>
+<br>Commencez par sauver la configuration <b>AVANT</b> de lancer les dépendances.</p>
+
+<p>Note: 
+* L'installation des dépendances n'installe PAS l'image <code>eufy-security-ws</code>.</p>
 
 <h4>1. Paramètres communs</h4>
 
 <ul>
 <li>IP Docker: adresse IP du container <code>eufy-security-ws</code>, <code>127.0.0.1</code> par défaut</li>
 <li>Port Docker: port du container <code>eufy-security-ws</code>, <code>3000</code> par défaut</li>
+<li>Version cible: <code>latest</code> par défaut ou la version que vous souhaitez</li>
 <li>Tester: Vérifier la présence du container <code>eufy-security-ws</code> et sa connexion au service Cloud Eufy</li>
 </ul>
 
@@ -36,12 +39,11 @@
 
 <h4>2. Mode local</h4>
 
-<p>L'installation du mode local a pour prérequis <code>docker</code> et le plugin <code>docker compose</code> déjà installés et configurés.
-Si ce n'est pas le cas installer le plugin officiel docker management ou en ligne de commande 
-cf le <a href="https://docs.docker.com/engine/install/debian">site officiel</a>. 
-Pour plus de détails voir <a href="../../README.html#Troubleshooting">ici</a>.</p>
+<p>L'installation du mode local a pour prérequis les modules <code>docker</code>. Ils sont maintenant installés et configurés automatiquement.</p>
 
-<p>Paramètres:
+<p>Le plugin ne nécessite pas l'utilisation du <code>#plugin-docker2</code> mais il est possible d'importer le fichier généré <code>data/docker-compose.yml</code> si vous préférez gérer l'image vous même.</p>
+
+<p>Paramètres supplémentaires:
 - Device: nom de votre téléphone dans l'app Eufy, utilisé pour se connecter au serveur Cloud Eufy
 - Utilisateur et mot de passe: il est conseillé de créer un utilisateur dédié</p>
 
@@ -86,7 +88,7 @@ resources/eufy
 <p><img src="../images/eufy2.png" alt="Configuration" title="" /></p>
 
 <p>Note: pour l'instant seuls certains modèles ont été testés. Si votre modèle n'est pas suporté vous pouvez 
-m'envoyer le résutat du programme <code>test_eufy.py</code>. Voir <a href="../../README.html#Tested">ici</a> pour plus d'infos.</p>
+m'envoyer le résutat du programme <code>test_eufy.py</code>. Voir <a href="../../README.html#untested-devices">ici</a> pour plus d'infos.</p>
 
 <h3>Santé</h3>
 

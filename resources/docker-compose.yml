@@ -1,7 +1,7 @@
 services:
   eufy-security-ws:
     container_name: eufy
-    image: bropat/eufy-security-ws
+    image: bropat/eufy-security-ws:#version#
 #    network_mode: host
     privileged: true
     restart: unless-stopped

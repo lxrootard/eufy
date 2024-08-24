@@ -35,8 +35,8 @@ try {
     	ajax::success();
     }
     if (init('action') == 'installEufy') {
-	// eufy::executeAsync ('installContainer');
-	eufy::setupContainer('install');
+	eufy::executeAsync ('installContainer');
+	// eufy::setupContainer('install');
 	ajax::success();
     }
     if (init('action') == 'uninstallEufy') {

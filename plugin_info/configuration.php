@@ -34,7 +34,7 @@ if (!isConnect()) {
          	<sup><i class="fas fa-question-circle tooltips" title="{{Mode du service Eufy}}"></i></sup>
            </label>
            <div class="col-lg-4">
-           	<select class="configKey form-control" data-l1key="eufy_mode">
+           	<select class="configKey form-control" data-l1key="eufyMode">
              		<option value="local">{{docker local}}</option>
              		<option value="remote">{{docker distant}}</option>
            	</select>
@@ -44,19 +44,19 @@ if (!isConnect()) {
         <div class="form-group">
             <label class="col-lg-4 control-label">{{IP Docker}}</label>
             <div class="col-lg-4">
-                <input class="configKey form-control" data-l1key="containerip" />
+                <input class="configKey form-control" data-l1key="containerIP" />
             </div>
         </div>
         <div class="form-group">
             <label class="col-lg-4 control-label">{{Port Docker}}</label>
             <div class="col-lg-4">
-                <input class="configKey form-control" data-l1key="containerport" />
+                <input class="configKey form-control" data-l1key="containerPort" />
             </div>
         </div>
         <div class="form-group eufyMode local">
             <label class="col-lg-4 control-label">{{Device}}</label>
             <div class="col-lg-4">
-                <input class="configKey form-control" data-l1key="devicename"/>
+                <input class="configKey form-control" data-l1key="deviceName"/>
             </div>
         </div>
         <div class="form-group eufyMode local">
@@ -69,6 +69,14 @@ if (!isConnect()) {
             <label class="col-lg-4 control-label">{{Password}}</label>
             <div class="col-lg-4">
                 <input class="configKey inputPassword form-control" data-l1key="password"/>
+            </div>
+        </div>
+        <div class="form-group eufyMode local">
+            <label class="col-lg-4 control-label">{{Version cible}}
+                <sup><i class="fas fa-question-circle tooltips" title="{{Version du container eufy à installer, défaut: dernière version}}"></i></sup>
+	    </label>
+            <div class="col-lg-4">
+                <input class="configKey form-control" data-l1key="targetVersion"/>
             </div>
         </div>
 	<p/>
@@ -94,8 +102,8 @@ if (!isConnect()) {
             </div>
         </div>
         <div class="form-group">
-            <label class="col-md-4 control-label tooltips" style="position:relative;top:-5px;">{{Version}}
-                <sup><i class="fas fa-question-circle tooltips" title="{{Version du container Eufy}}"></i></sup>
+            <label class="col-md-4 control-label tooltips" style="position:relative;top:-5px;">{{Version installée}}
+                <sup><i class="fas fa-question-circle tooltips" title="{{Version installée du container Eufy}}"></i></sup>
             </label>
             <div class="col-md-7">
 		<span class="col-sm-1 label">
@@ -106,7 +114,7 @@ if (!isConnect()) {
 
     </div>
 
-    <div class="col-lg-6"> 
+    <div class="col-lg-6">
         <div class="form-group eufyMode local">
             <label class="col-md-4 control-label tooltips">{{Setup}}
                 <sup><i class="fas fa-question-circle tooltips" title="{{Setup du container Eufy}}"></i></sup>
@@ -123,31 +131,31 @@ if (!isConnect()) {
   </fieldset>
 </form>
 <script>
-$('.configKey[data-l1key=eufy_mode]').off('change').on('change', function() {
+$('.configKey[data-l1key=eufyMode]').off('change').on('change', function() {
     $('.eufyMode').hide()
     $('.eufyMode.' + $(this).value()).show()
 })
 
-$('#bt_installEufy').off('click').on('click', function() { 
-	$.ajax({ type: "POST", url: "plugins/eufy/core/ajax/eufy.ajax.php", 
+$('#bt_installEufy').off('click').on('click', function() {
+	$.ajax({ type: "POST", url: "plugins/eufy/core/ajax/eufy.ajax.php",
 		data: {
 			action: "installEufy"
 		},
       		dataType: 'json',
-		error: function(error) { 
+		error: function(error) {
 			$.fn.showAlert({ message: error.message, level: 'danger'
         		})
       		},
-      		success: function(data) { 
-			if (data.state != 'ok') { 
+      		success: function(data) {
+			if (data.state != 'ok') {
 				$.fn.showAlert({ message: data.result, level: 'danger'
           			})
           			return
         		} else {
-          			$('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click() 
-				$.fn.showAlert({ 
-					message: '{{Installation en cours}}', 
-					level: 'success', 
+          			$('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
+				$.fn.showAlert({
+					message: '{{Installation en cours}}',
+					level: 'success',
 					emptyBefore: true
           			})
         		}

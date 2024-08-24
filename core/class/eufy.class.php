@@ -21,17 +21,63 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
 class eufy extends eqLogic {
 
   public static function dependancy_end() {
-    $mode = config::byKey('eufy_mode', __CLASS__);
+    $mode = config::byKey('eufyMode', __CLASS__);
     log::add(__CLASS__, 'info', "Configuration du container, mode sélectionné: " . $mode);
     if ($mode == 'local') {
-    	if (shell_exec(system::getCmdSudo() . ' which docker | wc -l') == 0)
-		throw new Exception(__('Docker non installé', __FILE__));
-
-    	$compose_version=shell_exec(system::getCmdSudo() . " docker compose version|sed 's:.*version ::g'");
-    	if ($compose_version == "")
-		throw new Exception(__('plugin docker compose non installé', __FILE__));
-    	eufy::updateYaml();
+	eufy::installDocker();
+	config::save('containerIP', '127.0.0.1', __CLASS__);
+	config::save('containerPort', '3000', __CLASS__);
+	config::save('targetVersion', 'latest', __CLASS__);
     }
+  }
+
+  public static function installDocker() {
+   if ((shell_exec(system::getCmdSudo() . ' which docker | wc -l') != 1) ||
+      (shell_exec(system::getCmdSudo() . " docker compose version|sed 's:.*version ::g'") == "")) {
+        $log = log::getPathToLog('eufy_packages');
+        shell_exec(system::getCmdSudo() . ' echo "*** Installation de docker, merci de patienter ***"' . '>> ' . $log);
+        shell_exec(system::getCmdSudo() . ' apt-get update' . ' >> ' . $log . ' 2>&1');
+        shell_exec(system::getCmdSudo() . ' apt-get install ca-certificates curl' . ' >> ' . $log . ' 2>&1');
+        shell_exec(system::getCmdSudo() . ' install -m 0755 -d /etc/apt/keyrings' . ' >> ' . $log . ' 2>&1');
+        shell_exec(system::getCmdSudo() . ' curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc' . ' >> ' . $log . ' 2>&1');
+        shell_exec(system::getCmdSudo() . ' chmod a+r /etc/apt/keyrings/docker.asc');
+        // Add the repository to Apt sources
+        $file = '/etc/apt/sources.list.d/docker.list';
+        $repo = 'deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian $(. /etc/os-release && echo "$VERSION_CODENAME") stable';
+        shell_exec(system::getCmdSudo() . ' echo ' . $repo . ' > ' . $file);
+        shell_exec(system::getCmdSudo() . ' apt-get update' . ' >> ' . $log . ' 2>&1');
+        shell_exec(system::getCmdSudo() . ' apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin' . ' >> ' . $log . ' 2>&1');
+        shell_exec(system::getCmdSudo() . ' echo "*** Installation de docker terminée ***"'. ' >> ' . $log);
+    }
+  }
+
+  public static function getPyPath() {
+    $osVersion = shell_exec("lsb_release -r|awk '{ print $2 }'");
+    $pyExec = '/usr/bin/python3';
+    if ($osVersion == '12')
+        $pyExec = __DIR__ . '/../../resources/python_venv/bin/python3';
+
+    log::add(__CLASS__, 'debug', 'debian OS version: ' . $osVersion);
+    log::add(__CLASS__, 'debug', 'Py executable: ' . $pyExec);
+    return $pyExec;
+  }
+
+  public static function backupExclude() {
+		return [ 'resources/python_venv' ];
+  }
+
+  public static function getSchemaVersion()
+  {
+	$v = cache::byKey('eufy::version')->getValue();
+	$s= '';
+	if ($v == '1.8.0')
+		$s = '21';
+	elseif ($v == '1.7.1')
+		$s = '20';
+	else
+		throw new Exception(__("Version d'image eufy non supportée: ". $v, __FILE__));
+	log::add(__CLASS__, 'debug', 'eufy-security-ws schema version: ' . $s);
+	return $s;
   }
 
   public static function deamon_info() {
@@ -47,8 +93,21 @@ class eufy extends eqLogic {
         }
     }
     $rc['launchable'] = 'ok';
-    $containerip = config::byKey('containerip', __CLASS__); 
-    $containerport = config::byKey('containerport', __CLASS__); 
+    $mode = config::byKey('eufyMode', __CLASS__);
+    if ($mode == 'local') {
+	$compose_version=shell_exec(system::getCmdSudo() . " docker compose version|sed 's:.*version ::g'");
+        if (shell_exec(system::getCmdSudo() . ' which docker | wc -l') != 1) {
+		$rc['launchable'] = 'nok';
+		$rc['launchable_message'] = __("Docker non installé, lancez l'installation des dépendances", __FILE__);
+	}
+        elseif ($compose_version == "") {
+		$rc['launchable'] = 'nok';
+		$rc['launchable_message'] = __("Module docker compose non installé, lancez l'installation des dépendances", __FILE__);
+	}
+    }
+
+    $containerip = config::byKey('containerIP', __CLASS__); 
+    $containerport = config::byKey('containerPort', __CLASS__); 
     if ($containerip == '') {
         $rc['launchable'] = 'nok';
         $rc['launchable_message'] = __('L\'IP du container n\'est pas configurée', __FILE__);
@@ -67,11 +126,20 @@ class eufy extends eqLogic {
         throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
     }
 
+    $pyExec = eufy::getPyPath();
+
+    if  (!file_exists($pyExec)) {
+        $msg = 'venv python non installé, veuillez relancer les dépendances';
+        log::add(__CLASS__, 'error', __($msg, __FILE__), 'unableStartDeamon');
+        event::add('jeedom::alert', array('level' => 'error', 'page' => 'plugin',
+                'message' =>  __($msg, __FILE__)));
+	return false;
+    }
+
     if (! eufy::checkContainer()) {
         log::add(__CLASS__, 'error', __('Container Eufy non démarré', __FILE__), 'unableStartDeamon');
         event::add('jeedom::alert', array('level' => 'error', 'page' => 'plugin',
                 'message' => __('Container Eufy non démarré', __FILE__)));
-    //    throw new Exception(__('Container Eufy non démarré!!!', __FILE__));
 	return false;
     }
     if (! eufy::testService()) {
@@ -81,13 +149,15 @@ class eufy extends eqLogic {
 	return false;
     }
 
+    $schemaVersion = eufy::getSchemaVersion();
     $path = realpath(dirname(__FILE__) . '/../../resources/eufyd'); // répertoire du démon
-    $cmd = 'python3 ' . $path . '/eufyd.py'; // nom du démon
+    $cmd = $pyExec . ' ' . $path . '/eufyd.py'; // nom du démon
     $cmd .= ' --loglevel ' . log::convertLogLevel(log::getLogLevel(__CLASS__));
-    $cmd .= ' --socketport ' . config::byKey('socketport', __CLASS__, '60600');
+    $cmd .= ' --socketport ' . config::byKey('socketPort', __CLASS__, '60600');
     $cmd .= ' --callback ' . network::getNetworkAccess('internal', 'proto:127.0.0.1:port:comp') . '/plugins/eufy/core/php/jeeeufy.php';
-    $cmd .= ' --containerip "' . trim(str_replace('"', '\"', config::byKey('containerip', __CLASS__))) . '"'; // on rajoute les paramètres utiles à votre démon
-    $cmd .= ' --containerport "' . trim(str_replace('"', '\"', config::byKey('containerport', __CLASS__))) . '"'; // second parametre
+    $cmd .= ' --containerip "' . trim(str_replace('"', '\"', config::byKey('containerIP', __CLASS__))) . '"'; // on rajoute les paramètres utiles à votre démon
+    $cmd .= ' --containerport "' . trim(str_replace('"', '\"', config::byKey('containerPort', __CLASS__))) . '"'; // second parametre
+    $cmd .= ' --schemaversion "' . trim(str_replace('"', '\"', $schemaVersion)) . '"';
     $cmd .= ' --apikey ' . jeedom::getApiKey(__CLASS__); // l'apikey pour authentifier les échanges suivants
     $cmd .= ' --pid ' . jeedom::getTmpFolder(__CLASS__) . '/deamon.pid'; // et on précise le chemin vers le pid file (ne pas modifier)
     log::add(__CLASS__, 'info', 'Lancement démon');
@@ -140,7 +210,7 @@ class eufy extends eqLogic {
 	log::add(__CLASS__, 'debug', "sendToDaemon: " . $payLoad);
 
 	$socket = socket_create(AF_INET, SOCK_STREAM, 0);
-	socket_connect($socket, '127.0.0.1', config::byKey('socketport', __CLASS__, '60600'));
+	socket_connect($socket, '127.0.0.1', config::byKey('socketPort', __CLASS__, '60600'));
 	socket_write($socket, $payLoad, strlen($payLoad));
 	socket_close($socket);
   }
@@ -473,8 +543,8 @@ class eufy extends eqLogic {
  // vérif si container up&running
   public static function checkContainer()
   {
-    $ip = config::byKey('containerip', __CLASS__);
-    $port = config::byKey('containerport', __CLASS__);
+    $ip = config::byKey('containerIP', __CLASS__);
+    $port = config::byKey('containerPort', __CLASS__);
     log::add(__CLASS__, 'debug', '>>> Checking container ' . $ip .':' . $port);
     try {
         $conn = @fsockopen($ip, $port);
@@ -494,13 +564,13 @@ class eufy extends eqLogic {
   public static function isListening()
   {
     $b = cache::byKey('eufy::container_ok')->getValue();
-    log::add(__CLASS__, 'debug', 'isListening: ' .  $b);
+  // log::add(__CLASS__, 'debug', 'isListening: ' .  $b);
     return $b;
   }
 
   public static function setOnlineStatus($s)
   {
-	log::add(__CLASS__, 'debug', 'setOnlineStatus: ' . $s);
+	log::add(__CLASS__, 'debug', 'online Status: ' . $s);
 	if ($s == 'True')
 		 cache::set('eufy::online', true);
 	else
@@ -510,15 +580,15 @@ class eufy extends eqLogic {
   public static function isOnline ()
   {
 	$online = cache::byKey('eufy::online')->getValue();
-        log::add(__CLASS__, 'debug', 'isOnline: ' . $online);
+  //      log::add(__CLASS__, 'debug', 'isOnline: ' . $online);
 	return $online ;
   }
 
 
   public static function testContainer($option)
   {
-	$host = config::byKey('containerip', __CLASS__);
-	$port = config::byKey('containerport', __CLASS__);
+	$host = config::byKey('containerIP', __CLASS__);
+	$port = config::byKey('containerPort', __CLASS__);
 	if ((! isset($host)) or (! isset($port))) {
 		$host="127.0.0.1";
 		$port="3000";
@@ -581,11 +651,12 @@ class eufy extends eqLogic {
         $yaml = 'docker-compose.yml';
         $file = $path . '/data/' . $yaml ;
 
-	log::add('eufy', 'debug', "Mise à jour du fichier yaml " . $file);
-	$device = config::byKey('devicename', __CLASS__);
+	log::add(__CLASS__, 'debug', "Mise à jour du fichier yaml " . $file);
+	$device = config::byKey('deviceName', __CLASS__);
 	$user = config::byKey('username', __CLASS__);
 	$passwd = config::byKey('password', __CLASS__);
-	$port = config::byKey('containerport', __CLASS__);
+	$port = config::byKey('containerPort', __CLASS__);
+	$version = config::byKey('targetVersion', __CLASS__);
 	if (empty($device))
                	throw new Exception(__('Nom du device non renseigné', __FILE__));
 	else if (empty($user) or empty($passwd))
@@ -599,47 +670,49 @@ class eufy extends eqLogic {
 	$compose = str_replace('#user#', $user, $compose);
 	$compose = str_replace('#password#', $passwd, $compose);
 	$compose = str_replace('#port#', $port, $compose);
+	$compose = str_replace('#version#', $version, $compose);
     	mkdir ($store_dir,0755,true);
 	file_put_contents($file, $compose);
 	return $file;
   }
 
+
   public static function installContainer() {
-	try {
- 	 	if (config::byKey('eufy::opInProgress', __CLASS__, '') == 1)
-			throw new Exception(__('Installation du container déjà en cours, merci de patienter', __FILE__));
-		config::save('eufy::opInProgress', 1, __CLASS__);
-		eufy::setupContainer('install');
-		config::save('eufy::opInProgress', 0, __CLASS__);
-         } catch (Exception $e) {
-		log::add('eufy', 'debug', "Erreur en cours d'installation: " . $e->getMessage());
-		config::save('eufy::opInProgress', 0, __CLASS__);
-	        event::add('jeedom::alert', array('level' => 'error', 'page' => 'eufy',
-               	'message' => $e->getMessage()));
-	 }
+	eufy::setupContainer('install');
   }
 
-  // install | uninstall
+  // eufy container management
   public static function setupContainer($action)
   {
 	$msg = $action . ' du conteneur eufy merci de patienter';
-	log::add('eufy', 'info', "Début de l'opération " . $action . '_container');
+	log::add(__CLASS__, 'info', "Début de l'opération " . $action . ' du service Eufy');
 	event::add('jeedom::alert', array('level' => 'info', 'page' => 'eufy',
        		'message' => $msg));
 	$eufy = 'bropat/eufy-security-ws';
-	$yaml = eufy::updateYaml();
 	$cid  = shell_exec(system::getCmdSudo() . " docker ps -a | grep -i eufy|awk '{ print $1 }'");
 	$image = shell_exec(system::getCmdSudo() . ' docker images | grep ' . $eufy);
-	log::add('eufy', 'debug','container id: '. $cid);
-	switch ($action) {
-	   case 'install':
+	log::add(__CLASS__, 'debug','container id: '. $cid);
+ 	$log = log::getPathToLog(__CLASS__);
+	$yaml = eufy::updateYaml();
+	if (cache::exist('eufy::opInProgress'))
+		$inProgress = cache::byKey('eufy::opInProgress')->getValue();
+	else
+		$inProgress = false;
+	try {
+          if ($inProgress)
+		throw  new Exception(__("l'Opération " . $action . ' est déjà en cours, merci de patienter', __FILE__));
+
+          cache::set('eufy::opInProgress', true);
+	  switch ($action) {
+	    case 'install':
 		if ($cid != "")
 			throw new Exception(__("Le container n'est pas arrêté", __FILE__));
 		if ($image != "")
 			 throw new Exception(__("L'image est déjà installée", __FILE__));
-		shell_exec(system::getCmdSudo() . ' docker pull ' . $eufy);
+		$version = config::byKey('targetVersion', __CLASS__);
+		shell_exec(system::getCmdSudo() . ' docker pull ' . $eufy . ':' . $version . ' >> ' . $log . ' 2>&1');
 		break;
-	   case 'start':
+	    case 'start':
 		if ($image == "")
 			throw new Exception(__("L'image n'est pas installée", __FILE__));
 		if ($cid != "")
@@ -647,27 +720,39 @@ class eufy extends eqLogic {
 	        if (!file_exists($yaml))
                 	throw new Exception(__('Fichier yaml non trouvé', __FILE__));
 
-		$cid = shell_exec(system::getCmdSudo() . ' docker compose -f '. $yaml .' up -d');
-		log::add('eufy', 'debug','container id: '. $cid);
+		$cid = shell_exec(system::getCmdSudo() . ' docker compose -f '. $yaml .' up -d' . ' >> ' . $log . ' 2>&1');
+		log::add(__CLASS__, 'debug','container id: '. $cid);
+		sleep(3);
+        	eufy::checkContainer();
+        	eufy::testService();
 		break;
-	   case 'stop':
+	     case 'stop':
 		if ($cid == "")
 			throw new Exception(__("Le container n'est pas démarré", __FILE__));
                 if (!file_exists($yaml))
                         throw new Exception(__('Fichier yaml non trouvé', __FILE__));
 
-		shell_exec(system::getCmdSudo() . ' docker compose -f '. $yaml .' down');
+		shell_exec(system::getCmdSudo() . ' docker compose -f '. $yaml .' down' . ' >> ' . $log . ' 2>&1');
+                sleep(3);
+                eufy::checkContainer();
+                eufy::testService();
 		break;
-	   case 'uninstall':
+	     case 'uninstall':
 		if ($cid != "")
 			throw new Exception(__("Le container n'est pas arrêté", __FILE__));
-		shell_exec(system::getCmdSudo() . ' docker rmi '. $eufy);
-                log::add('eufy', 'debug', "Suppression du fichier " . $yaml);
+		shell_exec(system::getCmdSudo() . ' docker rmi '. $eufy . ' >> ' . $log . ' 2>&1');
+                log::add(__CLASS__, 'debug', "Suppression du fichier " . $yaml);
                 shell_exec(system::getCmdSudo() . ' rm -f '. $yaml);
+	  }
+          log::add(__CLASS__, 'info', "Fin de l'opération " . $action . ' du service Eufy');
+          event::add('jeedom::alert', array('level' => 'info', 'page' => 'eufy',
+                'message' => "Opération " . $action . " terminée"));
+	} catch (Exception $e) {
+                event::add('jeedom::alert', array('level' => 'error', 'page' => 'eufy',
+                'message' => $e->getMessage()));
+                log::add(__CLASS__, 'error', "Erreur pendant l'opération " . $action . ' du service Eufy: ' . $e->getMessage());
 	}
-	log::add('eufy', 'info', "Fin de l'opération " . $action . '_container');
-	event::add('jeedom::alert', array('level' => 'info', 'page' => 'eufy',
-		'message' => "Opération " . $action . " terminée"));
+	cache::set('eufy::opInProgress', false);
   }
 }
 

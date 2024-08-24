@@ -15,12 +15,15 @@
 
 Installer le plugin et ses dépendances.
 <br>Vous avez le choix entre les modes local et distant pour docker.
-<br>Ne pas oublier de sauver la configuration AVANT de lancer les dépendances.
-<br>Note: L'installation des dépendances n'installe PAS l'image `eufy-security-ws`.
+<br>Commencez par sauver la configuration <b>AVANT</b> de lancer les dépendances.
+
+Note: 
+* L'installation des dépendances n'installe PAS l'image `eufy-security-ws`.
 
 #### 1. Paramètres communs
 - IP Docker: adresse IP du container `eufy-security-ws`, `127.0.0.1` par défaut
 - Port Docker: port du container `eufy-security-ws`, `3000` par défaut
+- Version cible: `latest` par défaut ou la version que vous souhaitez
 - Tester: Vérifier la présence du container `eufy-security-ws` et sa connexion au service Cloud Eufy
 
 Notes:
@@ -28,12 +31,11 @@ Notes:
 - La version du container est indiquée dans le champ `Version`
 
 #### 2. Mode local
-L'installation du mode local a pour prérequis `docker` et le plugin `docker compose` déjà installés et configurés.
-Si ce n'est pas le cas installer le plugin officiel docker management ou en ligne de commande 
-cf le [site officiel](https://docs.docker.com/engine/install/debian). 
-Pour plus de détails voir [ici](../../README.md#Troubleshooting).
+L'installation du mode local a pour prérequis les modules `docker`. Ils sont maintenant installés et configurés automatiquement.
 
-Paramètres:
+Le plugin ne nécessite pas l'utilisation du `#plugin-docker2` mais il est possible d'importer le fichier généré `data/docker-compose.yml` si vous préférez gérer l'image vous même.
+
+Paramètres supplémentaires:
 - Device: nom de votre téléphone dans l'app Eufy, utilisé pour se connecter au serveur Cloud Eufy
 - Utilisateur et mot de passe: il est conseillé de créer un utilisateur dédié
 
@@ -73,7 +75,7 @@ Note: `connected` et `pushConnected` doivent être à `true`
 ![Configuration](../images/eufy2.png)
 
 Note: pour l'instant seuls certains modèles ont été testés. Si votre modèle n'est pas suporté vous pouvez 
-m'envoyer le résutat du programme `test_eufy.py`. Voir [ici](../../README.md#Tested) pour plus d'infos.
+m'envoyer le résutat du programme `test_eufy.py`. Voir [ici](../../README.md#untested-devices) pour plus d'infos.
 
 ### Santé
 ![Configuration](../images/eufy1.png)

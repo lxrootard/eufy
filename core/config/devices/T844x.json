@@ -598,7 +598,33 @@
 					"switch": "status",
 					"listValue": "1|Efficient;2|Include thumbnail;3|Full effect"
 				}
+			},
+                        "40": {
+                                "logicalId": "motionDetectionType",
+                                "name": "Type de détection mvt",
+                                "type": "info",
+                                "subtype": "numeric",
+                                "isVisible": 1,
+                                "isHistorized": 0,
+                                "generic_type": "GENERIC_INFO",
+                                "template": {
+                                        "dashboard": "line",
+                                        "mobile": "line"
+                                }
+                        },
+			"41": {
+				"logicalId": "motionDetectionType:set",
+				"name": "Type détection mouvement",
+				"type": "action",
+				"subtype": "select",
+				"isVisible": 1,
+				"generic_type": "CAMERA_PRESET",
+				"configuration": {
+					"switch": "status",
+					"listValue": "1|Person;2|Pet;3|Person+Pet;4|Other;5|Person+other;6|Pet+other;7|All"
+				}
 			}
 		}
 	}
 ]
+

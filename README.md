@@ -56,12 +56,9 @@ Help:
 
 ## Troubleshooting
 * Docker or docker compose not found
-<br> `docker` and the `docker compose` plugin must be installed and working properly before installing the plugin.
-See the [docker official documentation](https://docs.docker.com/compose/install/linux)
-```
-docker --version
-docker compose version
-```
+<br> `docker` prerequisites are now installed automatically using the ` dependencies` button when the mode is set to `local`
+* debian12: `python_venv` is now installed automatically when the mode is set to `local`
+* Pi3 32bit latest image version not found: since `v1.8.0 armv7`  binary is not updated anymore, use `v1.7.1` 
 * Container install failed or container communication indicator is red
 <br>Check the container status using the script in `resources` :
 ```
@@ -94,6 +91,11 @@ Also check the [Jeedom community blog](https://community.jeedom.com/tag/plugin-e
 tag: `#plugin-eufy`
 
 ## ChangeLog
+* v2.8 [lxrootard](https://github.com/lxrootard)
+<br> - Support for debian12
+<br> - Automatic docker prerequisites installation
+<br> - Improved eufy image management logging
+<br> - Added command motionDetectionType for T844x
 * v2.7 [lxrootard](https://github.com/lxrootard)
 <br> - Fix in the installation procedure
 <br> - eufy script improvements

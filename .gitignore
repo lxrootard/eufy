@@ -1,5 +1,6 @@
 core/config/common.config.php
 data/
+resources/python_venv/
 .project
 .DS_Store
 Thumbs.db

@@ -15,12 +15,13 @@
 
 Install the plugin and its dependencies.
 <br>Choose either local or remote docker mode.
-<br>Don't forget to save the configuration BEFORE launching the dependencies installation.
+<br>Don't forget to save the configuration <b>BEFORE</b> launching the dependencies installation.
 <br>Note: This action does NOT install the `eufy-security-ws` image.
 
 #### 1. Common parameters
 - Docker IP: `eufy-security-ws` container host IP, `127.0.0.1` by default
 - Docker Port: `eufy-security-ws` container port, `3000` by default
+- Target version: `latest` by default or the wanted version
 - Test communication: Check connexion to `eufy-security-ws` container
 
 Notes:
@@ -28,10 +29,10 @@ Notes:
 - The `Version` field displays the container version
 
 #### 2. Local mode
-Local mode requires `docker` and the `docker compose` plugin already installed and configured.
-<br>If it's not the case install the `docker management` official plugin or from the command line.
-see the [docker webpage](https://docs.docker.com/engine/install/debian) for details.
-<br>For more information see [here](../../README.md#Troubleshooting)
+
+The local mode requires the `docker` prerequisites. They are now automatically installed and configured.
+
+The plugin doesn't depend on `#plugin-docker2` but it's possible to import the `data/docker-compose.yml` generated file if you prefer to manage the image yourself.
 
 Extra parameters:
 - Device: name of your phone in the Eufy app, used to connect the Eufy Cloud server
@@ -75,7 +76,7 @@ Note that `connected` and `pushConnected` need to be `true`
 ![Configuration](../images/eufy2.png)
 
 Note: for now only some devices have been tested. If your device is not supported you can send me the output 
-from the `test_eufy.py` program. Please see [here](../../README.md#Tested) for details.
+from the `test_eufy.py` program. Please see [here](../../README.md#untested-devices) for details.
 
 ### Health
 ![Configuration](../images/eufy1.png)

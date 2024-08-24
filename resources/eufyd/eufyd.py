@@ -153,7 +153,7 @@ def on_open(ws):
 		time.sleep(1)
 		_websocket.send("{\"command\": \"start_listening\"}") # start listening events
 		time.sleep(1)
-		_websocket.send("{\"command\": \"set_api_schema\", \"schemaVersion\": 21}") # Set API schema
+		_websocket.send("{\"command\": \"set_api_schema\", \"schemaVersion\":" + _schemaversion + "}") # Set API schema
 		time.sleep(1)
 	Thread(target=run).start()
 
@@ -222,6 +222,7 @@ _callback = ''
 _cycle = 0.3
 _containerip = ""
 _containerport = 0
+_schemaversion = '';
 _stations = ''
 _devices = ''
 _online = False
@@ -234,9 +235,10 @@ parser.add_argument("--callback", help="Callback", type=str)
 parser.add_argument("--apikey", help="Apikey", type=str)
 parser.add_argument("--cycle", help="Cycle to send event", type=str)
 parser.add_argument("--pid", help="Pid file", type=str)
-parser.add_argument("--socketport", help="Port for Zigbee server", type=str)
+parser.add_argument("--socketport", help="Port for Eufy server", type=str)
 parser.add_argument("--containerip", help="Container IP", type=str)
 parser.add_argument("--containerport", help="Container Port", type=str)
+parser.add_argument("--schemaversion", help="Schema Version", type=str)
 args = parser.parse_args()
 
 if args.loglevel:
@@ -255,6 +257,8 @@ if args.containerip:
 	_containerip = args.containerip
 if args.containerport:
 	_containerport = args.containerport
+if args.schemaversion:
+	_schemaversion = args.schemaversion
 
 _socket_port = int(_socket_port)
 
@@ -268,6 +272,7 @@ logging.info('PID file : '+str(_pidfile))
 logging.info('Apikey : '+str(_apikey))
 logging.info('Container IP : '+str(_containerip))
 logging.info('Container Port : '+str(_containerport))
+logging.info('Schema Version : '+str(_schemaversion))
 
 _ws = websocket
 
