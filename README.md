@@ -40,42 +40,35 @@ See the full list [here](https://bropat.github.io/eufy-security-client/#/support
 <br>If your model is not listed above or some controls are missing please send me the results of these commands:
 
     $ cd /var/www/html/plugins/eufy
-    $ python3 resources/test_eufy.py -d device_serial
+    $ ./resources/eufy -d device_serial test
 
 where `device_serial` is your device serial number, starting by `Txxx`
 <br>
-Help:
-
-    $ python3 resources/test_eufy.py -h
-    usage: test_eufy.py [-h] [-d DEVICE] [-u URL]
-
-    optional arguments:
-	-h, --help            show this help message and exit
-	-d DEVICE, --device DEVICE  device serial number
-	-u URL, --url URL     eufy service URL, default 127.0.0.1:3000
 
 ## Troubleshooting
-* Docker or docker compose not found
-<br> `docker` prerequisites are now installed automatically using the ` dependencies` button when the mode is set to `local`
-* debian12: `python_venv` is now installed automatically when the mode is set to `local`
-* Pi3 32bit latest image version not found: since `v1.8.0 armv7`  binary is not updated anymore, use `v1.7.1` 
+* Prerequisites not found
+<br> `docker`,  prerequisites are now installed automatically using the ` dependencies` button when the mode is set to `local`
+<br> `python_venv` prerequisite is now installed automatically on `debian 12`
+* Pi3 32bit latest image version not found
+<br> `eufy-security-ws armv7` image is not updated anymore, latest version is `v1.7.1` 
 * Container install failed or container communication indicator is red
-<br>Check the container status using the script in `resources` :
+<br>Check the container status using the script in `resources`
+<br>See the [Local mode (expert)](docs/en_US/index.md#configuration) documentation section for details on the `eufy` command usage:
 ```
-eufy status # check the image and container status
-eufy info # check the image container status (extended info)
-eufy test # check if the container is connected to the eufy cloud
-eufy logs # get the container logs
+	eufy status # check the image and container status
+	eufy info # check the image and container status (extended info)
+	eufy test # check if the container is connected to the eufy cloud
+	eufy logs # get the container logs
 ```
 * The daemon doesn't start
 <br> Make sure both container and Cloud communication indicators are green in the Configuration section
-<br> Check your container with the `eufy test` command as described above
+<br> Check your container status with the `eufy test` command as described above
 * Synchronization failed, devices are not found
 <br> Apostrophes and quotes are not supported in equipment names
 * Incompatible schema error, commands not working
-<br> Make sure you're using the latest `eufy-security-ws` [release](https://github.com/bropat/eufy-security-ws/releases).
-<br> Your container version is displayed in the plugin config page when hitting the `Tester` button.
-<br> If you've upgraded the plugin uninstall/reinstall the image and restart the container.
+<br> Make sure you're using the correct `eufy-security-ws` [release](https://github.com/bropat/eufy-security-ws/releases).
+<br> Your installed image version is displayed in the plugin config page when hitting the `Tester` button.
+<br> If you've upgraded the plugin you might try to uninstall/reinstall the image and restart the container.
 * Some actions change the corresponding property but there's no change on the device (eg flash on/off)
 <br> These are not actions but device settings that will only impact its behavior for the next detection 
 (eg the flash will light at the next event)
@@ -91,6 +84,8 @@ Also check the [Jeedom community blog](https://community.jeedom.com/tag/plugin-e
 tag: `#plugin-eufy`
 
 ## ChangeLog
+* v2.9 [lxrootard](https://github.com/lxrootard)
+<br> - debian12 compatibility fixes
 * v2.8 [lxrootard](https://github.com/lxrootard)
 <br> - Support for debian12
 <br> - Automatic docker prerequisites installation

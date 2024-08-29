@@ -22,13 +22,16 @@ class eufy extends eqLogic {
 
   public static function dependancy_end() {
     $mode = config::byKey('eufyMode', __CLASS__);
-    log::add(__CLASS__, 'info', "Configuration du container, mode sélectionné: " . $mode);
+    $msg = "Configuration du container, mode sélectionné: " . $mode;
+    log::add(__CLASS__, 'info', $msg);
+
     if ($mode == 'local') {
 	eufy::installDocker();
 	config::save('containerIP', '127.0.0.1', __CLASS__);
 	config::save('containerPort', '3000', __CLASS__);
 	config::save('targetVersion', 'latest', __CLASS__);
     }
+    eufy::updateYaml();
   }
 
   public static function installDocker() {
@@ -70,12 +73,15 @@ class eufy extends eqLogic {
   {
 	$v = cache::byKey('eufy::version')->getValue();
 	$s= '';
-	if ($v == '1.8.0')
-		$s = '21';
-	elseif ($v == '1.7.1')
-		$s = '20';
-	else
+	switch ($v) {
+	   case '1.8.0':
+	   case '1.9.0':
+		$s = '21'; break;
+	   case '1.7.1':
+		$s = '20'; break;
+	   default:
 		throw new Exception(__("Version d'image eufy non supportée: ". $v, __FILE__));
+	}
 	log::add(__CLASS__, 'debug', 'eufy-security-ws schema version: ' . $s);
 	return $s;
   }
@@ -596,7 +602,7 @@ class eufy extends eqLogic {
 	$h = "'" . $host . "'";
 	$p = "'" . $port . "'";
 	// log::add(__CLASS__, 'debug',  '>>> Testing EufyWS service on '. $host . ':' . $port);
-	$python='python3';
+	$python = eufy::getPyPath();
 	$script =  __DIR__ . '/../../resources/test_eufy.py ';
 	$rc = shell_exec(system::getCmdSudo() . $python . ' ' . $script . $option . ' -u ' . $h . ':' . $p .' 2>&1');
 	// log::add(__CLASS__, 'debug', '*** Test result '. $rc);

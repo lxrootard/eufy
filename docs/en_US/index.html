@@ -57,7 +57,15 @@
 <p>Once the dependencies are installed you can also use the <code>eufy</code> script found in <code>resources</code> to install,check 
 and manage the <code>eufy-security-ws</code> image from the command line:</p>
 
-<p><code>eufy start|stop|restart|status|info|test|logs</code> </p>
+<p><code>
+$ ./eufy -h
+usage: ./eufy [-h] [-d device] [-u url] action
+-h show this help message and exit
+action: { start|stop|restart|status|info|logs|test }
+test optional arguments:
+      -d DEVICE device serial number
+      -u URL eufy service URL, default 127.0.0.1:3000
+</code></p>
 
 <h4>4. Remote mode (expert)</h4>
 

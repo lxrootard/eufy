@@ -1,4 +1,4 @@
-# Jeedom Plugin pour Devices/Stations Eufy
+# Plugin Jeedom pour les Devices/Stations Eufy
 
 ![Logo Jeedom](../images/jeedom.png)
 ![Logo Plugin](../images/eufy.png)
@@ -46,9 +46,17 @@ Configuration post-installation:
 
 #### 3. Mode local en ligne de commande (expert)
 Une fois les dépendances installées vous pouvez aussi utiliser le script `eufy` disponible dans `resources`
-pour installer, vérifier et gérer l'image `eufy-security-ws` en ligne de commande:
+pour installer, vérifier et gérer l'image `eufy-security-ws` et tester vos caméras en ligne de commande:
 
-`eufy start|stop|restart|status|info|test|logs`
+```
+$ ./eufy
+usage: eufy [-h] [-d device] [-u url] action
+-h show this help message and exit
+action: { start|stop|restart|status|info|logs|test }
+test optional arguments:
+      -d DEVICE device serial number
+      -u URL eufy service URL, default 127.0.0.1:3000
+```
 
 #### 4. Mode distant (expert)
 

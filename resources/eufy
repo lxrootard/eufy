@@ -9,10 +9,36 @@ image='bropat/eufy-security-ws'
 eufyfile=$(realpath "$0")
 data=$(dirname "$eufyfile")/../data
 res=$(dirname "$eufyfile")/../resources
+osversion=`lsb_release -r|awk '{ print $2 }'`
+pyexec='/usr/bin/python3'
+[[ $osversion -gt 11 ]] && pyexec=$res/python_venv/bin/python3 ;
+
+usage() {
+ echo "usage: $0 [-h] [-d device] [-u url] action"
+echo "-h show this help message and exit"
+ echo "action: { start|stop|restart|status|info|logs|test }"
+ echo "test optional arguments:"
+ echo "      -d DEVICE device serial number"
+ echo "      -u URL eufy service URL, default 127.0.0.1:3000"
+}
 
 container_id=`sudo docker ps -a | grep -i $image|awk '{ print $1 }'`
 [ ! -f $data/docker-compose.yml ] && echo 'eufy image not installed, yaml file not found' && exit 1;
-case $1 in
+
+opts=''
+while getopts "d:u:h" opt; do
+   case "$opt" in
+	d) opts="$opts"' -d '"$OPTARG" ;;
+	u) opts="$opts"' -u '"$OPTARG" ;;
+	h) usage ; exit 1 ;;
+   esac
+done
+shift $(( OPTIND - 1 ))
+action=$1
+#${1:?$( usage )}
+[ -z "$action" ] && usage && exit 1 ;
+
+case $action in
         start)
         	echo 'starting image' $image
 		docker compose -f $data/docker-compose.yml up -d ;;
@@ -27,8 +53,8 @@ case $1 in
 	info)
 		docker ps -a|grep $container_id ;;
 	test)
-		echo "test du container " $container_id
-		python3 $res/test_eufy.py ;;
+		echo "test du container:" $container_id "options:" $opts
+		$pyexec $res/test_eufy.py $opts;;
 	logs)
 		[ "$container_id" == "" ] && echo $image 'not running' && exit 1;
 		docker logs $container_id ;;
@@ -36,7 +62,7 @@ case $1 in
                 $0 stop
                 $0 start ;;
         *)
-                echo "usage: $0 {start|stop|restart|status|info|test|logs}"
+                usage
                 exit 1 ;;
 esac
 

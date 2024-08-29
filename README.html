@@ -46,46 +46,38 @@ See the full list <a href="https://bropat.github.io/eufy-security-client/#/suppo
 <br>If your model is not listed above or some controls are missing please send me the results of these commands:</p>
 
 <pre><code>$ cd /var/www/html/plugins/eufy
-$ python3 resources/test_eufy.py -d device_serial
+$ ./resources/eufy -d device_serial test
 </code></pre>
 
 <p>where <code>device_serial</code> is your device serial number, starting by <code>Txxx</code>
-<br>
-Help:</p>
-
-<pre><code>$ python3 resources/test_eufy.py -h
-usage: test_eufy.py [-h] [-d DEVICE] [-u URL]
-
-optional arguments:
--h, --help            show this help message and exit
--d DEVICE, --device DEVICE  device serial number
--u URL, --url URL     eufy service URL, default 127.0.0.1:3000
-</code></pre>
+<br></p>
 
 <h2>Troubleshooting</h2>
 
 <ul>
-<li>Docker or docker compose not found
-<br> <code>docker</code> prerequisites are now installed automatically using the <code>dependencies</code> button when the mode is set to <code>local</code></li>
-<li>debian12: <code>python_venv</code> is now installed automatically when the mode is set to <code>local</code></li>
-<li>Pi3 32bit latest image version not found: since <code>v1.8.0 armv7</code>  binary is not updated anymore, use <code>v1.7.1</code> </li>
+<li>Prerequisites not found
+<br> <code>docker</code>,  prerequisites are now installed automatically using the <code>dependencies</code> button when the mode is set to <code>local</code>
+<br> <code>python_venv</code> prerequisite is now installed automatically on <code>debian 12</code></li>
+<li>Pi3 32bit latest image version not found
+<br> <code>eufy-security-ws armv7</code> image is not updated anymore, latest version is <code>v1.7.1</code> </li>
 <li>Container install failed or container communication indicator is red
-<br>Check the container status using the script in <code>resources</code> :
+<br>Check the container status using the script in <code>resources</code>
+<br>See the <a href="docs/en_US/index.html#configuration">Local mode (expert)</a> documentation section for details on the <code>eufy</code> command usage:
 <code>
 eufy status # check the image and container status
-eufy info # check the image container status (extended info)
+eufy info # check the image and container status (extended info)
 eufy test # check if the container is connected to the eufy cloud
 eufy logs # get the container logs
 </code></li>
 <li>The daemon doesn't start
 <br> Make sure both container and Cloud communication indicators are green in the Configuration section
-<br> Check your container with the <code>eufy test</code> command as described above</li>
+<br> Check your container status with the <code>eufy test</code> command as described above</li>
 <li>Synchronization failed, devices are not found
 <br> Apostrophes and quotes are not supported in equipment names</li>
 <li>Incompatible schema error, commands not working
-<br> Make sure you're using the latest <code>eufy-security-ws</code> <a href="https://github.com/bropat/eufy-security-ws/releases">release</a>.
-<br> Your container version is displayed in the plugin config page when hitting the <code>Tester</code> button.
-<br> If you've upgraded the plugin uninstall/reinstall the image and restart the container.</li>
+<br> Make sure you're using the correct <code>eufy-security-ws</code> <a href="https://github.com/bropat/eufy-security-ws/releases">release</a>.
+<br> Your installed image version is displayed in the plugin config page when hitting the <code>Tester</code> button.
+<br> If you've upgraded the plugin you might try to uninstall/reinstall the image and restart the container.</li>
 <li>Some actions change the corresponding property but there's no change on the device (eg flash on/off)
 <br> These are not actions but device settings that will only impact its behavior for the next detection 
 (eg the flash will light at the next event)</li>
@@ -107,6 +99,8 @@ tag: <code>#plugin-eufy</code></p>
 <h2>ChangeLog</h2>
 
 <ul>
+<li>v2.9 <a href="https://github.com/lxrootard">lxrootard</a>
+<br> - debian12 compatibility fixes</li>
 <li>v2.8 <a href="https://github.com/lxrootard">lxrootard</a>
 <br> - Support for debian12
 <br> - Automatic docker prerequisites installation
