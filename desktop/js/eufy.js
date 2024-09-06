@@ -99,12 +99,14 @@ $('#bt_syncEufy').on('click', function () {
   });
 });
 
-
 $('#bt_healtheufy').on('click', function () {
   $('#md_modal').dialog({title: "{{Santé Eufy}}"});
   $('#md_modal').load('index.php?v=d&plugin=eufy&modal=health').dialog('open');
 });
 
+$('.pluginAction[data-action=openLocation]').on('click', function () {
+  window.open($(this).attr("data-location"), "_blank", null);
+});
 
 
 $("#table_cmd").sortable({

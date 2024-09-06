@@ -33,7 +33,7 @@
 
 <p>Notes:
 - The Eufy daemon won't start if the <code>eufy-security-ws</code> container can't connect to the Eufy Cloud service
-- The <code>Version</code> field displays the container version</p>
+- The <code>Version</code> field below displays your installed image version (if any)</p>
 
 <h4>2. Local mode</h4>
 
@@ -48,8 +48,9 @@
 <p>Post-installation setup:</p>
 
 <ul>
-<li>Install/uninstall Eufy: install/uninstall <code>eufy-security-ws</code> image</li>
-<li>Start/stop Eufy: start/stop the <code>eufy-security-ws</code> container</li>
+<li>Install Eufy: install and start the <code>eufy-security-ws</code> image</li>
+<li>Uninstall Eufy: stop and uninstall the <code>eufy-security-ws</code> image</li>
+<li>Upgrade Eufy: upgrade the <code>eufy-security-ws</code> image to the given version</li>
 </ul>
 
 <h4>3. Local mode using the command line (expert)</h4>
@@ -61,7 +62,7 @@ and manage the <code>eufy-security-ws</code> image from the command line:</p>
 $ ./eufy -h
 usage: ./eufy [-h] [-d device] [-u url] action
 -h show this help message and exit
-action: { start|stop|restart|status|info|logs|test }
+action: { install|uninstall|upgrade|start|stop|restart|status|info|logs|test }
 test optional arguments:
       -d DEVICE device serial number
       -u URL eufy service URL, default 127.0.0.1:3000

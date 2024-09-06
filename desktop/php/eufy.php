@@ -27,6 +27,18 @@ $eqLogics = eqLogic::byType($plugin->getId());
         	<br/>
         	<span>{{Santé}}</span>
         </div>
+	<div class="cursor pluginAction logoSecondary" data-action="openLocation"
+	 data-location="<?= $plugin->getDocumentation() ?>">
+		<i class="fas fa-book"></i>
+		<br>
+		<span>{{Documentation}}</span>
+	</div>
+	<div class="cursor pluginAction logoSecondary"
+	 data-action="openLocation" data-location="https://community.jeedom.com/tag/plugin-<?= $plugin->getId() ?>">
+		<i class="fas fa-comments"></i>
+		<br>
+		<span>{{Community}}</span>
+	</div>
 </div>
 <legend><i class="fas fa-table"></i> {{Mes équipements}}</legend>
         <div class="input-group" style="margin:5px;">

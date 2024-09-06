@@ -28,7 +28,7 @@ Note:
 
 Notes:
 - Le daemon Eufy ne démarrera pas si le container `eufy-security-ws` ne peut pas se connecter au service Cloud Eufy.
-- La version du container est indiquée dans le champ `Version`
+- La version d'image installée (si elle existe) est indiquée dans le champ `Version`
 
 #### 2. Mode local
 L'installation du mode local a pour prérequis les modules `docker`. Ils sont maintenant installés et configurés automatiquement.
@@ -41,8 +41,9 @@ Paramètres supplémentaires:
 
 Configuration post-installation:
 
-- Installer/désinstaller Eufy: installer/désinstaller l'image `eufy-security-ws`
-- Démarrer/arrêter Eufy: démarrer/arrêter le container `eufy-security-ws`
+- Installer Eufy: installer et démarrer l'image `eufy-security-ws`
+- Désinstaller Eufy: arrêter et déinstaller l'image `eufy-security-ws`
+- Upgrader Eufy: metre à jour  l'image `eufy-security-ws` avec la version demandée
 
 #### 3. Mode local en ligne de commande (expert)
 Une fois les dépendances installées vous pouvez aussi utiliser le script `eufy` disponible dans `resources`
@@ -52,7 +53,7 @@ pour installer, vérifier et gérer l'image `eufy-security-ws` et tester vos cam
 $ ./eufy
 usage: eufy [-h] [-d device] [-u url] action
 -h show this help message and exit
-action: { start|stop|restart|status|info|logs|test }
+action: { install|uninstall|upgrade|start|stop|restart|status|info|logs|test }
 test optional arguments:
       -d DEVICE device serial number
       -u URL eufy service URL, default 127.0.0.1:3000
@@ -66,7 +67,7 @@ resources/docker-compose.yml
 resources/eufy
 ```
 
-####  5. Soucis de connexion
+####  5. Problèmes de connexion
 En cas de problème vérifier la connexion avec le container via la commande `eufy` disponible dans `resources`:
 <br>`eufy test`
 <br>Ou directement:

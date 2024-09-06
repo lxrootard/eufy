@@ -679,27 +679,26 @@ class eufy extends eqLogic {
 	$compose = str_replace('#version#', $version, $compose);
     	mkdir ($store_dir,0755,true);
 	file_put_contents($file, $compose);
-	return $file;
   }
 
-
-  public static function installContainer() {
+  public static function installImage() {
 	eufy::setupContainer('install');
   }
 
   // eufy container management
   public static function setupContainer($action)
   {
-	$msg = $action . ' du conteneur eufy merci de patienter';
-	log::add(__CLASS__, 'info', "Début de l'opération " . $action . ' du service Eufy');
+	$msg = $action . ' du service eufy merci de patienter';
+	log::add(__CLASS__, 'info', ">>> Début de l'opération " . $action . ' du service Eufy');
 	event::add('jeedom::alert', array('level' => 'info', 'page' => 'eufy',
        		'message' => $msg));
 	$eufy = 'bropat/eufy-security-ws';
+        $yaml = realpath(__DIR__ . '/../..') . '/data/docker-compose.yml';
 	$cid  = shell_exec(system::getCmdSudo() . " docker ps -a | grep -i eufy|awk '{ print $1 }'");
-	$image = shell_exec(system::getCmdSudo() . ' docker images | grep ' . $eufy);
-	log::add(__CLASS__, 'debug','container id: '. $cid);
+	$images = shell_exec(system::getCmdSudo() . ' docker images -q ' . $eufy );
+        log::add(__CLASS__, 'debug','images installées: '. $images);
+	log::add(__CLASS__, 'debug','container actif: '. $cid);
  	$log = log::getPathToLog(__CLASS__);
-	$yaml = eufy::updateYaml();
 	if (cache::exist('eufy::opInProgress'))
 		$inProgress = cache::byKey('eufy::opInProgress')->getValue();
 	else
@@ -713,20 +712,22 @@ class eufy extends eqLogic {
 	    case 'install':
 		if ($cid != "")
 			throw new Exception(__("Le container n'est pas arrêté", __FILE__));
-		if ($image != "")
+		if ($images != "")
 			 throw new Exception(__("L'image est déjà installée", __FILE__));
 		$version = config::byKey('targetVersion', __CLASS__);
-		shell_exec(system::getCmdSudo() . ' docker pull ' . $eufy . ':' . $version . ' >> ' . $log . ' 2>&1');
+		$cmd = 'docker pull ' . $eufy . ':' . $version;
+		log::add(__CLASS__, 'debug', $cmd);
+		shell_exec(system::getCmdSudo() . ' ' . $cmd . ' >> ' . $log . ' 2>&1');
 		break;
 	    case 'start':
-		if ($image == "")
+		if ($images == "")
 			throw new Exception(__("L'image n'est pas installée", __FILE__));
 		if ($cid != "")
                         throw new Exception(__('Le container est déjà démarré', __FILE__));
-	        if (!file_exists($yaml))
-                	throw new Exception(__('Fichier yaml non trouvé', __FILE__));
-
-		$cid = shell_exec(system::getCmdSudo() . ' docker compose -f '. $yaml .' up -d' . ' >> ' . $log . ' 2>&1');
+		eufy::updateYaml();
+		$cmd = 'docker compose -f '. $yaml .' up -d';
+		log::add(__CLASS__, 'debug', $cmd);
+		$cid = shell_exec(system::getCmdSudo() . ' ' . $cmd . ' >> ' . $log . ' 2>&1');
 		log::add(__CLASS__, 'debug','container id: '. $cid);
 		sleep(3);
         	eufy::checkContainer();
@@ -735,10 +736,9 @@ class eufy extends eqLogic {
 	     case 'stop':
 		if ($cid == "")
 			throw new Exception(__("Le container n'est pas démarré", __FILE__));
-                if (!file_exists($yaml))
-                        throw new Exception(__('Fichier yaml non trouvé', __FILE__));
-
-		shell_exec(system::getCmdSudo() . ' docker compose -f '. $yaml .' down' . ' >> ' . $log . ' 2>&1');
+		$cmd = 'docker rm -f ' . $cid;
+		log::add(__CLASS__, 'debug', $cmd);
+		shell_exec(system::getCmdSudo() . ' ' . $cmd . ' >> ' . $log . ' 2>&1');
                 sleep(3);
                 eufy::checkContainer();
                 eufy::testService();
@@ -746,17 +746,22 @@ class eufy extends eqLogic {
 	     case 'uninstall':
 		if ($cid != "")
 			throw new Exception(__("Le container n'est pas arrêté", __FILE__));
-		shell_exec(system::getCmdSudo() . ' docker rmi '. $eufy . ' >> ' . $log . ' 2>&1');
-                log::add(__CLASS__, 'debug', "Suppression du fichier " . $yaml);
-                shell_exec(system::getCmdSudo() . ' rm -f '. $yaml);
+		$ids = explode(PHP_EOL, $images);
+		foreach ($ids as $id)
+			if ($id != '') {
+				$cmd = 'docker rmi --force '. $id;
+				log::add(__CLASS__, 'debug', $cmd);
+				shell_exec(system::getCmdSudo() . ' ' . $cmd . ' >> ' . $log . ' 2>&1');
+			}
+		break;
 	  }
-          log::add(__CLASS__, 'info', "Fin de l'opération " . $action . ' du service Eufy');
+          log::add(__CLASS__, 'info', ">>> Fin de l'opération " . $action . ' du service Eufy');
           event::add('jeedom::alert', array('level' => 'info', 'page' => 'eufy',
-                'message' => "Opération " . $action . " terminée"));
+                'message' => $action . " terminé"));
 	} catch (Exception $e) {
                 event::add('jeedom::alert', array('level' => 'error', 'page' => 'eufy',
                 'message' => $e->getMessage()));
-                log::add(__CLASS__, 'error', "Erreur pendant l'opération " . $action . ' du service Eufy: ' . $e->getMessage());
+                log::add(__CLASS__, 'warning', '>>> ' . $action . ' du service Eufy: ' . $e->getMessage());
 	}
 	cache::set('eufy::opInProgress', false);
   }

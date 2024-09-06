@@ -117,13 +117,12 @@ if (!isConnect()) {
     <div class="col-lg-6">
         <div class="form-group eufyMode local">
             <label class="col-md-4 control-label tooltips">{{Setup}}
-                <sup><i class="fas fa-question-circle tooltips" title="{{Setup du container Eufy}}"></i></sup>
+                <sup><i class="fas fa-question-circle tooltips" title="{{Gestion du container Eufy}}"></i></sup>
  	    </label>
             <div class="col-md-8">
-             <a class="btn btn-xs btn-warning" id="bt_installEufy"><i class="fas fa-plus-square"></i> {{Installer Eufy}}</a>
+             <a class="btn btn-xs btn-primary" id="bt_installEufy"><i class="fas fa-plus-square"></i> {{Installer Eufy}}</a>
              <a class="btn btn-xs btn-danger" id="bt_uninstallEufy"><i class="fas fa-minus-square"></i> {{Désinstaller Eufy}}</a>
-             <a class="btn btn-xs btn-primary" id="bt_startEufy"><i class="fas fa-play"></i> {{Démarrer Eufy}}</a>
-             <a class="btn btn-xs btn-primary" id="bt_stopEufy"><i class="fas fa-stop"></i> {{Arrêter Eufy}}</a>
+             <a class="btn btn-xs btn-warning" id="bt_upgradeEufy"><i class="fas fa-sync"></i> {{Upgrader Eufy}}</a>
             </div>
         </div>
 
@@ -189,10 +188,10 @@ $('#bt_uninstallEufy').off('click').on('click', function() {
         })
 })
 
-$('#bt_startEufy').off('click').on('click', function() {
+$('#bt_upgradeEufy').off('click').on('click', function() {
         $.ajax({ type: "POST", url: "plugins/eufy/core/ajax/eufy.ajax.php",
                 data: {
-                        action: "startEufy"
+                        action: "upgradeEufy"
                 },
                 dataType: 'json',
                 error: function(error) {
@@ -207,34 +206,7 @@ $('#bt_startEufy').off('click').on('click', function() {
                         } else {
                                 $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
                                 $.fn.showAlert({
-                                        message: '{{Démarrage en cours}}',
-                                        level: 'success',
-                                        emptyBefore: true
-                                })
-                        }
-                }
-        })
-})
-
-$('#bt_stopEufy').off('click').on('click', function() {
-        $.ajax({ type: "POST", url: "plugins/eufy/core/ajax/eufy.ajax.php",
-                data: {
-                        action: "stopEufy"
-                },
-                dataType: 'json',
-                error: function(error) {
-                        $.fn.showAlert({ message: error.message, level: 'danger'
-                        })
-                },
-                success: function(data) {
-                        if (data.state != 'ok') {
-                                $.fn.showAlert({ message: data.result, level: 'danger'
-                                })
-                                return
-                        } else {
-                                $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
-                                $.fn.showAlert({
-                                        message: '{{Arrêt en cours}}',
+                                        message: '{{Upgrade en cours}}',
                                         level: 'success',
                                         emptyBefore: true
                                 })

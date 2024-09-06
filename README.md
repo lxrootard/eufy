@@ -47,10 +47,8 @@ where `device_serial` is your device serial number, starting by `Txxx`
 
 ## Troubleshooting
 * Prerequisites not found
-<br> `docker`,  prerequisites are now installed automatically using the ` dependencies` button when the mode is set to `local`
+<br> `docker` prerequisites are now installed automatically using the `dependencies` button when the mode is set to `local`
 <br> `python_venv` prerequisite is now installed automatically on `debian 12`
-* Pi3 32bit latest image version not found
-<br> `eufy-security-ws armv7` image is not updated anymore, latest version is `v1.7.1` 
 * Container install failed or container communication indicator is red
 <br>Check the container status using the script in `resources`
 <br>See the [Local mode (expert)](docs/en_US/index.md#configuration) documentation section for details on the `eufy` command usage:
@@ -84,6 +82,9 @@ Also check the [Jeedom community blog](https://community.jeedom.com/tag/plugin-e
 tag: `#plugin-eufy`
 
 ## ChangeLog
+* v2.10 [lxrootard](https://github.com/lxrootard)
+<br> - Improved image management
+<br> - Added documentation and community links
 * v2.9 [lxrootard](https://github.com/lxrootard)
 <br> - debian12 compatibility fixes
 * v2.8 [lxrootard](https://github.com/lxrootard)

@@ -35,7 +35,7 @@
 
 <p>Notes:
 - Le daemon Eufy ne démarrera pas si le container <code>eufy-security-ws</code> ne peut pas se connecter au service Cloud Eufy.
-- La version du container est indiquée dans le champ <code>Version</code></p>
+- La version d'image installée (si elle existe) est indiquée dans le champ <code>Version</code></p>
 
 <h4>2. Mode local</h4>
 
@@ -50,8 +50,9 @@
 <p>Configuration post-installation:</p>
 
 <ul>
-<li>Installer/désinstaller Eufy: installer/désinstaller l'image <code>eufy-security-ws</code></li>
-<li>Démarrer/arrêter Eufy: démarrer/arrêter le container <code>eufy-security-ws</code></li>
+<li>Installer Eufy: installer et démarrer l'image <code>eufy-security-ws</code></li>
+<li>Désinstaller Eufy: arrêter et déinstaller l'image <code>eufy-security-ws</code></li>
+<li>Upgrader Eufy: metre à jour  l'image <code>eufy-security-ws</code> avec la version demandée</li>
 </ul>
 
 <h4>3. Mode local en ligne de commande (expert)</h4>
@@ -63,7 +64,7 @@ pour installer, vérifier et gérer l'image <code>eufy-security-ws</code> et tes
 $ ./eufy
 usage: eufy [-h] [-d device] [-u url] action
 -h show this help message and exit
-action: { start|stop|restart|status|info|logs|test }
+action: { install|uninstall|upgrade|start|stop|restart|status|info|logs|test }
 test optional arguments:
       -d DEVICE device serial number
       -u URL eufy service URL, default 127.0.0.1:3000
@@ -77,7 +78,7 @@ resources/docker-compose.yml
 resources/eufy
 </code></p>
 
-<h4>5. Soucis de connexion</h4>
+<h4>5. Problèmes de connexion</h4>
 
 <p>En cas de problème vérifier la connexion avec le container via la commande <code>eufy</code> disponible dans <code>resources</code>:
 <br><code>eufy test</code>

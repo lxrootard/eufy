@@ -26,7 +26,7 @@ Install the plugin and its dependencies.
 
 Notes:
 - The Eufy daemon won't start if the `eufy-security-ws` container can't connect to the Eufy Cloud service
-- The `Version` field displays the container version
+- The `Version` field below displays your installed image version (if any)
 
 #### 2. Local mode
 
@@ -40,8 +40,9 @@ Extra parameters:
 
 Post-installation setup:
 
-- Install/uninstall Eufy: install/uninstall `eufy-security-ws` image
-- Start/stop Eufy: start/stop the `eufy-security-ws` container
+- Install Eufy: install and start the `eufy-security-ws` image
+- Uninstall Eufy: stop and uninstall the `eufy-security-ws` image
+- Upgrade Eufy: upgrade the `eufy-security-ws` image to the given version
 
 #### 3. Local mode using the command line (expert)
 Once the dependencies are installed you can also use the `eufy` script found in `resources` to install,check 
@@ -51,7 +52,7 @@ and manage the `eufy-security-ws` image from the command line:
 $ ./eufy -h
 usage: ./eufy [-h] [-d device] [-u url] action
 -h show this help message and exit
-action: { start|stop|restart|status|info|logs|test }
+action: { install|uninstall|upgrade|start|stop|restart|status|info|logs|test }
 test optional arguments:
       -d DEVICE device serial number
       -u URL eufy service URL, default 127.0.0.1:3000

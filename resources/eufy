@@ -15,8 +15,8 @@ pyexec='/usr/bin/python3'
 
 usage() {
  echo "usage: $0 [-h] [-d device] [-u url] action"
-echo "-h show this help message and exit"
- echo "action: { start|stop|restart|status|info|logs|test }"
+ echo "-h show this help message and exit"
+ echo "action: { install|uninstall|upgrade|start|stop|restart|status|info|logs|test }"
  echo "test optional arguments:"
  echo "      -d DEVICE device serial number"
  echo "      -u URL eufy service URL, default 127.0.0.1:3000"
@@ -39,13 +39,14 @@ action=$1
 [ -z "$action" ] && usage && exit 1 ;
 
 case $action in
-        start)
+        start|install)
         	echo 'starting image' $image
 		docker compose -f $data/docker-compose.yml up -d ;;
         stop)
                 [ "$container_id" == "" ] && echo $image 'not running' && exit 1;
                 echo 'stopping container ' $container_id
-		docker compose -f $data/docker-compose.yml down ;;
+		docker rm -f $container_id ;;
+#		docker compose -f $data/docker-compose.yml down ;;
         status)
                 echo "image: " `sudo docker images |grep $image`
                 [ "$container_id" == "" ] && container_id='not running' ;
@@ -61,6 +62,14 @@ case $action in
         restart)
                 $0 stop
                 $0 start ;;
+	uninstall)
+		$0 stop
+		echo 'deleting images for ' $image
+		installed=`docker images -q $image`
+		docker rmi $installed --force ;;
+	upgrade)
+		$0 uninstall
+		$0 install ;;
         *)
                 usage
                 exit 1 ;;

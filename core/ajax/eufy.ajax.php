@@ -35,20 +35,21 @@ try {
     	ajax::success();
     }
     if (init('action') == 'installEufy') {
-	eufy::executeAsync ('installContainer');
-	// eufy::setupContainer('install');
+	//eufy::executeAsync ('installImage');
+	eufy::setupContainer('install');
+	eufy::setupContainer('start');
 	ajax::success();
     }
     if (init('action') == 'uninstallEufy') {
-        eufy::setupContainer('uninstall'); 
+	eufy::setupContainer('stop');
+        eufy::setupContainer('uninstall');
         ajax::success();
     }
-    if (init('action') == 'startEufy') {
-        eufy::setupContainer('start');
-        ajax::success();
-    }
-    if (init('action') == 'stopEufy') {
+    if (init('action') == 'upgradeEufy') {
         eufy::setupContainer('stop');
+	eufy::setupContainer('uninstall');
+	eufy::setupContainer('install');
+	eufy::setupContainer('start');
         ajax::success();
     }
     if (init('action') == 'testEufy') {
