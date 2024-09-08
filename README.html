@@ -58,18 +58,24 @@ $ ./resources/eufy -d device_serial test
 <li>Prerequisites not found
 <br> <code>docker</code> prerequisites are now installed automatically using the <code>dependencies</code> button when the mode is set to <code>local</code>
 <br> <code>python_venv</code> prerequisite is now installed automatically on <code>debian 12</code></li>
-<li>Container install failed or container communication indicator is red
-<br>Check the container status using the script in <code>resources</code>
-<br>See the <a href="docs/en_US/index.html#configuration">Local mode (expert)</a> documentation section for details on the <code>eufy</code> command usage:
+<li>Eufy deamon fails to start
+<br>Check the docker image, container and cloud login status indicators (see below).
+<br>If the docker image is properly installed its version will be displayed on the <code>installed version</code> line.
+<br>Both container and cloud login status indicators must be green (see below).
+<br>Use the <code>eufy</code> script the script in <code>resources</code> to get more info. 
+See the <a href="docs/en_US/index.html#configuration">Local mode (expert)</a> documentation section for details.
 <code>
-eufy status # check the image and container status
-eufy info # check the image and container status (extended info)
-eufy test # check if the container is connected to the eufy cloud
-eufy logs # get the container logs
+    eufy status # check the image and container status
+    eufy info # check the image and container status (extended info)
+    eufy test # check if the container is connected to the eufy cloud
+    eufy logs # get the container logs
 </code></li>
-<li>The daemon doesn't start
-<br> Make sure both container and Cloud communication indicators are green in the Configuration section
-<br> Check your container status with the <code>eufy test</code> command as described above</li>
+<li>Docker container indicator (left) is red
+<br> Docker image install failed or container fails to start. Make sure your image is property installed
+<br> Note: @bropat does not provide armv7 (Pi3) images anymore, latest one is 1.7.1</li>
+<li>Eufy Cloud indicator (right) is red
+<br> A red Cloud indicator means the Eufy cloud authentication failed or Eufy prevents you from connecting for security reasons.
+Verify that your Eufy login, password and device name are correct.</li>
 <li>Synchronization failed, devices are not found
 <br> Apostrophes and quotes are not supported in equipment names</li>
 <li>Incompatible schema error, commands not working
@@ -97,6 +103,8 @@ tag: <code>#plugin-eufy</code></p>
 <h2>ChangeLog</h2>
 
 <ul>
+<li>v2.11 <a href="https://github.com/lxrootard">lxrootard</a>
+<br> - Added restart docker image button</li>
 <li>v2.10 <a href="https://github.com/lxrootard">lxrootard</a>
 <br> - Improved image management
 <br> - Added documentation and community links</li>

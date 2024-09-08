@@ -39,11 +39,12 @@ Paramètres supplémentaires:
 - Device: nom de votre téléphone dans l'app Eufy, utilisé pour se connecter au serveur Cloud Eufy
 - Utilisateur et mot de passe: il est conseillé de créer un utilisateur dédié
 
-Configuration post-installation:
+Configuration de l'image docker post-installation:
 
-- Installer Eufy: installer et démarrer l'image `eufy-security-ws`
-- Désinstaller Eufy: arrêter et déinstaller l'image `eufy-security-ws`
-- Upgrader Eufy: metre à jour  l'image `eufy-security-ws` avec la version demandée
+- Installer: installe et démarre l'image `eufy-security-ws`
+- Redémarrer: redémarre le service `eufy-security-ws` (à relancer si vous changez les paramètres du container)
+- Désinstaller: arrête et déinstalle l'image `eufy-security-ws`
+- Upgrader: met à jour l'image `eufy-security-ws` avec la version demandée
 
 #### 3. Mode local en ligne de commande (expert)
 Une fois les dépendances installées vous pouvez aussi utiliser le script `eufy` disponible dans `resources`

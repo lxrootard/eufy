@@ -40,6 +40,11 @@ try {
 	eufy::setupContainer('start');
 	ajax::success();
     }
+    if (init('action') == 'restartEufy') {
+        eufy::setupContainer('stop');
+        eufy::setupContainer('start');
+        ajax::success();
+    }
     if (init('action') == 'uninstallEufy') {
 	eufy::setupContainer('stop');
         eufy::setupContainer('uninstall');

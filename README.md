@@ -49,18 +49,24 @@ where `device_serial` is your device serial number, starting by `Txxx`
 * Prerequisites not found
 <br> `docker` prerequisites are now installed automatically using the `dependencies` button when the mode is set to `local`
 <br> `python_venv` prerequisite is now installed automatically on `debian 12`
-* Container install failed or container communication indicator is red
-<br>Check the container status using the script in `resources`
-<br>See the [Local mode (expert)](docs/en_US/index.md#configuration) documentation section for details on the `eufy` command usage:
+* Eufy deamon fails to start
+<br>Check the docker image, container and cloud login status indicators (see below).
+<br>If the docker image is properly installed its version will be displayed on the `installed version` line.
+<br>Both container and cloud login status indicators must be green (see below).
+<br>Use the `eufy` script the script in `resources` to get more info. 
+See the [Local mode (expert)](docs/en_US/index.md#configuration) documentation section for details.
 ```
-	eufy status # check the image and container status
-	eufy info # check the image and container status (extended info)
-	eufy test # check if the container is connected to the eufy cloud
-	eufy logs # get the container logs
+        eufy status # check the image and container status
+        eufy info # check the image and container status (extended info)
+        eufy test # check if the container is connected to the eufy cloud
+        eufy logs # get the container logs
 ```
-* The daemon doesn't start
-<br> Make sure both container and Cloud communication indicators are green in the Configuration section
-<br> Check your container status with the `eufy test` command as described above
+* Docker container indicator (left) is red
+<br> Docker image install failed or container fails to start. Make sure your image is property installed
+<br> Note: @bropat does not provide armv7 (Pi3) images anymore, latest one is 1.7.1
+* Eufy Cloud indicator (right) is red
+<br> A red Cloud indicator means the Eufy cloud authentication failed or Eufy prevents you from connecting for security reasons.
+Verify that your Eufy login, password and device name are correct.
 * Synchronization failed, devices are not found
 <br> Apostrophes and quotes are not supported in equipment names
 * Incompatible schema error, commands not working
@@ -82,6 +88,8 @@ Also check the [Jeedom community blog](https://community.jeedom.com/tag/plugin-e
 tag: `#plugin-eufy`
 
 ## ChangeLog
+* v2.11 [lxrootard](https://github.com/lxrootard)
+<br> - Added restart docker image button
 * v2.10 [lxrootard](https://github.com/lxrootard)
 <br> - Improved image management
 <br> - Added documentation and community links

@@ -38,11 +38,12 @@ Extra parameters:
 - Device: name of your phone in the Eufy app, used to connect the Eufy Cloud server
 - User and password: it's strongly advised to create a dedicated user
 
-Post-installation setup:
+Docker image post-installation setup:
 
-- Install Eufy: install and start the `eufy-security-ws` image
-- Uninstall Eufy: stop and uninstall the `eufy-security-ws` image
-- Upgrade Eufy: upgrade the `eufy-security-ws` image to the given version
+- Install: install and start the `eufy-security-ws` image
+- Restart: restart the `eufy-security-ws` image. Use if you change the image settings
+- Uninstall: stop and uninstall the `eufy-security-ws` image
+- Upgrade: upgrade the `eufy-security-ws` image to the given version
 
 #### 3. Local mode using the command line (expert)
 Once the dependencies are installed you can also use the `eufy` script found in `resources` to install,check 

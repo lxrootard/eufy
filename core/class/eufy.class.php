@@ -667,6 +667,8 @@ class eufy extends eqLogic {
                	throw new Exception(__('Nom du device non renseigné', __FILE__));
 	else if (empty($user) or empty($passwd))
  		throw new Exception(__('Login ou password non renseignés', __FILE__));
+	if (empty($version))
+		$version = 'latest';
         if (empty($port))
                	$port = '3000';
 
@@ -759,7 +761,7 @@ class eufy extends eqLogic {
           event::add('jeedom::alert', array('level' => 'info', 'page' => 'eufy',
                 'message' => $action . " terminé"));
 	} catch (Exception $e) {
-                event::add('jeedom::alert', array('level' => 'error', 'page' => 'eufy',
+                event::add('jeedom::alert', array('level' => 'warning', 'page' => 'eufy',
                 'message' => $e->getMessage()));
                 log::add(__CLASS__, 'warning', '>>> ' . $action . ' du service Eufy: ' . $e->getMessage());
 	}
