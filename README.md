@@ -88,6 +88,8 @@ Also check the [Jeedom community blog](https://community.jeedom.com/tag/plugin-e
 tag: `#plugin-eufy`
 
 ## ChangeLog
+* v2.12 [lxrootard](https://github.com/lxrootard)
+<br> - Fix to solve [this issue](https://community.jeedom.com/t/pi4-et-docker-quelle-difference-entre-aarch64-et-arm64/130481/15)
 * v2.11 [lxrootard](https://github.com/lxrootard)
 <br> - Added restart docker image button
 * v2.10 [lxrootard](https://github.com/lxrootard)

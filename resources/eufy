@@ -35,8 +35,9 @@ while getopts "d:u:h" opt; do
 done
 shift $(( OPTIND - 1 ))
 action=$1
-#${1:?$( usage )}
 [ -z "$action" ] && usage && exit 1 ;
+
+echo eufy 'action:' $action 'options:' $opts
 
 case $action in
         start|install)

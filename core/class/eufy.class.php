@@ -708,8 +708,9 @@ class eufy extends eqLogic {
 	try {
           if ($inProgress)
 		throw  new Exception(__("l'Opération " . $action . ' est déjà en cours, merci de patienter', __FILE__));
-
           cache::set('eufy::opInProgress', true);
+	  $arch = shell_exec(system::getCmdSudo() . 'uname -m');
+	log::add(__CLASS__, 'debug', 'hardware arch: ' . $arch);
 	  switch ($action) {
 	    case 'install':
 		if ($cid != "")
@@ -718,6 +719,8 @@ class eufy extends eqLogic {
 			 throw new Exception(__("L'image est déjà installée", __FILE__));
 		$version = config::byKey('targetVersion', __CLASS__);
 		$cmd = 'docker pull ' . $eufy . ':' . $version;
+                if ($arch == 'aarch64')
+                        $cmd = 'export DOCKER_DEFAULT_PLATFORM=linux/arm64; ' . $cmd;
 		log::add(__CLASS__, 'debug', $cmd);
 		shell_exec(system::getCmdSudo() . ' ' . $cmd . ' >> ' . $log . ' 2>&1');
 		break;
@@ -728,6 +731,8 @@ class eufy extends eqLogic {
                         throw new Exception(__('Le container est déjà démarré', __FILE__));
 		eufy::updateYaml();
 		$cmd = 'docker compose -f '. $yaml .' up -d';
+                if ($arch == 'aarch64')
+                        $cmd = 'export DOCKER_DEFAULT_PLATFORM=linux/arm64; ' . $cmd;
 		log::add(__CLASS__, 'debug', $cmd);
 		$cid = shell_exec(system::getCmdSudo() . ' ' . $cmd . ' >> ' . $log . ' 2>&1');
 		log::add(__CLASS__, 'debug','container id: '. $cid);
