@@ -36,6 +36,7 @@ try {
     }
     if (init('action') == 'installEufy') {
 	//eufy::executeAsync ('installImage');
+	eufy::installDocker();
 	eufy::setupContainer('install');
 	eufy::setupContainer('start');
 	ajax::success();

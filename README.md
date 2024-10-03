@@ -88,6 +88,9 @@ Also check the [Jeedom community blog](https://community.jeedom.com/tag/plugin-e
 tag: `#plugin-eufy`
 
 ## ChangeLog
+* v2.13 [lxrootard](https://github.com/lxrootard)
+<br> - Fix to support lib v1.9.1 and upcoming releases
+<br> - Fix in the docker detection
 * v2.12 [lxrootard](https://github.com/lxrootard)
 <br> - Fix to solve [this issue](https://community.jeedom.com/t/pi4-et-docker-quelle-difference-entre-aarch64-et-arm64/130481/15)
 * v2.11 [lxrootard](https://github.com/lxrootard)

@@ -21,24 +21,32 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
 class eufy extends eqLogic {
 
   public static function dependancy_end() {
+/*
     $mode = config::byKey('eufyMode', __CLASS__);
     $msg = "Configuration du container, mode sélectionné: " . $mode;
     log::add(__CLASS__, 'info', $msg);
-
-    if ($mode == 'local') {
-	eufy::installDocker();
-	config::save('containerIP', '127.0.0.1', __CLASS__);
-	config::save('containerPort', '3000', __CLASS__);
-	config::save('targetVersion', 'latest', __CLASS__);
-    }
+*/
+    config::save('eufyMode','local', __CLASS__);
+    config::save('containerIP', '127.0.0.1', __CLASS__);
+    config::save('containerPort', '3000', __CLASS__);
+    config::save('targetVersion', 'latest', __CLASS__);
     eufy::updateYaml();
   }
 
   public static function installDocker() {
    if ((shell_exec(system::getCmdSudo() . ' which docker | wc -l') != 1) ||
       (shell_exec(system::getCmdSudo() . " docker compose version|sed 's:.*version ::g'") == "")) {
+	$msg = "*** Installation de docker, merci de patienter ***";
+        event::add('jeedom::alert', array('level' => 'info', 'page' => 'eufy', 'message' => $msg));
+        if (cache::exist('eufy::opInProgress'))
+                $inProgress = cache::byKey('eufy::opInProgress')->getValue();
+        else
+                $inProgress = false;
+        if ($inProgress)
+                throw  new Exception(__("l'Opération " . $action . ' est déjà en cours, merci de patienter', __FILE__));
+	cache::set('eufy::opInProgress', true);
         $log = log::getPathToLog('eufy_packages');
-        shell_exec(system::getCmdSudo() . ' echo "*** Installation de docker, merci de patienter ***"' . '>> ' . $log);
+	shell_exec(system::getCmdSudo() . ' echo ' . $msg . ' >> ' . $log);
         shell_exec(system::getCmdSudo() . ' apt-get update' . ' >> ' . $log . ' 2>&1');
         shell_exec(system::getCmdSudo() . ' apt-get install ca-certificates curl' . ' >> ' . $log . ' 2>&1');
         shell_exec(system::getCmdSudo() . ' install -m 0755 -d /etc/apt/keyrings' . ' >> ' . $log . ' 2>&1');
@@ -50,8 +58,12 @@ class eufy extends eqLogic {
         shell_exec(system::getCmdSudo() . ' echo ' . $repo . ' > ' . $file);
         shell_exec(system::getCmdSudo() . ' apt-get update' . ' >> ' . $log . ' 2>&1');
         shell_exec(system::getCmdSudo() . ' apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin' . ' >> ' . $log . ' 2>&1');
-        shell_exec(system::getCmdSudo() . ' echo "*** Installation de docker terminée ***"'. ' >> ' . $log);
-    }
+        $msg = "*** Installation de docker terminée ***";
+        shell_exec(system::getCmdSudo() . ' echo ' . $msg . ' >> ' . $log);
+        event::add('jeedom::alert', array('level' => 'info', 'page' => 'eufy', 'message' => $msg));
+        cache::set('eufy::opInProgress', false);
+    } else
+	log::add(__CLASS__, 'debug', 'docker est déjà installé');
   }
 
   public static function getPyPath() {
@@ -71,13 +83,13 @@ class eufy extends eqLogic {
 
   public static function getSchemaVersion()
   {
+	$s = '';
 	$v = cache::byKey('eufy::version')->getValue();
-	$s= '';
-	switch ($v) {
-	   case '1.8.0':
-	   case '1.9.0':
+	$vv = (int) str_replace(".","",$v);
+	switch ($vv) {
+	   case $vv >= 180:
 		$s = '21'; break;
-	   case '1.7.1':
+	   case $vv >= 171:
 		$s = '20'; break;
 	   default:
 		throw new Exception(__("Version d'image eufy non supportée: ". $v, __FILE__));
