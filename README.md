@@ -28,8 +28,10 @@
 - T8410 Indoor Cam Pan&Tilt
 - T8423 Floodlight Cam 2 Pro
 - T8424 Floodlight Cam 2
+- T8425 Floodlight Cam E340
 - T8441 Outdoor Cam Pro
 - T84A1 Wired Wall Light Cam S100
+- T8600 Eufycam E330
 - T8910 Motion Sensor. `motionDetection` events not working, 
 see [this thread](https://github.com/fuatakgun/eufy_security/issues/22)
 - T8960 Keypad
@@ -88,6 +90,10 @@ Also check the [Jeedom community blog](https://community.jeedom.com/tag/plugin-e
 tag: `#plugin-eufy`
 
 ## ChangeLog
+* v2.14 [lxrootard](https://github.com/lxrootard)
+<br> - Added support for T8425 and T8600
+<br> - Added Value column in device commands tab
+<br> - Fix for aarch64 docker install
 * v2.13 [lxrootard](https://github.com/lxrootard)
 <br> - Fix to support lib v1.9.1 and upcoming releases
 <br> - Fix in the docker detection
