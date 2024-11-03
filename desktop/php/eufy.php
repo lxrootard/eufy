@@ -188,6 +188,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 				<! -- ajout cible pour filtrer sur les inputs -->
                                 <th data-sortable="true" data-sorter="inputs">{{Nom}}</th>
                                 <th data-sorter="select-text">{{Type}}</th>
+				<th data-sorter="false">{{Valeur}}</th>
                                 <th data-sorter="false" data-filter="false">{{Options}}</th>
                                 <th data-sorter="false" data-filter="false">{{Actions}}</th>
                             </tr>

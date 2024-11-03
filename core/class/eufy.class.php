@@ -236,7 +236,7 @@ class eufy extends eqLogic {
    public static function initModelTypes()
    {
     //log::add(__CLASS__, 'debug','initModelTypes');
-    $types = eufyCmd::getCommandsFileContent(__DIR__ . '/../config/devices/eufy_types.json');
+    $types = eufy::getCommandsFileContent(__DIR__ . '/../config/devices/eufy_types.json');
     cache::set('eufy::modelTypes',$types);
    }
 
@@ -273,6 +273,7 @@ class eufy extends eqLogic {
         $eqLogic->setName($device->name);
         $eqLogic->setEqType_name(__CLASS__);
         $eqLogic->setIsEnable(1);
+	$eqLogic->setIsVisible(1);
         $eqLogic->setCategory('security', 1);
         $eqLogic->setConfiguration('eufyName', $device->name); // nom app Eufy
         $eqLogic->setConfiguration('eufyModel', $device->model);
@@ -285,9 +286,8 @@ class eufy extends eqLogic {
         log::add(__CLASS__, 'debug', 'Device already exists: ' . $device->name . ' #' . $device->serialNumber);
 
       try {
-	  $fname=substr($device->model, 0, 4) . 'x';
-	  log::add(__CLASS__, 'debug', '>>> createCommandsFromConfig, file: ' . $fname);
-          $commandsConfig = eufyCmd::getCommandsFileContent(__DIR__ . '/../config/devices/' . $fname . '.json');
+          $commandsConfig = self::getModelConfig($device->model);
+	  log::add(__CLASS__, 'debug', '>>> createCommandsFromConfig');
 	  for ($i=0; $i < count($commandsConfig); $i++)
           	$eqLogic->createCommandsFromConfig($commandsConfig[$i], $jsonObjArray[$deviceId], $commandsConfig[$i]['interface']);
       }
@@ -298,6 +298,18 @@ class eufy extends eqLogic {
       $eqLogic->refreshDevice();
       $deviceId = $deviceId + 1;
     }
+  }
+
+  public static function getModelConfig ($fname) {
+    $file = __DIR__ . '/../config/devices/' . $fname . '.json';
+    if (file_exists($file))
+	$commandsConfig = eufy::getCommandsFileContent($file);
+    else {
+	$fname = substr($fname, 0, 4) . 'x';
+	$file = __DIR__ . '/../config/devices/' . $fname . '.json';
+	$commandsConfig = eufy::getCommandsFileContent($file);
+    }
+    return $commandsConfig;
   }
 
   public static function refreshAllDevices()
@@ -721,8 +733,9 @@ class eufy extends eqLogic {
           if ($inProgress)
 		throw  new Exception(__("l'Opération " . $action . ' est déjà en cours, merci de patienter', __FILE__));
           cache::set('eufy::opInProgress', true);
-	  $arch = shell_exec(system::getCmdSudo() . 'uname -m');
-	log::add(__CLASS__, 'debug', 'hardware arch: ' . $arch);
+	  $arch = shell_exec(system::getCmdSudo() . ' uname -m');
+	  $arch = str_replace("\n", "", $arch);
+	  log::add(__CLASS__, 'debug', 'hardware arch: ' . $arch);
 	  switch ($action) {
 	    case 'install':
 		if ($cid != "")
@@ -732,7 +745,7 @@ class eufy extends eqLogic {
 		$version = config::byKey('targetVersion', __CLASS__);
 		$cmd = 'docker pull ' . $eufy . ':' . $version;
                 if ($arch == 'aarch64')
-                        $cmd = 'export DOCKER_DEFAULT_PLATFORM=linux/arm64; ' . $cmd;
+                        $cmd = 'DOCKER_DEFAULT_PLATFORM=linux/arm64 ' . $cmd;
 		log::add(__CLASS__, 'debug', $cmd);
 		shell_exec(system::getCmdSudo() . ' ' . $cmd . ' >> ' . $log . ' 2>&1');
 		break;
@@ -744,7 +757,7 @@ class eufy extends eqLogic {
 		eufy::updateYaml();
 		$cmd = 'docker compose -f '. $yaml .' up -d';
                 if ($arch == 'aarch64')
-                        $cmd = 'export DOCKER_DEFAULT_PLATFORM=linux/arm64; ' . $cmd;
+                        $cmd = 'DOCKER_DEFAULT_PLATFORM=linux/arm64 ' . $cmd;
 		log::add(__CLASS__, 'debug', $cmd);
 		$cid = shell_exec(system::getCmdSudo() . ' ' . $cmd . ' >> ' . $log . ' 2>&1');
 		log::add(__CLASS__, 'debug','container id: '. $cid);
@@ -784,10 +797,6 @@ class eufy extends eqLogic {
 	}
 	cache::set('eufy::opInProgress', false);
   }
-}
-
-
-class eufyCmd extends cmd {
 
  /* helper */
   public static function getCommandsFileContent(string $filePath) {
@@ -800,7 +809,9 @@ class eufyCmd extends cmd {
         }
         return json_decode($content, true);
   }
+}
 
+class eufyCmd extends cmd {
 
   // Exécution d'une commande
   public function execute($_options = array()) {

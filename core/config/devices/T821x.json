@@ -503,7 +503,7 @@
 			},
 			"45": {
 				"logicalId": "ringtoneVolume:set",
-				"name": "Volume sonnerie",
+				"name": "Réglage volume sonnerie",
 				"type": "action",
 				"subtype": "slider",
 				"isVisible": 1,
