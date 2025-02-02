@@ -51,13 +51,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
             <?php
             foreach ($eqLogics as $eqLogic) {
                 $opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
-		$iname = substr($eqLogic->getConfiguration('eufyModel'), 0, 5);
                 echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '">';
-
-                if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $iname . '.png'))
-			echo '<img src="plugins/eufy/core/config/devices/' . $iname . '.png"/>';
-		else
-                	echo '<img src="' . $eqLogic->getImage() . '"/>';
+		echo '<img src="' . $eqLogic->getImage() . '"/>';
                 echo "<br>";
                 echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
                 echo '</div>';
@@ -172,6 +167,12 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                     <label class="col-sm-3 control-label">{{Date de création}}</label>
                                     <div class="col-sm-6">
                                         <span type="text" class="eqLogicAttr label label-default" data-l1key="configuration" data-l2key="createtime"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Image}}</label>
+                                    <div class="col-sm-6">
+					 <img id="device_pic" style="height:100px; align:left"/>
                                     </div>
                                 </div>
                             </fieldset>

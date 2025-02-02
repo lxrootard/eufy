@@ -34,8 +34,13 @@ try {
 	eufy::sendToDaemon($params);
     	ajax::success();
     }
+    if (init('action') == 'getPicture') {
+        $logicalId = init('logicalId');
+	$eqLogic = eufy::byLogicalId($logicalId, 'eufy');
+        $img = $eqLogic->getImage();
+        ajax::success($img);
+    }
     if (init('action') == 'installEufy') {
-	//eufy::executeAsync ('installImage');
 	eufy::installDocker();
 	eufy::setupContainer('install');
 	eufy::setupContainer('start');

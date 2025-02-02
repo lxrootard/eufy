@@ -323,6 +323,7 @@ class eufy extends eqLogic {
 	if (! $this->getIsEnable())
 	  return;
 
+        $this->initSnapshot();
 	$name = $this->getConfiguration('eufyName');
         $serialNumber= $this->getConfiguration('serialNumber');
         log::add(__CLASS__, 'debug', 'Refresh device: ' . $name .' #'. $serialNumber);
@@ -332,6 +333,21 @@ class eufy extends eqLogic {
 		log::add(__CLASS__, 'debug', '> refresh interface: ' . $itf);
                 $params = array('command' => $itf . '.get_properties', 'serialNumber' => $serialNumber);
 		eufy::sendToDaemon($params);
+	}
+  }
+
+  public function initSnapshot() {
+	$picCmd = $this->getCmd(null, 'picture');
+	if (is_object($picCmd)) {
+		$urlRoot = '/plugins/eufy';
+		$imgRoot= '/data/tmp/';
+		$dirName = __DIR__ . '/../..' . $imgRoot;
+		$img = $this->getConfiguration('serialNumber') . '.jpg';
+		$fname = $dirName . $img;
+		if (file_exists($fname))
+			return;
+		$url = $urlRoot . '/data/no_snapshot.png';
+		eufy::sendEvent($picCmd, $url);
 	}
   }
 
@@ -397,12 +413,11 @@ class eufy extends eqLogic {
     $img = $this->getConfiguration('serialNumber') . '.jpg';
 
     $dirName = __DIR__ . '/../..' . $imgRoot;
-    mkdir ($dirName,0755,true);
+    if (!file_exists($dirName))
+    	mkdir ($dirName,0755,true);
     $fname = $dirName . $img;
     $urlRoot = '/plugins/eufy';
     $bytes = $a['data']['data'];
- //   log::add(__CLASS__, 'debug', 'img file: ' . $img);
-//    log::add(__CLASS__, 'debug', 'fname: ' . $fname);
 
     if (is_array($bytes)) {
 //	log::add(__CLASS__, 'debug', 'pic size: '. count($bytes));
@@ -417,7 +432,15 @@ class eufy extends eqLogic {
 	return $urlRoot . $imgRoot . $img . '?ts=' . @filemtime($fname);
     }
     else
-	return $urlRoot . '/resources/no_snapshot.png';
+	return $urlRoot . '/data/no_snapshot.png';
+  }
+
+  public function getImage() {
+    $iname = substr($this->getConfiguration('eufyModel'), 0, 5);
+    if (file_exists(__DIR__ . '/../../core/config/devices/' . $iname . '.png'))
+	return 'plugins/eufy/core/config/devices/' . $iname . '.png';
+    else
+	return parent::getImage();
   }
 
   public static function sendEvent($cmd, $value) {
@@ -649,29 +672,6 @@ class eufy extends eqLogic {
         cache::set('eufy::online', $online);
 	return $online;
   }
-
-        // @Mips
-        public static function executeAsync(string $_method, $_option = null, $_date = 'now') {
-                if (!method_exists(__CLASS__, $_method))
-                        throw new InvalidArgumentException("Method provided for executeAsync does not exist: {$_method}");
-
-                $cron = new cron();
-                $cron->setClass(__CLASS__);
-                $cron->setFunction($_method);
-                if (isset($_option))
-                        $cron->setOption($_option);
-
-                $cron->setOnce(1);
-                $scheduleTime = strtotime($_date);
-                $cron->setSchedule(cron::convertDateToCron($scheduleTime));
-                $cron->save();
-                if ($scheduleTime <= strtotime('now')) {
-                        $cron->run();
-			log::add(__CLASS__, 'debug', "Task '{$_method}' executed now");
-                } else
-                        log::add(__CLASS__, 'debug', "Task '{$_method}' scheduled at {$_date}");
-        }
-
 
   // init yaml file
   public static function updateYaml ()

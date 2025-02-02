@@ -90,6 +90,10 @@ Also check the [Jeedom community blog](https://community.jeedom.com/tag/plugin-e
 tag: `#plugin-eufy`
 
 ## ChangeLog
+* v2.15 [lxrootard](https://github.com/lxrootard)
+<br> - Fix debian11 python deamon memory issue
+<br> - Added picture on equipement modal
+<br> - Minor fixes
 * v2.14 [lxrootard](https://github.com/lxrootard)
 <br> - Added support for T8425 and T8600
 <br> - Added Value column in device commands tab

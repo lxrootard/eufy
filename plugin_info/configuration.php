@@ -267,5 +267,8 @@ $('#bt_testEufy').off('click').on('click', function() {
         })
 })
 
+$('body').off('eufy::dependancy_end').on('eufy::dependancy_end', function(_event, _options) {
+  window.location.reload();
+})
 
 </script>

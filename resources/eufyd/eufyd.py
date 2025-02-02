@@ -4,12 +4,12 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # Jeedom is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
 
@@ -51,11 +51,14 @@ def read_socket():
 		if "command" not in message:
 			return
 # 		sync
-		if message["command"] == "syncDevices":
-			logging.debug("eufyd stations: " + str(_stations))
-			logging.debug("eufyd devices: " + str(_devices))
-			_jeedomCom.send_change_immediate({'type': 'sync', 'stations': str(_stations),'devices': str(_devices)})
-			return
+		try:
+			if message["command"] == "syncDevices":
+				logging.debug("eufyd stations: " + str(_stations))
+				logging.debug("eufyd devices: " + str(_devices))
+				_jeedomCom.send_change_immediate({'type': 'sync', 'stations': str(_stations),'devices': str(_devices)})
+				return
+		except Exception as e:
+			logging.error('Send command to demon error: %s', e)
 #		other commands
 		try:
 			jsonMsg = json.dumps(message)
@@ -87,8 +90,7 @@ def startWebsocket():
                                 on_error=on_error,
                                 on_close=on_close)
 	_ws.on_open = on_open
-	#_ws.run_forever()
-	th = threading.Thread(target=_ws.run_forever)
+	th = Thread(target=_ws.run_forever)
 	th.daemon = True
 	th.start()
 
@@ -104,19 +106,17 @@ def shutdown():
 	logging.debug("Removing PID file " + str(_pidfile))
 	try:
 		os.remove(_pidfile)
-	except:
-		pass
+	except Exception as e:
+		logging.warning('Error removing PID file: %s', e)
 	try:
 		jeedom_socket.close()
-	except:
-		pass
-	try:
-		jeedom_serial.close()
-	except:
-		pass
-
+	except Exception as e:
+		logging.warning('Error closing socket: %s', e)
 	# Close websocket
-	_websocket.close()
+	try:
+		_websocket.close()
+	except Exception as e:
+		logging.warning('Error closing websocket: %s', e)
 
 	logging.debug("Exit 0")
 	sys.stdout.flush()
@@ -282,7 +282,10 @@ signal.signal(signal.SIGTERM, handler)
 try:
 	jeedom_utils.write_pid(str(_pidfile))
 	jeedom_socket = jeedom_socket(port=_socket_port,address=_socket_host)
-	_jeedomCom = jeedom_com(_apikey, _callback)
+	_jeedomCom = jeedom_com(_apikey, _callback, _cycle)
+	if not _jeedomCom.test():
+		logging.error('Network communication issues. Please fix your Jeedom network configuration.')
+		shutdown()
 
 	# Start WebSocket connection with the container
 	startWebsocket()

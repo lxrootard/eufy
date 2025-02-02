@@ -80,6 +80,30 @@ function addCmdToTable(_cmd) {
   })
 }
 
+function updatePicture (uid) {
+   //alert('updatePicture: ' + uid);
+   $.ajax({
+      type: "POST",
+      url: "plugins/eufy/core/ajax/eufy.ajax.php",
+      data: {
+          action: "getPicture",
+          logicalId : uid
+      },
+      dataType: 'json',
+      error: function (request, status, error) {
+          handleAjaxError(request, status, error);
+      },
+      success: function (data) {
+        if (data.state != 'ok') {
+                $('#div_alert').showAlert({ message: data.result, level: 'danger' });
+                return;
+        }
+        $('#device_pic').attr("src", data.result);
+      }
+  });
+}
+
+
 $('#bt_syncEufy').on('click', function () {
   $.ajax({
       type: "POST",
@@ -134,6 +158,7 @@ setTimeout(() => {
 
 function printEqLogic(_eqLogic) {
   // lance une tempo pour laisser le temps au core d'executer tous les addCmdToTable
+  updatePicture (_eqLogic.logicalId);
   setTimeout(() => {
     $('table.tablesorter').trigger('update') // update de tablesorter
   }, "1000");
