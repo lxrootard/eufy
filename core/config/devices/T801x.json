@@ -98,30 +98,30 @@
 					"mobile": "line"
 				}
 			},
-                        "8": {
-                                "logicalId": "alarmType",
-                                "name": "Type d alarme",
-                                "type": "info",
-                                "subtype": "numeric",
-                                "isVisible": 0,
-                                "generic_type": "GENERIC_INFO",
-                                "template": {
-                                        "dashboard": "line",
-                                        "mobile": "line"
-                                }
-                        },
-                        "9": {
-                                "logicalId": "promptVolume",
-                                "name": "Volume Prompt",
-                                "type": "info",
-                                "subtype": "numeric",
-                                "isVisible": 1,
-                                "generic_type": "GENERIC_INFO",
-                                "template": {
-                                        "dashboard": "line",
-                                        "mobile": "line"
-                                }
-                        },
+			"8": {
+				"logicalId": "alarmType",
+				"name": "Type d alarme",
+				"type": "info",
+				"subtype": "numeric",
+				"isVisible": 0,
+				"generic_type": "GENERIC_INFO",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			},
+			"9": {
+				"logicalId": "promptVolume",
+				"name": "Volume Prompt",
+				"type": "info",
+				"subtype": "numeric",
+				"isVisible": 1,
+				"generic_type": "GENERIC_INFO",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			},
 			"10": {
 				"logicalId": "sdCapacity",
 				"name": "Capacité SD",
@@ -281,33 +281,44 @@
 					"icon": "<i class=\"fas fa-bell-slash\"></i>"
 				}
 			},
-                        "26": {
-                                "logicalId": "alarmType:set",
-                                "name": "Réglage type d alarme",
-                                "type": "action",
-                                "subtype": "slider",
-                                "isVisible": 0,
-                                "generic_type": "CAMERA_PRESET",
-                                "configuration": {
-                                        "params": "[#slider#]",
-                                        "minValue": 0,
-                                        "maxValue": 13
-                                }
-                        },
-                        "27": {
-                                "logicalId": "promptVolume:set",
-                                "name": "Réglage volume prompt",
-                                "type": "action",
-                                "subtype": "slider",
-                                "isVisible": 1,
-                                "generic_type": "SET_VOLUME",
-                                "configuration": {
-                                        "params": "[#slider#]",
-                                        "minValue": 0,
-                                        "maxValue": 26
-                                }
-                        }
-
+			"26": {
+				"logicalId": "alarmType:set",
+				"name": "Réglage type d alarme",
+				"type": "action",
+				"subtype": "slider",
+				"isVisible": 0,
+				"generic_type": "CAMERA_PRESET",
+				"configuration": {
+					"params": "[#slider#]",
+					"minValue": 0,
+					"maxValue": 13
+				}
+			},
+			"27": {
+				"logicalId": "promptVolume:set",
+				"name": "Réglage volume prompt",
+				"type": "action",
+				"subtype": "slider",
+				"isVisible": 1,
+				"generic_type": "SET_VOLUME",
+				"configuration": {
+					"params": "[#slider#]",
+					"minValue": 0,
+					"maxValue": 26
+				}
+			},
+			"28": {
+				"logicalId": "currentMode",
+				"name": "Mode courant",
+				"type": "info",
+				"subtype": "numeric",
+				"isVisible": 0,
+				"generic_type": "ALARM_MODE",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			}
 		}
 	}
 ]

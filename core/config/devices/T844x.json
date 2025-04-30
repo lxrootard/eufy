@@ -135,6 +135,18 @@
 				"subtype": "other",
 				"isVisible": 0,
 				"generic_type": "ALARM_MODE"
+			},
+			"14": {
+				"logicalId": "currentMode",
+				"name": "Mode courant",
+				"type": "info",
+				"subtype": "numeric",
+				"isVisible": 0,
+				"generic_type": "ALARM_MODE",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
 			}
 		}
 	},
@@ -599,19 +611,19 @@
 					"listValue": "1|Efficient;2|Include thumbnail;3|Full effect"
 				}
 			},
-                        "40": {
-                                "logicalId": "motionDetectionType",
-                                "name": "Type de détection mvt",
-                                "type": "info",
-                                "subtype": "numeric",
-                                "isVisible": 1,
-                                "isHistorized": 0,
-                                "generic_type": "GENERIC_INFO",
-                                "template": {
-                                        "dashboard": "line",
-                                        "mobile": "line"
-                                }
-                        },
+			"40": {
+				"logicalId": "motionDetectionType",
+				"name": "Type de détection mvt",
+				"type": "info",
+				"subtype": "numeric",
+				"isVisible": 1,
+				"isHistorized": 0,
+				"generic_type": "GENERIC_INFO",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			},
 			"41": {
 				"logicalId": "motionDetectionType:set",
 				"name": "Type détection mouvement",
@@ -627,4 +639,3 @@
 		}
 	}
 ]
-

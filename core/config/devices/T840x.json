@@ -135,6 +135,18 @@
 				"subtype": "other",
 				"isVisible": 0,
 				"generic_type": "ALARM_MODE"
+			},
+			"14": {
+				"logicalId": "currentMode",
+				"name": "Mode courant",
+				"type": "info",
+				"subtype": "numeric",
+				"isVisible": 0,
+				"generic_type": "ALARM_MODE",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
 			}
 		}
 	},

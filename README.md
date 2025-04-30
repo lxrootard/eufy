@@ -17,6 +17,7 @@
 - T8111 Camera
 - T8113 Camera 2C 
 - T8114 Camera 2
+- T8124 SoloCam S40
 - T8134 S220 (requires image v1.7.0+)
 - T8140 S221 Camera 2 Pro
 - T8142 Camera 2C Pro
@@ -90,6 +91,9 @@ Also check the [Jeedom community blog](https://community.jeedom.com/tag/plugin-e
 tag: `#plugin-eufy`
 
 ## ChangeLog
+* v2.16 [lxrootard](https://github.com/lxrootard)
+<br> - Added support for T8124
+<br> - Added currentMode property
 * v2.15 [lxrootard](https://github.com/lxrootard)
 <br> - Fix debian11 python deamon memory issue
 <br> - Added picture on equipement modal

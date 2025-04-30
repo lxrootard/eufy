@@ -135,6 +135,18 @@
 				"subtype": "other",
 				"isVisible": 0,
 				"generic_type": "ALARM_MODE"
+			},
+			"14": {
+				"logicalId": "currentMode",
+				"name": "Mode courant",
+				"type": "info",
+				"subtype": "numeric",
+				"isVisible": 0,
+				"generic_type": "ALARM_MODE",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
 			}
 		}
 	},
@@ -447,9 +459,9 @@
 				"subtype": "slider",
 				"isVisible": 1,
 				"generic_type": "CAMERA_PRESET",
-                                "configuration": {
-                                        "switch": "status",
-                                        "listValue": "0|Standard;1|Advanced;2|Automatic"
+				"configuration": {
+					"switch": "status",
+					"listValue": "0|Standard;1|Advanced;2|Automatic"
 				}
 			},
 			"25": {
