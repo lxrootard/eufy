@@ -36,6 +36,7 @@
 - T8910 Motion Sensor. `motionDetection` events not working, 
 see [this thread](https://github.com/fuatakgun/eufy_security/issues/22)
 - T8960 Keypad
+- T8W11 Indoor Cam C220
 
 ## Untested devices
 Other Eufy models should also work but might not be recognized incompletely or require a config file.
@@ -91,6 +92,8 @@ Also check the [Jeedom community blog](https://community.jeedom.com/tag/plugin-e
 tag: `#plugin-eufy`
 
 ## ChangeLog
+* v2.17 [lxrootard](https://github.com/lxrootard)
+<br> - Added support for T8W11
 * v2.16 [lxrootard](https://github.com/lxrootard)
 <br> - Added support for T8124
 <br> - Added currentMode property
