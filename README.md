@@ -13,7 +13,6 @@
 - T8002 Homebase E 
 - T8010 Homebase 2
 - T8030 Homebase 3
-- T81A0 Solar Wall Light Cam S120
 - T8111 Camera
 - T8113 Camera 2C 
 - T8114 Camera 2
@@ -24,6 +23,7 @@
 - T8160 Camera 3
 - T8170 SoloCam S340
 - T8161 Camera 3C
+- T81A0 Solar Wall Light Cam S120
 - T8210 Battery Doorbell (RTSP not supported)
 - T8400 Indoor Cam
 - T8410 Indoor Cam Pan&Tilt
@@ -36,6 +36,7 @@
 - T8910 Motion Sensor. `motionDetection` events not working, 
 see [this thread](https://github.com/fuatakgun/eufy_security/issues/22)
 - T8960 Keypad
+- T8B00 SoloCam C210
 - T8W11 Indoor Cam C220
 
 ## Untested devices
@@ -92,6 +93,8 @@ Also check the [Jeedom community blog](https://community.jeedom.com/tag/plugin-e
 tag: `#plugin-eufy`
 
 ## ChangeLog
+* v2.18 [lxrootard](https://github.com/lxrootard)
+<br> - Added support for T8B00
 * v2.17 [lxrootard](https://github.com/lxrootard)
 <br> - Added support for T8W11
 * v2.16 [lxrootard](https://github.com/lxrootard)
