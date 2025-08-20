@@ -20,17 +20,16 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
 
 class eufy extends eqLogic {
 
-  public static function dependancy_end() {
-/*
+  public static function initConfig() {
     $mode = config::byKey('eufyMode', __CLASS__);
-    $msg = "Configuration du container, mode sélectionné: " . $mode;
-    log::add(__CLASS__, 'info', $msg);
-*/
-    config::save('eufyMode','local', __CLASS__);
-    config::save('containerIP', '127.0.0.1', __CLASS__);
-    config::save('containerPort', '3000', __CLASS__);
-    config::save('targetVersion', 'latest', __CLASS__);
-    eufy::updateYaml();
+    log::add(__CLASS__, 'debug', __FUNCTION__ . ' mode=' . $mode);
+    if (empty($mode)) {
+	config::save('eufyMode','local', __CLASS__);
+	config::save('containerIP', '127.0.0.1', __CLASS__);
+	config::save('containerPort', '3000', __CLASS__);
+	config::save('targetVersion', 'latest', __CLASS__);
+	eufy::updateYaml();
+    }
   }
 
   public static function installDocker() {

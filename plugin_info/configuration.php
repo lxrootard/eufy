@@ -31,7 +31,7 @@ if (!isConnect()) {
     <div class="col-lg-6">
        <div class="form-group">
            <label class="col-lg-4 control-label">{{Mode}}
-         	<sup><i class="fas fa-question-circle tooltips" title="{{Mode du service Eufy}}"></i></sup>
+         	<sup><i class="fas fa-question-circle tooltips" title="{{Mode du service Eufy. Défaut: local}}"></i></sup>
            </label>
            <div class="col-lg-4">
            	<select class="configKey form-control" data-l1key="eufyMode">
@@ -42,41 +42,47 @@ if (!isConnect()) {
         </div>
 	<p/>
         <div class="form-group">
-            <label class="col-lg-4 control-label">{{IP Docker}}</label>
+            <label class="col-lg-4 control-label">{{IP Docker}}
+		<sup><i class="fas fa-question-circle tooltips" title="{{IP du container docker Eufy. Défaut: localhost ou 127.0.0.1}}"></i></sup>
+	    </label>
             <div class="col-lg-4">
-                <input class="configKey form-control" data-l1key="containerIP" />
+                <input class="configKey form-control" data-l1key="containerIP" placeholder="127.0.0.1"/>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-lg-4 control-label">{{Port Docker}}</label>
+            <label class="col-lg-4 control-label">{{Port Docker}}
+		 <sup><i class="fas fa-question-circle tooltips" title="{{Port du container docker Eufy. Défaut: 3000}}"></i></sup>
+	    </label>
             <div class="col-lg-4">
-                <input class="configKey form-control" data-l1key="containerPort" />
+                <input class="configKey form-control" data-l1key="containerPort" placeholder="3000"/>
             </div>
         </div>
         <div class="form-group eufyMode local">
-            <label class="col-lg-4 control-label">{{Device}}</label>
+            <label class="col-lg-4 control-label">{{Device}}
+		<sup><i class="fas fa-question-circle tooltips" title="{{Nom du device sur lequel est installée l'application mobile Eufy}}"></i></sup>
+	    </label>
             <div class="col-lg-4">
-                <input class="configKey form-control" data-l1key="deviceName"/>
+                <input class="configKey form-control" data-l1key="deviceName"  placeholder="nom du device"/>
             </div>
         </div>
         <div class="form-group eufyMode local">
             <label class="col-lg-4 control-label">{{User}}</label>
             <div class="col-lg-4">
-                <input class="configKey form-control" data-l1key="username" />
+                <input class="configKey form-control" data-l1key="username" placeholder="login Eufy Cloud"/>
             </div>
         </div>
         <div class="form-group eufyMode local">
             <label class="col-lg-4 control-label">{{Password}}</label>
             <div class="col-lg-4">
-                <input class="configKey inputPassword form-control" data-l1key="password"/>
+                <input class="configKey inputPassword form-control" data-l1key="password"  placeholder="mot de passe"/>
             </div>
         </div>
         <div class="form-group eufyMode local">
             <label class="col-lg-4 control-label">{{Version cible}}
-                <sup><i class="fas fa-question-circle tooltips" title="{{Version du container eufy à installer, défaut: dernière version}}"></i></sup>
+                <sup><i class="fas fa-question-circle tooltips" title="{{Version du container eufy à installer. Défaut: dernière version}}"></i></sup>
 	    </label>
             <div class="col-lg-4">
-                <input class="configKey form-control" data-l1key="targetVersion"/>
+                <input class="configKey form-control" data-l1key="targetVersion" placeholder="latest"/>
             </div>
         </div>
 	<p/>
@@ -265,10 +271,6 @@ $('#bt_testEufy').off('click').on('click', function() {
                         }
                 }
         })
-})
-
-$('body').off('eufy::dependancy_end').on('eufy::dependancy_end', function(_event, _options) {
-  window.location.reload();
 })
 
 </script>
