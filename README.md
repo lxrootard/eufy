@@ -27,6 +27,7 @@
 - T8161 Camera 3C
 - T81A0 Solar Wall Light Cam S120
 - T8210 Battery Doorbell (RTSP not supported)
+- T8214 Video Doorbell E340
 - T8223 Video Doorbell C31
 - T8400 Indoor Cam
 - T8410 Indoor Cam Pan&Tilt
@@ -36,6 +37,7 @@
 - T8441 Outdoor Cam Pro
 - T84A1 Wired Wall Light Cam S100
 - T8600 Eufycam E330
+- T8900 Entry Sensor
 - T8910 Motion Sensor. `motionDetection` events not working, 
 see [this thread](https://github.com/fuatakgun/eufy_security/issues/22)
 - T8960 Keypad
@@ -96,6 +98,8 @@ Also check the [Jeedom community blog](https://community.jeedom.com/tag/plugin-e
 tag: `#plugin-eufy`
 
 ## ChangeLog
+* v2.20 [lxrootard](https://github.com/lxrootard)
+<br> - Added support for T8900 and T8214
 * v2.19 [lxrootard](https://github.com/lxrootard)
 <br> - Added support for T8162 and T8223
 <br> - configuration screen bugfixes

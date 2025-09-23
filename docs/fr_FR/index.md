@@ -98,13 +98,16 @@ Liste et statut des devices reconnus
 ![Equipments](../images/eufy6.png)
 
 ### Snapshots
-La commande `URL snaphot` contient l'URL de l'image sur le serveur
+Les snapshots sont uniquement générés lors de la détection d'un événement (mode Alarme).
+<br> La commande `URL snaphot` contient l'URL de l'image sur le serveur
 <br> Vous pouvez utiliser mon widget [ImageViewer](https://github.com/lxrootard/widgets_v4)
 <br> Pensez à activer les notifications d'image dans les paramètres de vos devices depuis l'application Eufy sans quoi les snapshots ne seront pas mis à jour
 
 
 ### Video stream RTSP
-Le flux RTSP fonctionne dans le plugin [Camera](https://doc.jeedom.com/fr_FR/plugins/security/camera) ou une application comme VLC
+Le support du RTSP dépend des modèles, cf la liste des modèles compatibles
+[ici](https://service.eufy.com/article-description/Storage-Methods-Compatibility-for-eufySecurity-Device) (colonne NAS)
+<br>Le flux RTSP fonctionne dans le plugin [Camera](https://doc.jeedom.com/fr_FR/plugins/security/camera) ou une application comme VLC
 <br>Sur les caméras à batterie il doit être activé/désactivé via les commandes de l'équipement `start_rtsp` et `stop_rtsp`.
 <br>Selon les devices le login/passwd est celui du compte Eufy ou celui généré par l'application sur la page
 `Paramètres > General > Stockage > NAS(RTSP)`
@@ -113,7 +116,7 @@ Le flux RTSP fonctionne dans le plugin [Camera](https://doc.jeedom.com/fr_FR/plu
 
 ![Video stream RTSP](../images/camera_plugin.jpg)
 
-<br>Voir [ici](https://camlytics.com/camera/eufy) et [la](https://support.eufy.com/s/article/Using-NAS-Storage-Step-by-Step) selon votre modèle
+<br>Paramétrage: voir [ici](https://camlytics.com/camera/eufy) et [la](https://support.eufy.com/s/article/Using-NAS-Storage-Step-by-Step) selon votre modèle
 
 ### Bugs et dépannage
 Voir [ici](../../README.md#Troubleshooting)

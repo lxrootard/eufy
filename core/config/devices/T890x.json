@@ -1,0 +1,99 @@
+[
+	{
+		"interface": "device",
+		"commands": {
+			"0": {
+				"logicalId": "wifiRSSI",
+				"name": "Signal Wifi",
+				"type": "info",
+				"subtype": "numeric",
+				"isVisible": 1,
+				"isHistorized": 0,
+				"unite": "dBm",
+				"generic_type": "GENERIC_INFO",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			},
+			"1": {
+				"logicalId": "sensorOpen",
+				"name": "Capteur ouvert",
+				"type": "info",
+				"subtype": "binary",
+				"isVisible": 1,
+				"isHistorized": 1,
+				"generic_type": "OPENING"
+			},
+			"2": {
+				"logicalId": "batteryLow",
+				"name": "Batterie faible",
+				"type": "info",
+				"subtype": "binary",
+				"isVisible": 1,
+				"isHistorized": 0,
+				"generic_type": "GENERIC_INFO"
+			},
+			"3": {
+				"logicalId": "state",
+				"name": "Etat",
+				"type": "info",
+				"subtype": "numeric",
+				"isVisible": 1,
+				"isHistorized": 0,
+				"generic_type": "GENERIC_INFO"
+			},
+			"4": {
+				"logicalId": "chirpVolume",
+				"name": "Volume",
+				"type": "info",
+				"subtype": "numeric",
+				"isVisible": 1,
+				"isHistorized": 0,
+				"generic_type": "GENERIC_INFO",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			},
+			"5": {
+				"logicalId": "chirpTone",
+				"name": "Tonalité",
+				"type": "info",
+				"subtype": "numeric",
+				"isVisible": 1,
+				"isHistorized": 0,
+				"generic_type": "GENERIC_INFO",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			},
+			"6": {
+				"logicalId": "chirpVolume:set",
+				"name": "Réglage volume",
+				"type": "action",
+				"subtype": "slider",
+				"isVisible": 1,
+				"generic_type": "CAMERA_PRESET",
+				"configuration": {
+					"params": "[#slider#]",
+					"minValue": 1,
+					"maxValue": 26
+				}
+			},
+			"7": {
+				"logicalId": "chirpTone:set",
+				"name": "Réglage tonalité",
+				"type": "action",
+				"subtype": "select",
+				"isVisible": 1,
+				"generic_type": "CAMERA_PRESET",
+				"configuration": {
+					"switch": "status",
+					"listValue": "0|None;1|Water;2|Classic;3|Light;4|Ding"
+				}
+			}
+		}
+	}
+]

@@ -538,6 +538,66 @@
 					"switch": "status",
 					"listValue": "0|Default;1|Silent;2|Beacon;3|Chord;4|Christmas;5|Circuit;6|Clock;7|Ding;8|Hillside;9|Presto"
 				}
+			},
+			"48": {
+				"logicalId": "microphone",
+				"name": "Micro",
+				"type": "info",
+				"subtype": "binary",
+				"isVisible": 1,
+				"isHistorized": 0,
+				"generic_type": "GENERIC_INFO",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			},
+			"49": {
+				"logicalId": "dualCamWatchViewMode",
+				"name": "Mode DualCam",
+				"type": "info",
+				"subtype": "numeric",
+				"isVisible": 1,
+				"isHistorized": 0,
+				"generic_type": "GENERIC_INFO",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			},
+			"50": {
+				"logicalId": "dualCamWatchViewMode:set",
+				"name": "Réglage mode DualCam",
+				"type": "action",
+				"subtype": "select",
+				"isVisible": 1,
+				"generic_type": "CAMERA_PRESET",
+				"configuration": {
+					"switch": "status",
+					"listValue": "0|Single view;12|Double view"
+				}
+			},
+			"51": {
+				"logicalId": "microphone:on",
+				"name": "Activer micro",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"generic_type": "CAMERA_PRESET",
+				"display": {
+					"icon": "<i class=\"fas fa-microphone\"></i>"
+				}
+			},
+			"52": {
+				"logicalId": "microphone:off",
+				"name": "Désactiver micro",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"generic_type": "CAMERA_PRESET",
+				"display": {
+					"icon": "<i class=\"fas fa-microphone-slash\"></i>"
+				}
 			}
 		}
 	}
