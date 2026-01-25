@@ -9,9 +9,10 @@ image='bropat/eufy-security-ws'
 eufyfile=$(realpath "$0")
 data=$(dirname "$eufyfile")/../data
 res=$(dirname "$eufyfile")/../resources
-osversion=`lsb_release -r|awk '{ print $2 }'`
 pyexec='/usr/bin/python3'
-[[ $osversion -gt 11 ]] && pyexec=$res/python_venv/bin/python3 ;
+venv=$res/python_venv
+
+[[ -d $venv ]] && pyexec=$venv/bin/python3 ;
 
 usage() {
  echo "usage: $0 [-h] [-d device] [-u url] action"
@@ -56,6 +57,7 @@ case $action in
 		docker ps -a|grep $container_id ;;
 	test)
 		echo "test du container:" $container_id "options:" $opts
+		echo python3 path: $pyexec
 		$pyexec $res/test_eufy.py $opts;;
 	logs)
 		[ "$container_id" == "" ] && echo $image 'not running' && exit 1;

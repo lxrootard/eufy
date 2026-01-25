@@ -25,9 +25,15 @@ if (!isConnect()) {
 }
 ?>
 
+<style>
+  .warning-tooltip {
+    color: var(--al-warning-color);
+  }
+
+</style>
+
 <form class="form-horizontal">
   <fieldset>
-
     <div class="col-lg-6">
        <div class="form-group">
            <label class="col-lg-4 control-label">{{Mode}}
@@ -41,32 +47,22 @@ if (!isConnect()) {
             </div>
         </div>
 	<p/>
-        <div class="form-group">
-            <label class="col-lg-4 control-label">{{IP Docker}}</label>
-            <div class="col-lg-4">
-                <input class="configKey form-control" data-l1key="containerIP" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-4 control-label">{{Port Docker}}</label>
-            <div class="col-lg-4">
-                <input class="configKey form-control" data-l1key="containerPort" />
-            </div>
-        </div>
         <div class="form-group eufyMode local">
-            <label class="col-lg-4 control-label">{{Device}}</label>
+            <label class="col-lg-4 control-label">{{Device}}
+		<sup><i class="fa fa-question-circle tooltips" title="{{Nom du device utilisé pour l'app Eufy}}"></i></sup>
+	    </label>
             <div class="col-lg-4">
                 <input class="configKey form-control" data-l1key="deviceName"/>
             </div>
         </div>
         <div class="form-group eufyMode local">
-            <label class="col-lg-4 control-label">{{User}}</label>
+            <label class="col-lg-4 control-label">{{Utilisateur}}</label>
             <div class="col-lg-4">
                 <input class="configKey form-control" data-l1key="username" />
             </div>
         </div>
         <div class="form-group eufyMode local">
-            <label class="col-lg-4 control-label">{{Password}}</label>
+            <label class="col-lg-4 control-label">{{Mot de passe}}</label>
             <div class="col-lg-4">
                 <input class="configKey inputPassword form-control" data-l1key="password"/>
             </div>
@@ -113,8 +109,29 @@ if (!isConnect()) {
         </div>
 
     </div>
-
     <div class="col-lg-6">
+        <div class="form-group">
+           <label class="col-lg-4 control-label">{{Container Docker}}&nbsp;
+             <sup><i class="fa fa-question-circle tooltips" title="{{Image docker eufy-security-ws}}"></i></sup>
+           </label>
+           <div class="col-lg-6 input-group">
+             <span class="input-group-addon">ws://</span>
+             <input class="configKey form-control tooltips" data-l1key="container" data-l2key="host" placeholder="localhost"
+                title="{{Adresse IP du container. Défaut: localhost}}"/>
+             <span class="input-group-addon">:</span>
+             <input class="configKey form-control tooltips" data-l1key="container" data-l2key="port" placeholder="3000"
+                type="number" min="1" max="65535" title="{{Port du container. Défaut: 3000}}"/>
+             </div>
+        </div>
+        <div class="form-group">
+           <label class="col-lg-4 control-label">{{Port socket deamon}}&nbsp;
+             <sup><i class="fas fa-exclamation-triangle tooltips warning-tooltip"
+                title="{{Port du deamon eufyd. Ne pas modifier sauf en cas de conflit}}"></i></sup>
+           </label>
+           <div class="col-lg-6">
+             <input class="configKey form-control" data-l1key="socketPort" type="number" min="1" max="65535" placeholder="60600"/>
+           </div>
+        </div>
         <div class="form-group eufyMode local">
             <label class="col-md-4 control-label tooltips">{{Setup docker}}
                 <sup><i class="fas fa-question-circle tooltips" title="{{Gestion de l'image Eufy}}"></i></sup>
@@ -126,7 +143,6 @@ if (!isConnect()) {
              <a class="btn btn-xs btn-warning" id="bt_upgradeEufy"><i class="fas fa-sync"></i> {{Upgrader}}</a>
             </div>
         </div>
-
      </div>
   </fieldset>
 </form>

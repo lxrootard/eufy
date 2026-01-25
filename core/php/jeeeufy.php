@@ -3,36 +3,27 @@ try {
      require_once dirname(__FILE__) . "/../../../../core/php/core.inc.php";
 
      if (!jeedom::apiAccess(init('apikey'), 'eufy')) {
-        	echo __('Vous n\'etes pas autorisé à effectuer cette action', __FILE__);
-        	die();
+       	echo __('Vous n\'etes pas autorisé à effectuer cette action', __FILE__);
+        die();
      }
      if (init('test') != '') {
-        	echo 'OK';
-        	die();
+        echo 'OK';
+        die();
      }
-     $result = json_decode(file_get_contents("php://input"), true);
-     if (!is_array($result)) 
-        	die();
+     $str = file_get_contents("php://input");
+//   log::add('eufy', 'debug','>>> Eufyd message received: ' . $str);
+     $msg = json_decode($str, true);
 
-     if(isset($result['type'])) {
-          // lxrootard check connexion service Eufy
-          if ($result['type'] == 'connexion') {
-              log::add('eufy', 'debug', '>>> Connexion info received from daemon');
-	      eufy::setOnlineStatus ($result['online']);
-	  }
-          if ($result['type'] == 'sync') {
-              log::add('eufy', 'debug', '>>> Sync devices received from daemon');
-              eufy::syncDevices($result['stations'],$result['devices']);
-          }
+     if ((!is_array($msg)) || (! isset($msg['type'])))
+        die();
 
-
-          if ($result['type'] == 'event') {
-              log::add('eufy', 'debug', '>>> Event received from daemon: serialNumber: '. $result['serialNumber'] . ', property: ' 
-		. $result['property'] . ', value: ' . $result['value']);
-	      eufy::updateDeviceInfo($result['serialNumber'], $result['property'], $result['value']);
-          }
-    }
-} 
+     if (($msg['type'] == 'result') && (isset($msg['success'])))
+	eufy::handleResult($msg);
+     else if (($msg['type'] == 'event') && (isset($msg['event'])))
+	eufy::handleEvent ($msg['event']);
+     else
+        log::add('eufy', 'warning', 'unmanaged message received from deamon: ' . $str);
+}
 catch (Exception $e) {
     log::add('eufy', 'error', displayException($e));
 }

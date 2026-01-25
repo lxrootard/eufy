@@ -20,7 +20,20 @@ if (!isConnect('admin')) {
 }
 $plugin = plugin::byId('eufy');
 $eqLogics = eufy::byType('eufy');
+$deamon_info = eufy::deamon_info();
 ?>
+<style type="text/css">
+        .refresh-modal {
+                float: right;
+                margin-bottom: 20px;
+        }
+</style>
+
+<div class="refresh-modal">
+        <label>{{Rafraîchir }}&nbsp;</label>
+        <a class="btn btn-success refreshBtn" data-action="refresh"><i class="fas fa-sync"></i></a>
+</div>
+
 <table class="table table-condensed tablesorter" id="table_healtheufy">
 	<thead>
 		<tr>
@@ -38,7 +51,11 @@ $eqLogics = eufy::byType('eufy');
 	</thead>
 	<tbody>
 <?php
+if ($deamon_info['state'] != 'ok')
+	return;
 foreach ($eqLogics as $eqLogic) {
+	if (! $eqLogic->getIsEnable())
+	   continue;
 	$iname = substr($eqLogic->getConfiguration('eufyModel'), 0, 5);
 	if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $iname . '.png')) {
 		$image = '<img src="plugins/eufy/core/config/devices/' . $iname . '.png' . '" height="55" width="55" />';
@@ -82,3 +99,6 @@ foreach ($eqLogics as $eqLogic) {
 ?>
 	</tbody>
 </table>
+<?php
+include_file('desktop', 'eufy', 'js', 'eufy');
+?>

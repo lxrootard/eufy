@@ -17,6 +17,8 @@
 
 try {
     require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
+    require_once dirname(__FILE__) . '/../class/eufyUtils.php';
+    require_once dirname(__FILE__) . '/../class/eufy.class.php';
     include_file('core', 'authentification', 'php');
 
     if (!isConnect('admin')) {
@@ -27,45 +29,65 @@ try {
     En V3 : indiquer l'argument 'true' pour contrôler le token d'accès Jeedom
     En V4 : autoriser l'exécution d'une méthode 'action' en GET en indiquant le(s) nom(s) de(s) action(s$
   */
-    ajax::init();
+
+    ajax::init(array('uploadPicture'));
 
     if (init('action') == 'sync') {
-	$params = array('command' => 'syncDevices');
-	eufy::sendToDaemon($params);
+	eufy::refreshAllDevices();
     	ajax::success();
     }
+
+    if (init('action') == 'disco') {
+        eufy::discoverItfs();
+        ajax::success();
+    }
+
+    if (init('action') == 'uploadPicture') {
+        $file = $_FILES['file'];
+//        log::add('eufy', 'debug', 'ajax: uploadPicture for: '. init('model') . ' icon: ' . $file['name']);
+        eufyUtils::uploadPicture ($file,init('model'));
+        ajax::success();
+    }
+
     if (init('action') == 'getPicture') {
-        $logicalId = init('logicalId');
-	$eqLogic = eufy::byLogicalId($logicalId, 'eufy');
-        $img = $eqLogic->getImage();
+        $model = init('model');
+//	log::add('eufy', 'debug', 'ajax: getPicture for: '. $model);
+	$img = eufyUtils::getPicture($model);
         ajax::success($img);
     }
+
+    if (init('action') == 'resetPicture') {
+//        log::add('eufy', 'debug', 'ajax: resetPicture for: '. init('model'));
+        eufyUtils::resetPicture (init('model'));
+        ajax::success();
+    }
+
     if (init('action') == 'installEufy') {
-	eufy::installDocker();
-	eufy::setupContainer('install');
-	eufy::setupContainer('start');
+	eufyUtils::installDocker();
+	eufyUtils::setupContainer('install');
+	eufyUtils::setupContainer('start');
 	ajax::success();
     }
     if (init('action') == 'restartEufy') {
-        eufy::setupContainer('stop');
-        eufy::setupContainer('start');
+        eufyUtils::setupContainer('stop');
+        eufyUtils::setupContainer('start');
         ajax::success();
     }
     if (init('action') == 'uninstallEufy') {
-	eufy::setupContainer('stop');
-        eufy::setupContainer('uninstall');
+	eufyUtils::setupContainer('stop');
+        eufyUtils::setupContainer('uninstall');
         ajax::success();
     }
     if (init('action') == 'upgradeEufy') {
-        eufy::setupContainer('stop');
-	eufy::setupContainer('uninstall');
-	eufy::setupContainer('install');
-	eufy::setupContainer('start');
+        eufyUtils::setupContainer('stop');
+	eufyUtils::setupContainer('uninstall');
+	eufyUtils::setupContainer('install');
+	eufyUtils::setupContainer('start');
         ajax::success();
     }
     if (init('action') == 'testEufy') {
-	eufy::checkContainer();
-        eufy::testService();
+	eufyUtils::checkContainer();
+        eufyUtils::testService();
         ajax::success();
     }
     throw new Exception(__('Aucune méthode correspondante à', __FILE__) . ' : ' . init('action'));

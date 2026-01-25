@@ -1,6 +1,6 @@
 import json
 import argparse
-from websocket import create_connection
+from websockets.sync import client
 
 argParser = argparse.ArgumentParser()
 argParser.add_argument("-d", "--device", help="device serial number")
@@ -17,7 +17,7 @@ if args.url:
 else:
 	url = '127.0.0.1:3000'
 
-ws = create_connection("ws://" + url)
+ws = client.connect("ws://" + url)
 
 if args.version:
 	print(ws.recv())

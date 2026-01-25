@@ -7,6 +7,7 @@
 
 <ul>
 <li><a href="#configuration">Configuration</a></li>
+<li><a href="#auto-decouverte">Auto-Découverte</a></li>
 <li><a href="#synchronisation">Synchronisation</a></li>
 <li><a href="#health">Santé</a></li>
 <li><a href="#equipments">Equipements</a></li>
@@ -15,11 +16,8 @@
 
 <h3>Configuration</h3>
 
-<p><img src="../images/eufy3.png" alt="Configuration" title="" /></p>
-
 <p>Installer le plugin et ses dépendances.
-<br>Vous avez le choix entre les modes local et distant pour docker.
-<br>Commencez par sauver la configuration <b>AVANT</b> de lancer les dépendances.</p>
+Vous avez le choix entre les modes local et distant pour docker ou lxc.</p>
 
 <p>Note: 
 * L'installation des dépendances n'installe PAS l'image <code>eufy-security-ws</code>.</p>
@@ -27,25 +25,27 @@
 <h4>1. Paramètres communs</h4>
 
 <ul>
-<li>IP Docker: adresse IP du container <code>eufy-security-ws</code>, <code>127.0.0.1</code> par défaut</li>
-<li>Port Docker: port du container <code>eufy-security-ws</code>, <code>3000</code> par défaut</li>
-<li>Version cible: <code>latest</code> par défaut ou la version que vous souhaitez</li>
+<li>Container Docker: adresse IP et port du container <code>eufy-security-ws</code>, <code>localhost:3000</code> par défaut</li>
+<li>Port socket deamon: port du deamon eufyd, <code>60600</code> par défaut. Ne changez pas cette valeur sauf si vous avez un conflit avec un autre plugin</li>
 <li>Tester: Vérifier la présence du container <code>eufy-security-ws</code> et sa connexion au service Cloud Eufy</li>
 </ul>
 
 <p>Notes:
 - Le daemon Eufy ne démarrera pas si le container <code>eufy-security-ws</code> ne peut pas se connecter au service Cloud Eufy.
-- La version d'image installée (si elle existe) est indiquée dans le champ <code>Version</code></p>
+- La version d'image installée (si elle existe) est indiquée dans le champ <code>Version installée</code></p>
 
 <h4>2. Mode local</h4>
 
+<p><img src="../images/eufy6.png" alt="Configuration" title="" /></p>
+
 <p>L'installation du mode local a pour prérequis les modules <code>docker</code>. Ils sont maintenant installés et configurés automatiquement.</p>
 
-<p>Le plugin ne nécessite pas l'utilisation du <code>#plugin-docker2</code> mais il est possible d'importer le fichier généré <code>data/docker-compose.yml</code> si vous préférez gérer l'image vous même.</p>
+<p>Le plugin ne nécessite pas l'utilisation du <code>#plugin-docker2</code> mais il est possible d'importer le fichier généré <code>data/docker-compose.yml</code> si vous préférez gérer l'image vous même avec ce plugin.</p>
 
 <p>Paramètres supplémentaires:
 - Device: nom de votre téléphone dans l'app Eufy, utilisé pour se connecter au serveur Cloud Eufy
-- Utilisateur et mot de passe: il est conseillé de créer un utilisateur dédié</p>
+- Utilisateur et mot de passe: il est conseillé de créer un utilisateur dédié
+- Version cible: <code>latest</code> par défaut ou la version que vous souhaitez</p>
 
 <p>Configuration de l'image docker post-installation:</p>
 
@@ -71,57 +71,98 @@ test optional arguments:
       -u URL eufy service URL, default 127.0.0.1:3000
 </code></p>
 
+<p><code>
+eufy status # check the image and container status
+eufy info # check the image and container status (extended info)
+eufy test # check if the container is connected to the eufy cloud
+eufy logs # get the container logs
+</code></p>
+
 <h4>4. Mode distant (expert)</h4>
 
-<p>Voici les fichiers à adapter et copier sur le docker distant:
+<p><img src="../images/eufy7.png" alt="Configuration" title="" /></p>
+
+<p>A utiliser si vous avez déployé l'image <code>eufy-security-ws</code> sur un docker ou un lxc distant.
+Voici les fichiers à adapter et copier sur le serveur distant:
 <code>
 resources/docker-compose.yml
 resources/eufy
 </code></p>
 
-<h4>5. Problèmes de connexion</h4>
-
-<p>En cas de problème vérifier la connexion avec le container via la commande <code>eufy</code> disponible dans <code>resources</code>:
-<br><code>eufy test</code>
-<br>Ou directement:
-<br><code>python3 resources/test_eufy.py -u server:port</code>
-<br>
-<br> Vous devriez obtenir l'output suivant:
-<code>
-{"type":"result","success":true,"result":{"state":{"driver":{"version":"2.4.0","connected":true,"pushConnected":true}
-</code></p>
-
-<p>Note: <code>connected</code> et <code>pushConnected</code> doivent être à <code>true</code></p>
-
-<h3>Synchronisation</h3>
+<h3>Auto-Découverte</h3>
 
 <p><img src="../images/eufy2.png" alt="Configuration" title="" /></p>
 
-<p>Note: pour l'instant seuls certains modèles ont été testés. Si votre modèle n'est pas suporté vous pouvez 
-m'envoyer le résutat du programme <code>test_eufy.py</code>. Voir <a href="../../README.html#untested-devices">ici</a> pour plus d'infos.</p>
+<p>Détection et création automatique des devices.
+Note:<br> Seuls certains modèles ont été testés. La liste complète des modèles susceptibles de fonctionner est disponible <a href="https://bropat.github.io/eufy-security-client/#/supported_devices">ici</a>.
+Si votre modèle est dans cette liste et ne fonctionne pas comme prévu vous pouvez m'envoyer le résutat de la commande <code>eufy test</code>. Voir <a href="#devices-ou-commandes-non-supportees">Devices ou commandes non supportées</a> pour plus d'infos.</p>
+
+<h3>Synchronisation</h3>
+
+<p>Mise à jour des valeurs de tous les devices actifs. Vous pouvez également mettre à jour chaque device avec la comande <code>Rafraichir</code></p>
 
 <h3>Santé</h3>
 
 <p><img src="../images/eufy1.png" alt="Configuration" title="" /></p>
 
-<p>Liste et statut des devices reconnus </p>
+<p>Liste et statut des devices actifs. </p>
 
 <h3>Equipements</h3>
 
+<p><img src="../images/eufy3.png" alt="Configuration" title="" /></p>
+
+<p>Les commandes sont réparties entre les catégories Station et Caméra. 
+<br>L'image du device peut être modifiée si nécessaire.
+<br>L'onglet Autres commandes regroupe la présence, la commande <code>Rafraichir</code> et les commandes supplémentaires. 
+Les commandes supplémentaires suivantes peuvent être créées:</p>
+
+<h4>Commandes station</h4>
+
+<ul>
+<li>Carillon</li>
+<li>Déclencher l'alarme</li>
+<li>Arrêter l'alarme</li>
+<li>Reboot</li>
+</ul>
+
+<h4>Commandes Pan &amp; Tilt (caméras motorisées)</h4>
+
+<ul>
+<li>Haut, bas, gauche, droite</li>
+<li>Calibrage</li>
+</ul>
+
+<p><img src="../images/eufy8.png" alt="Configuration" title="" /></p>
+
+<p>Attention! Ces commandes peuvent fonctionner ou non selon le modèle.</p>
+
+<h4>Renommage des labels (menus déroulants)</h4>
+
+<p><img src="../images/eufy9.png" alt="Equipments" title="" /></p>
+
+<p>Il est possible de renommer les labels des menus déroulants. Ex ici Custom1 en Alarm pour la commande <code>guardMode</code>. Le format est le suivant:</p>
+
+<p><code>0|Away;1|Home;2|Schedule;3|Alarm;4|Custom 2;5|Custom 3;47|Geofencing;63|Disarmed</code></p>
+
+<p>Attention! Ne pas modifier les valeurs.</p>
+
+<h4>Widgets</h4>
+
+<p>Si mes widgets custom sont installés ils seront automatiquement appliqués: snapshot,liste déroulante, mode alarme, switch. Pour plus d'informations voir <a href="https://github.com/lxrootard/widgets_v4">ici</a>.</p>
+
 <p><img src="../images/eufy4.png" alt="Equipments" title="" />
-<img src="../images/eufy5.png" alt="Equipments" title="" />
-<img src="../images/eufy6.png" alt="Equipments" title="" /></p>
+<img src="../images/eufy5.png" alt="Equipments" title="" /></p>
 
-<h3>Snapshots</h3>
+<h4>Snapshots</h4>
 
-<p>La commande <code>URL snaphot</code> contient l'URL de l'image sur le serveur
-<br> Vous pouvez utiliser mon widget <a href="https://github.com/lxrootard/widgets_v4">ImageViewer</a>
+<p>La commande <code>Last Camera Picture</code> contient l'URL de l'image sur le serveur
+<br> Vous pouvez utiliser mon widget <a href="https://github.com/lxrootard/widgets_v4">ImageViewer</a>.
 <br> Pensez à activer les notifications d'image dans les paramètres de vos devices depuis l'application Eufy sans quoi les snapshots ne seront pas mis à jour</p>
 
-<h3>Video stream RTSP</h3>
+<h4>Video stream RTSP</h4>
 
-<p>Le flux RTSP fonctionne dans le plugin <a href="https://doc.jeedom.com/fr_FR/plugins/security/camera">Camera</a> ou une application comme VLC
-<br>Sur les caméras à batterie il doit être activé/désactivé via les commandes de l'équipement <code>start_rtsp</code> et <code>stop_rtsp</code>.
+<p>Le flux RTSP fonctionne dans le plugin <a href="https://doc.jeedom.com/fr_FR/plugins/security/camera">Camera</a> ou une application comme VLC.
+<br>Il doit être activé/désactivé via les commandes de l'équipement <code>RTSP Stream On</code> et <code>RTSP Stream Off</code>.
 <br>Selon les devices le login/passwd est celui du compte Eufy ou celui généré par l'application sur la page
 <code>Paramètres &gt; General &gt; Stockage &gt; NAS(RTSP)</code>
 <br>L'IP est celle de la base ou celle de la caméra 
@@ -133,4 +174,70 @@ m'envoyer le résutat du programme <code>test_eufy.py</code>. Voir <a href="../.
 
 <h3>Bugs et dépannage</h3>
 
-<p>Voir <a href="../../README.html#Troubleshooting">ici</a></p>
+<h4>Prérequis non trouvés</h4>
+
+<p><br> Pour le mode <code>local</code> les prérequis <code>docker</code> sont installés automatiquement avec le bouton <code>Setup Docker &gt; Installer</code>. Un <code>python_venv</code> est également installé automatiquement pour <code>debian 12+</code></p>
+
+<h4>Le voyant du conteneur Docker (à gauche) est rouge</h4>
+
+<p>L’installation de l’image Docker a échoué ou le conteneur ne démarre pas. Assurez-vous que l’image est correctement installée. <br />
+<br> Note: <br>@bropat ne fournit plus d’images armv7 (Pi3), la dernière version disponible est la 1.7.1.</p>
+
+<h4>Le voyant du cloud Eufy (à droite) est rouge</h4>
+
+<p>Cela signifie que l’authentification au cloud Eufy a échoué ou qu’Eufy empêche la connexion pour des raisons de sécurité (ex trop d'erreurs de login). Vérifiez que votre identifiant Eufy, votre mot de passe et le nom de l’appareil sont corrects.
+<br>Attention le 2FA n'est pas supporté. </p>
+
+<h4>Le démon ne démarre pas</h4>
+
+<p>Vérifiez l'état de l’image Docker, du conteneur et de la connexion au cloud (voir ci-dessous).
+<br>Si l’image Docker est correctement installée, sa version sera affichée sur la ligne <code>installed version</code>.
+<br>Les indicateurs d’état du conteneur et de la connexion au cloud doivent tous deux être verts (voir ci-dessous).
+<br>Utilisez le script <code>eufy</code> dans <code>resources</code> pour obtenir plus d’informations. <br />
+Consultez la section <a href="docs/en_US/index.html#configuration">Mode local (expert)</a> pour plus de détails.</p>
+
+<h4>Echec de synchronisation, devices non trouvés</h4>
+
+<p>Les apostrophes et les guillemets ne sont pas pris en charge dans les noms des équipements.</p>
+
+<h4>Erreur schéma incompatible, les commandes ne fonctionnent pas</h4>
+
+<p>Assurez-vous d’utiliser la bonne <a href="https://github.com/bropat/eufy-security-ws/releases">version</a> de l'image <code>eufy-security-ws</code>. <br />
+La version installée est affichée sur la page de configuration du plugin lorsque vous cliquez sur le bouton <code>Tester</code>. <br />
+<br> Si vous avez mis à jour le plugin, essayez de désinstaller puis de réinstaller l’image et de redémarrer le conteneur.</p>
+
+<h4>Certaines actions ne fonctionnent pas (ex. flash on/off)</h4>
+
+<p>Il ne s’agit pas d’actions mais de settings qui n’affectent le comportement du device qu’à la prochaine détection (ex. le flash s’allumera lors du prochain événement).</p>
+
+<h4>Les snapshots des caméras ne se mettent pas à jour</h4>
+
+<p>Activez les instantanés dans l’application Eufy : <code>Appareil &gt; Paramètres &gt; Notification</code></p>
+
+<h4>Problèmes de connexion</h4>
+
+<p>En cas de problème vérifier la connexion avec le container via la commande <code>eufy</code> disponible dans <code>resources</code>:</p>
+
+<pre><code>$ cd /var/www/html/plugins/eufy
+$ ./resources/eufy test
+</code></pre>
+
+<p>Vous devriez obtenir l'output suivant:
+<code>
+{"type":"result","success":true,"result":{"state":{"driver":{"version":"2.4.0","connected":true,"pushConnected":true}
+</code>
+Note: <code>connected</code> et <code>pushConnected</code> doivent être à <code>true</code></p>
+
+<h4>Devices ou commandes non supportées</h4>
+
+<p>Vérifiez si le device et/ou la commande existe</p>
+
+<pre><code>$ cd /var/www/html/plugins/eufy
+$ ./resources/eufy -d device_serial test
+</code></pre>
+
+<p>Note: <code>device_serial</code> est l'identifiant de votre device commencant par <code>Txxx</code></p>
+
+<h4>Autres problèmes</h4>
+
+<p>Consultez le forum <a href="https://community.jeedom.com/tag/plugin-eufy">Jeedom community</a></p>

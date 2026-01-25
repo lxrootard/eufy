@@ -7,7 +7,7 @@
 	},
 	"licence" : "AGPL",
 	"author" : "a.berton / lxrootard",
-	"require" : "4.2.0",
+	"require" : "4.4",
 	"category" : "security",
 	"hasDependency" : true,
 	"hasOwnDeamon" : true,

@@ -39,7 +39,7 @@ see [this thread](https://github.com/fuatakgun/eufy_security/issues/22)
 - T8W11 Indoor Cam C220
 
 ## Untested devices
-Other Eufy models should also work but might not be recognized incompletely or require a config file.
+Other Eufy models should also work but might not be recognized incompletely.
 See the full list [here](https://bropat.github.io/eufy-security-client/#/supported_devices)
 <br>If your model is not listed above or some controls are missing please send me the results of these commands:
 
@@ -47,41 +47,6 @@ See the full list [here](https://bropat.github.io/eufy-security-client/#/support
     $ ./resources/eufy -d device_serial test
 
 where `device_serial` is your device serial number, starting by `Txxx`
-<br>
-
-## Troubleshooting
-* Prerequisites not found
-<br> `docker` prerequisites are now installed automatically using the `dependencies` button when the mode is set to `local`
-<br> `python_venv` prerequisite is now installed automatically on `debian 12`
-* Eufy deamon fails to start
-<br>Check the docker image, container and cloud login status indicators (see below).
-<br>If the docker image is properly installed its version will be displayed on the `installed version` line.
-<br>Both container and cloud login status indicators must be green (see below).
-<br>Use the `eufy` script the script in `resources` to get more info. 
-See the [Local mode (expert)](docs/en_US/index.md#configuration) documentation section for details.
-```
-        eufy status # check the image and container status
-        eufy info # check the image and container status (extended info)
-        eufy test # check if the container is connected to the eufy cloud
-        eufy logs # get the container logs
-```
-* Docker container indicator (left) is red
-<br> Docker image install failed or container fails to start. Make sure your image is property installed
-<br> Note: @bropat does not provide armv7 (Pi3) images anymore, latest one is 1.7.1
-* Eufy Cloud indicator (right) is red
-<br> A red Cloud indicator means the Eufy cloud authentication failed or Eufy prevents you from connecting for security reasons.
-Verify that your Eufy login, password and device name are correct.
-* Synchronization failed, devices are not found
-<br> Apostrophes and quotes are not supported in equipment names
-* Incompatible schema error, commands not working
-<br> Make sure you're using the correct `eufy-security-ws` [release](https://github.com/bropat/eufy-security-ws/releases).
-<br> Your installed image version is displayed in the plugin config page when hitting the `Tester` button.
-<br> If you've upgraded the plugin you might try to uninstall/reinstall the image and restart the container.
-* Some actions change the corresponding property but there's no change on the device (eg flash on/off)
-<br> These are not actions but device settings that will only impact its behavior for the next detection 
-(eg the flash will light at the next event)
-* Cam snapshots don't update
-<br> Enable snapshots in the Eufy app: `Device > Parameters > Notification`
 
 ## Known issues
 * Some commands don't [work as expected](https://github.com/bropat/eufy-security-ws/issues/212) on some devices
@@ -92,6 +57,12 @@ Also check the [Jeedom community blog](https://community.jeedom.com/tag/plugin-e
 tag: `#plugin-eufy`
 
 ## ChangeLog
+* v3.0 [lxrootard](https://github.com/lxrootard)
+<br> - Automatic commands discovery and creation
+<br> - Separated discovery and synchronization commands
+<br> - Station, device and other tabs
+<br> - Enhanced communication management and error handling
+<br> - Modernized deamon: websockets, asyncio 
 * v2.17 [lxrootard](https://github.com/lxrootard)
 <br> - Added support for T8W11
 * v2.16 [lxrootard](https://github.com/lxrootard)
