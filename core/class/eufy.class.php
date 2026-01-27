@@ -665,7 +665,8 @@ class eufyCmd extends cmd {
 		    $value = eufyUtils::hex2rgb($value);
 		   break;
 		case 'other':
-		    $value = intval($this->getConfiguration('value'));
+		    if ($value == '')
+			$value = intval($this->getConfiguration('value'));
 	   }
            $params = array('messageId' => $serialNumber, 'command' => $itf . '.set_property', 'serialNumber' => $serialNumber, 'name' => $set, 'value' => $value);
 	}

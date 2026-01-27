@@ -57,6 +57,8 @@ Also check the [Jeedom community blog](https://community.jeedom.com/tag/plugin-e
 tag: `#plugin-eufy`
 
 ## ChangeLog
+* v3.1 [lxrootard](https://github.com/lxrootard)
+<br> - Fix for equipments ascendant compatibility
 * v3.0 [lxrootard](https://github.com/lxrootard)
 <br> - Automatic commands discovery and creation
 <br> - Separated discovery and synchronization commands

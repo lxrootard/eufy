@@ -45,7 +45,7 @@ see <a href="https://github.com/fuatakgun/eufy_security/issues/22">this thread</
 
 <h2>Untested devices</h2>
 
-<p>Other Eufy models should also work but might not be recognized incompletely or require a config file.
+<p>Other Eufy models should also work but might not be recognized incompletely.
 See the full list <a href="https://bropat.github.io/eufy-security-client/#/supported_devices">here</a>
 <br>If your model is not listed above or some controls are missing please send me the results of these commands:</p>
 
@@ -53,45 +53,7 @@ See the full list <a href="https://bropat.github.io/eufy-security-client/#/suppo
 $ ./resources/eufy -d device_serial test
 </code></pre>
 
-<p>where <code>device_serial</code> is your device serial number, starting by <code>Txxx</code>
-<br></p>
-
-<h2>Troubleshooting</h2>
-
-<ul>
-<li>Prerequisites not found
-<br> <code>docker</code> prerequisites are now installed automatically using the <code>dependencies</code> button when the mode is set to <code>local</code>
-<br> <code>python_venv</code> prerequisite is now installed automatically on <code>debian 12</code></li>
-<li>Eufy deamon fails to start
-<br>Check the docker image, container and cloud login status indicators (see below).
-<br>If the docker image is properly installed its version will be displayed on the <code>installed version</code> line.
-<br>Both container and cloud login status indicators must be green (see below).
-<br>Use the <code>eufy</code> script the script in <code>resources</code> to get more info. 
-See the <a href="docs/en_US/index.html#configuration">Local mode (expert)</a> documentation section for details.
-<code>
-    eufy status # check the image and container status
-    eufy info # check the image and container status (extended info)
-    eufy test # check if the container is connected to the eufy cloud
-    eufy logs # get the container logs
-</code></li>
-<li>Docker container indicator (left) is red
-<br> Docker image install failed or container fails to start. Make sure your image is property installed
-<br> Note: @bropat does not provide armv7 (Pi3) images anymore, latest one is 1.7.1</li>
-<li>Eufy Cloud indicator (right) is red
-<br> A red Cloud indicator means the Eufy cloud authentication failed or Eufy prevents you from connecting for security reasons.
-Verify that your Eufy login, password and device name are correct.</li>
-<li>Synchronization failed, devices are not found
-<br> Apostrophes and quotes are not supported in equipment names</li>
-<li>Incompatible schema error, commands not working
-<br> Make sure you're using the correct <code>eufy-security-ws</code> <a href="https://github.com/bropat/eufy-security-ws/releases">release</a>.
-<br> Your installed image version is displayed in the plugin config page when hitting the <code>Tester</code> button.
-<br> If you've upgraded the plugin you might try to uninstall/reinstall the image and restart the container.</li>
-<li>Some actions change the corresponding property but there's no change on the device (eg flash on/off)
-<br> These are not actions but device settings that will only impact its behavior for the next detection 
-(eg the flash will light at the next event)</li>
-<li>Cam snapshots don't update
-<br> Enable snapshots in the Eufy app: <code>Device &gt; Parameters &gt; Notification</code></li>
-</ul>
+<p>where <code>device_serial</code> is your device serial number, starting by <code>Txxx</code></p>
 
 <h2>Known issues</h2>
 
@@ -107,6 +69,14 @@ tag: <code>#plugin-eufy</code></p>
 <h2>ChangeLog</h2>
 
 <ul>
+<li>v3.1 <a href="https://github.com/lxrootard">lxrootard</a>
+<br> - Fix for equipments ascendant compatibility</li>
+<li>v3.0 <a href="https://github.com/lxrootard">lxrootard</a>
+<br> - Automatic commands discovery and creation
+<br> - Separated discovery and synchronization commands
+<br> - Station, device and other tabs
+<br> - Enhanced communication management and error handling
+<br> - Modernized deamon: websockets, asyncio </li>
 <li>v2.17 <a href="https://github.com/lxrootard">lxrootard</a>
 <br> - Added support for T8W11</li>
 <li>v2.16 <a href="https://github.com/lxrootard">lxrootard</a>
