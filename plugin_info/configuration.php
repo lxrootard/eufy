@@ -123,6 +123,14 @@ if (!isConnect()) {
                 type="number" min="1" max="65535" title="{{Port du container. Défaut: 3000}}"/>
              </div>
         </div>
+	<div class="form-group eufyMode local">
+	   <label class="col-md-4 control-label">{{Réseau mode host}}
+		<sup><i class="fas fa-question-circle tooltips" title="{{Mode réseau docker: bridge (défaut) ou host}}"></i></sup>
+	   </label>
+	   <div class="col-md-1">
+                <input type="checkbox" class="configKey" data-l1key="host_mode" unchecked>
+	   </div>
+	</div>
         <div class="form-group">
            <label class="col-lg-4 control-label">{{Port socket deamon}}&nbsp;
              <sup><i class="fas fa-exclamation-triangle tooltips warning-tooltip"
@@ -146,145 +154,6 @@ if (!isConnect()) {
      </div>
   </fieldset>
 </form>
-<script>
-$('.configKey[data-l1key=eufyMode]').off('change').on('change', function() {
-    $('.eufyMode').hide()
-    $('.eufyMode.' + $(this).value()).show()
-})
-
-$('#bt_installEufy').off('click').on('click', function() {
-	$.ajax({ type: "POST", url: "plugins/eufy/core/ajax/eufy.ajax.php",
-		data: {
-			action: "installEufy"
-		},
-      		dataType: 'json',
-		error: function(error) {
-			$.fn.showAlert({ message: error.message, level: 'danger'
-        		})
-      		},
-      		success: function(data) {
-			if (data.state != 'ok') {
-				$.fn.showAlert({ message: data.result, level: 'danger'
-          			})
-          			return
-        		} else {
-          			$('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
-				$.fn.showAlert({
-					message: '{{Installation en cours}}',
-					level: 'success',
-					emptyBefore: true
-          			})
-        		}
-      		}
-	})
-})
-
-$('#bt_restartEufy').off('click').on('click', function() {
-        $.ajax({ type: "POST", url: "plugins/eufy/core/ajax/eufy.ajax.php",
-                data: {
-                        action: "restartEufy"
-                },
-                dataType: 'json',
-                error: function(error) {
-                        $.fn.showAlert({ message: error.message, level: 'danger'
-                        })
-                },
-                success: function(data) {
-                        if (data.state != 'ok') {
-                                $.fn.showAlert({ message: data.result, level: 'danger'
-                                })
-                                return
-                        } else {
-                                $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
-                                $.fn.showAlert({
-                                        message: '{{Redémarrage en cours}}',
-                                        level: 'success',
-                                        emptyBefore: true
-                                })
-                        }
-                }
-        })
-})
-
-$('#bt_uninstallEufy').off('click').on('click', function() {
-        $.ajax({ type: "POST", url: "plugins/eufy/core/ajax/eufy.ajax.php",
-                data: {
-                        action: "uninstallEufy"
-                },
-                dataType: 'json',
-                error: function(error) {
-                        $.fn.showAlert({ message: error.message, level: 'danger'
-                        })
-                },
-                success: function(data) {
-                        if (data.state != 'ok') {
-                                $.fn.showAlert({ message: data.result, level: 'danger'
-                                })
-                                return
-                        } else {
-                                $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
-                                $.fn.showAlert({
-                                        message: '{{Désinstallation en cours}}',
-                                        level: 'success',
-                                        emptyBefore: true
-                                })
-                        }
-                }
-        })
-})
-
-$('#bt_upgradeEufy').off('click').on('click', function() {
-        $.ajax({ type: "POST", url: "plugins/eufy/core/ajax/eufy.ajax.php",
-                data: {
-                        action: "upgradeEufy"
-                },
-                dataType: 'json',
-                error: function(error) {
-                        $.fn.showAlert({ message: error.message, level: 'danger'
-                        })
-                },
-                success: function(data) {
-                        if (data.state != 'ok') {
-                                $.fn.showAlert({ message: data.result, level: 'danger'
-                                })
-                                return
-                        } else {
-                                $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
-                                $.fn.showAlert({
-                                        message: '{{Upgrade en cours}}',
-                                        level: 'success',
-                                        emptyBefore: true
-                                })
-                        }
-                }
-        })
-})
-
-$('#bt_testEufy').off('click').on('click', function() {
-        $.ajax({ type: "POST", url: "plugins/eufy/core/ajax/eufy.ajax.php",
-                data: {
-                        action: "testEufy"
-                },
-                dataType: 'json',
-                error: function(error) {
-                        $.fn.showAlert({ message: error.message, level: 'danger'
-                        })
-                },
-                success: function(data) {
-                        if (data.state != 'ok') {
-                                $.fn.showAlert({ message: data.result, level: 'danger'
-                                })
-                                return
-                        } else {
-                                $('.pluginDisplayCard[data-plugin_id=' + $('#span_plugin_id').text() + ']').click()
-//                                window.location.reload()
-                        }
-                }
-        })
-})
-
-$('body').off('eufy::dependancy_end').on('eufy::dependancy_end', function(_event, _options) {
-  window.location.reload();
-})
-
-</script>
+<?php
+include_file('core', 'config', 'js', 'eufy');
+?>

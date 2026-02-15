@@ -48,6 +48,8 @@ Docker image configuration post-installation:
 - Uninstall: stops and uninstalls the `eufy-security-ws` image
 - Upgrade: updates the `eufy-security-ws` image with the requested version
 
+Docker network mode: bridge (default) or host. Modify if you encounter connectivity issues
+
 #### 3. Local Mode via Command Line (Expert)
 
 Once the dependencies are installed, you can also use the `eufy` script available in `resources`

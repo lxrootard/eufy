@@ -48,6 +48,8 @@ Configuration de l'image docker post-installation:
 - Désinstaller: arrête et déinstalle l'image `eufy-security-ws`
 - Upgrader: met à jour l'image `eufy-security-ws` avec la version demandée
 
+Réseau mode host: Mode réseau docker bridge (défaut) ou host. A modifier si vous rencontrez des problèmes de connectivité
+
 #### 3. Mode local en ligne de commande (expert)
 
 Une fois les dépendances installées vous pouvez aussi utiliser le script `eufy` disponible dans `resources`

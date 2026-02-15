@@ -662,10 +662,10 @@ class eufyCmd extends cmd {
 		   break;
 		case 'color':
 		   $value = $_options['color']; // couleur
-		    $value = eufyUtils::hex2rgb($value);
+		   $value = eufyUtils::hex2rgb($value);
 		   break;
 		case 'other':
-		    if ($value == '')
+		   if ($value == '')
 			$value = intval($this->getConfiguration('value'));
 	   }
            $params = array('messageId' => $serialNumber, 'command' => $itf . '.set_property', 'serialNumber' => $serialNumber, 'name' => $set, 'value' => $value);

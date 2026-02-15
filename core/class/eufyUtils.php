@@ -207,11 +207,20 @@ class eufyUtils {
                 $version = 'latest';
 
         $compose = file_get_contents($path . '/resources/' . $yaml);
+	$hostMode = config::byKey('host_mode', 'eufy');
+	if ($hostMode) {
+		$compose = str_replace('#network#', 'network_mode: host', $compose);
+		$compose = str_replace('#ports#', '', $compose);
+		$compose = str_replace('#port#', '', $compose);
+	} else {
+		$compose = str_replace('#network#', '', $compose);
+		$compose = str_replace('#ports#', 'ports:', $compose);
+		$compose = str_replace('#port#', '- '.$port.':3000', $compose);
+	}
         $compose = str_replace('#store#', $store_dir, $compose);
         $compose = str_replace('#device#', $device, $compose);
         $compose = str_replace('#user#', $user, $compose);
         $compose = str_replace('#password#', $passwd, $compose);
-        $compose = str_replace('#port#', $port, $compose);
         $compose = str_replace('#version#', $version, $compose);
         mkdir ($store_dir,0755,true);
         file_put_contents($file, $compose);
