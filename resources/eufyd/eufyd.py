@@ -33,11 +33,9 @@ class Eufyd(BaseDaemon):
         try:
              async with websockets.connect(self._url) as ws:
                   logging.info('Eufy Websocket connected')
-#                  await ws.send(json.dumps({"command": "driver.set_log_level", "level": self._config.loglevel}))
-#                  await asyncio.sleep(0.3)
+#                 await ws.send(json.dumps({"command": "driver.set_log_level", "level": self._config.loglevel}))
+#                 await asyncio.sleep(0.3)
                   await ws.send(json.dumps({"command": "start_listening"}))
-                  await asyncio.sleep(0.3)
-                  await ws.send(json.dumps({"command": "set_api_schema", "schemaVersion": self._config.schemaversion}))
                   await asyncio.sleep(0.3)
                   async for msg in ws:
                        await self.upd_jeedom(msg)
@@ -50,6 +48,8 @@ class Eufyd(BaseDaemon):
         logging.debug('[on_message] sent: ' + str(message))
         try:
             async with websockets.connect(self._url) as ws:
+                 await ws.send(json.dumps({"command": "set_api_schema", "schemaVersion": self._config.schemaversion}))
+                 await asyncio.sleep(0.3)
                  await ws.send(json.dumps(message))
                  await asyncio.sleep(0.3)
                  async for msg in ws:

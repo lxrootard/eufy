@@ -39,7 +39,7 @@ function buildCmd(_cmd) {
   tr += '<span class="cmdAttr" data-l1key="htmlstate"></span>'
 
   if (init(_cmd.type) == 'action') {
-    if ((_cmd.subType == 'other') && (_cmd.logicalId.endsWith(':set')))
+    if ((_cmd.subType == 'other') && isset(_cmd.configuration.value))
 	tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="value" placeholder="{{Valeur}}">'
     else if (_cmd.subType == 'slider') {
 	 tr += '<div style="margin-top:7px; display: flex">'

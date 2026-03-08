@@ -451,7 +451,7 @@ class eufy extends eqLogic {
 	if (($prop['type']== 'number') && (! is_null($prop['states']))) {
             $subtype ='select';
             $cmd->setConfiguration('listValue',eufyUtils::list2enum($prop['states']));
-	    $cmd->setCustomTemplate('cmd.action.select','Liste_lxr');
+	    $cmd->setCustomTemplate('cmd.action.select','List_lxr');
 	}
 	else if (($prop['type']== 'object') && (strpos(strtolower($id),'color') !== false))
 	    $subtype = 'color';
@@ -481,12 +481,13 @@ class eufy extends eqLogic {
   public function createCustomCmd($type, $stype, $itf, $id, $name, $icon=null) {
    $cmd = $this->getCmd(null, $id);
    if (is_object($cmd))
-	return;
+	return $cmd;
 
    $cmd = $this->createCmd($type, array('type' => $stype),$itf, $id,$name);
    $cmd->setConfiguration('other',1);
    $cmd->setDisplay('icon', '<i class="icon ' . $icon . '"><i>');
    $cmd->save();
+   return $cmd;
   }
 
   public function createPanTiltCmds() {
@@ -501,7 +502,9 @@ class eufy extends eqLogic {
   public function createStationCmds() {
    log::add(__CLASS__, 'debug', '['. __FUNCTION__ . '] ');
    $this->createCustomCmd('action','other','station','chime','Chime','fas fa-concierge-bell');
-   $this->createCustomCmd('action','other','station','trigger_alarm','Trigger alarm','fas fa-bell');
+   $cmd = $this->createCustomCmd('action','number','station','seconds:trigger_alarm','Trigger alarm','fas fa-bell');
+   $cmd->setConfiguration('value', 1);
+   $cmd->save();
    $this->createCustomCmd('action','other','station','reset_alarm','Reset alarm','fas fa-bell-slash');
    $this->createCustomCmd('action','other','station','reboot','Reboot','kiko-reload-arrow');
   }
@@ -670,13 +673,15 @@ class eufyCmd extends cmd {
 	   }
            $params = array('messageId' => $serialNumber, 'command' => $itf . '.set_property', 'serialNumber' => $serialNumber, 'name' => $set, 'value' => $value);
 	}
-	else if ($value != "") {
+	else {
+	   if ($value == '')
+		$value = $this->getConfiguration('value');
 	   if (is_numeric($value)) $value = intval($value);
-	   $params = array('messageId' => $serialNumber,'command' => $itf . '.' . $action , 'serialNumber' => $serialNumber, $prop => $value);
+	   if ($value != '')
+		$params = array('messageId' => $serialNumber,'command' => $itf . '.' . $action , 'serialNumber' => $serialNumber, $prop => $value);
+	   else // action command without parms
+		$params = array('messageId' => $serialNumber,'command' => $itf . '.' . $action, 'serialNumber' => $serialNumber);
 	}
-	else // action command without parms
-	   $params = array('messageId' => $serialNumber,'command' => $itf . '.' . $action, 'serialNumber' => $serialNumber);
-
    	log::add('eufy', 'debug', '> send to daemon: ' . json_encode($params));
         eufy::sendToDaemon($params);
     }
