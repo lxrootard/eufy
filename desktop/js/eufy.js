@@ -243,6 +243,9 @@ $('.refreshBtn[data-action=refresh]').on('click',function() {
    $('#md_modal').load('index.php?v=d&plugin=eufy&modal=health').dialog('open');
 });
 
+$('.pluginAction[data-action=openLocation]').on('click', function () {
+  window.open($(this).attr("data-location"), "_blank", null);
+});
 
 $("#table_cmd").sortable({
   axis: "y",
@@ -261,7 +264,6 @@ setTimeout(() => {
     jeedomUtils.loadPage('index.php?v=d&m=eufy&p=eufy', false)
   })
 }, "500");
-
 
 function printEqLogic(_eqLogic) {
   if (isset(_eqLogic.configuration)) {

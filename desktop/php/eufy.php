@@ -9,10 +9,11 @@ $deamon_info = eufy::deamon_info();
 
 if (!eufy::isOnline())
     echo "<div id='div_alert'><div class='alert alert-danger'  role='alert'>
-	{{Le container eufy-ws-security n'est pas démarré ou pas connecté au Cloud Eufy}}</div></div>";
+	{{Le container eufy-ws-security n&apos;est pas démarré ou pas connecté au Cloud Eufy}}</div></div>";
 else if ($deamon_info['state'] != 'ok')
     echo "<div id='div_alert'><div class='alert alert-warning'  role='alert'>
 	{{Le deamon eufyd n&apos;est pas démarré}}</div></div>";
+else
     echo '<div id="div_alert"></div>';
 ?>
 

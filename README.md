@@ -57,6 +57,9 @@ Also check the [Jeedom community blog](https://community.jeedom.com/tag/plugin-e
 tag: `#plugin-eufy`
 
 ## ChangeLog
+* v3.4 [lxrootard](https://github.com/lxrootard)
+<br> - Bugfix doc and community links
+<br> - Documentation update
 * v3.3 [lxrootard](https://github.com/lxrootard)
 <br> - Fix for eufy-security-ws session persistence [#506](https://github.com/bropat/eufy-security-ws/issues/506)
 <br> - Added new cam pictures 

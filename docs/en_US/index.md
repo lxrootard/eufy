@@ -158,7 +158,7 @@ The RTSP stream works in the [Camera](https://doc.jeedom.com/en_US/plugins/secur
 ### Bugs and Troubleshooting
 
 #### Prerequisites Not Found
-<br> For `local` mode, the `docker` prerequisites are automatically installed with the `Setup Docker > Install` button. A `python_venv` is also automatically installed for `debian 12+`
+For `local` mode, the `docker` prerequisites are automatically installed with the `Setup Docker > Install` button. A `python_venv` is also automatically installed for `debian 12+`
 
 #### The Docker Container Indicator (on the left) is Red  
 The Docker image installation failed or the container is not starting. Make sure the image is properly installed.  
@@ -169,16 +169,16 @@ This means that authentication to the Eufy cloud has failed or Eufy is preventin
 <br>Warining 2FA is not supported.
 
 
-#### The Daemon Does Not Start
-
+#### Daemon Does Not Start
 Check the Docker image status, container, and cloud connection (see below).
 <br>If the Docker image is properly installed, its version will be displayed on the `installed version` line.
 <br>Both the container status and cloud connection indicators should be green (see below).
 <br>Use the `eufy` script in `resources` for more information.  
 See the [Local Mode (Expert)](docs/en_US/index.md#configuration) section for more details.
 
-#### Synchronization Failure, Devices Not Found  
-Apostrophes and quotes are not supported in equipment names.
+#### Synchronization Failure, Devices Not Found
+Restart the container (blue triangle in the configuration page)
+<br>Warning: apostrophes and quotes are not supported in equipment names.
 
 #### Incompatible Schema Error, Commands Do Not Work  
 Make sure you are using the correct [version](https://github.com/bropat/eufy-security-ws/releases) of the `eufy-security-ws` image.  

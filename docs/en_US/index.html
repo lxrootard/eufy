@@ -178,7 +178,7 @@ The following additional commands can be created:</p>
 
 <h4>Prerequisites Not Found</h4>
 
-<p><br> For <code>local</code> mode, the <code>docker</code> prerequisites are automatically installed with the <code>Setup Docker &gt; Install</code> button. A <code>python_venv</code> is also automatically installed for <code>debian 12+</code></p>
+<p>For <code>local</code> mode, the <code>docker</code> prerequisites are automatically installed with the <code>Setup Docker &gt; Install</code> button. A <code>python_venv</code> is also automatically installed for <code>debian 12+</code></p>
 
 <h4>The Docker Container Indicator (on the left) is Red</h4>
 
@@ -190,7 +190,7 @@ The following additional commands can be created:</p>
 <p>This means that authentication to the Eufy cloud has failed or Eufy is preventing connection for security reasons (e.g., too many login errors). Verify that your Eufy username, password, and device name are correct.
 <br>Warining 2FA is not supported.</p>
 
-<h4>The Daemon Does Not Start</h4>
+<h4>Daemon Does Not Start</h4>
 
 <p>Check the Docker image status, container, and cloud connection (see below).
 <br>If the Docker image is properly installed, its version will be displayed on the <code>installed version</code> line.
@@ -200,7 +200,8 @@ See the <a href="docs/en_US/index.html#configuration">Local Mode (Expert)</a> se
 
 <h4>Synchronization Failure, Devices Not Found</h4>
 
-<p>Apostrophes and quotes are not supported in equipment names.</p>
+<p>Restart the container (blue triangle in the configuration page)
+<br>Warning: apostrophes and quotes are not supported in equipment names.</p>
 
 <h4>Incompatible Schema Error, Commands Do Not Work</h4>
 

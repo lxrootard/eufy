@@ -158,7 +158,7 @@ Le flux RTSP fonctionne dans le plugin [Camera](https://doc.jeedom.com/fr_FR/plu
 ### Bugs et dépannage
 
 #### Prérequis non trouvés
-<br> Pour le mode `local` les prérequis `docker` sont installés automatiquement avec le bouton `Setup Docker > Installer`. Un `python_venv` est également installé automatiquement pour `debian 12+`
+Pour le mode `local` les prérequis `docker` sont installés automatiquement avec le bouton `Setup Docker > Installer`. Un `python_venv` est également installé automatiquement pour `debian 12+`
 
 #### Le voyant du conteneur Docker (à gauche) est rouge  
 L’installation de l’image Docker a échoué ou le conteneur ne démarre pas. Assurez-vous que l’image est correctement installée.  
@@ -169,7 +169,6 @@ Cela signifie que l’authentification au cloud Eufy a échoué ou qu’Eufy emp
 <br>Attention le 2FA n'est pas supporté. 
 
 #### Le démon ne démarre pas
-
 Vérifiez l'état de l’image Docker, du conteneur et de la connexion au cloud (voir ci-dessous).
 <br>Si l’image Docker est correctement installée, sa version sera affichée sur la ligne `installed version`.
 <br>Les indicateurs d’état du conteneur et de la connexion au cloud doivent tous deux être verts (voir ci-dessous).
@@ -177,7 +176,8 @@ Vérifiez l'état de l’image Docker, du conteneur et de la connexion au cloud 
 Consultez la section [Mode local (expert)](docs/en_US/index.md#configuration) pour plus de détails.
 
 #### Echec de synchronisation, devices non trouvés  
-Les apostrophes et les guillemets ne sont pas pris en charge dans les noms des équipements.
+Redémarrez le container (triangle bleu dans la page de configuration)
+<br>Les apostrophes et les guillemets ne sont pas pris en charge dans les noms des équipements.
 
 #### Erreur schéma incompatible, les commandes ne fonctionnent pas  
 Assurez-vous d’utiliser la bonne [version](https://github.com/bropat/eufy-security-ws/releases) de l'image `eufy-security-ws`.  
