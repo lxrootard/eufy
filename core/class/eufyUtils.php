@@ -357,7 +357,7 @@ class eufyUtils {
         cache::set('eufy::version',$version);
 
         $jsonObj = self::testContainer("-t");
-        $online = False;
+        $online = false;
         if (is_object($jsonObj))
                 $online = $jsonObj->result->state->driver->connected;
         log::add('eufy', 'debug', 'eufy-security-ws service online: ' . $online);

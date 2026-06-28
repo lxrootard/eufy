@@ -57,6 +57,8 @@ Also check the [Jeedom community blog](https://community.jeedom.com/tag/plugin-e
 tag: `#plugin-eufy`
 
 ## ChangeLog
+* v3.5 [lxrootard](https://github.com/lxrootard)
+<br> - Deamon auto-restart fix
 * v3.4 [lxrootard](https://github.com/lxrootard)
 <br> - Bugfix doc and community links
 <br> - Documentation update

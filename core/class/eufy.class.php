@@ -25,6 +25,12 @@ class eufy extends eqLogic {
     return [ 'resources/python_venv' ];
   }
 
+  public static function send_alert($msg) {
+    log::add(__CLASS__, 'error', __($msg, __FILE__), 'unableStartDeamon');
+    event::add('jeedom::alert', array('level' => 'warning', 'page' => 'eufy','message' => $msg));
+  }
+
+
   public static function deamon_info() {
     $rc = array();
     $rc['log'] = __CLASS__;
@@ -59,6 +65,7 @@ class eufy extends eqLogic {
         $rc['launchable'] = 'nok';
         $rc['launchable_message'] = __('Le port n\'est pas configuré', __FILE__);
     }
+    // log::add(__CLASS__, 'debug', '[' . __FUNCTION__ . '] state: '. $rc['state'] . ' launchable: ' . $rc['launchable']);
     return $rc;
   }
 
@@ -70,18 +77,14 @@ class eufy extends eqLogic {
 
     $pyExec = eufyUtils::getPyPath();
     if (! eufyUtils::checkContainer()) {
-        log::add(__CLASS__, 'error', __('Container Eufy non démarré', __FILE__), 'unableStartDeamon');
-        event::add('jeedom::alert', array('level' => 'error', 'page' => 'plugin',
-                'message' => __('Container Eufy non démarré', __FILE__)));
+        self::send_alert('Container Eufy non démarré');
 	return false;
     }
     if (! eufyUtils::testService()) {
-	log::add(__CLASS__, 'error', __('Container Eufy non connecté au Cloud', __FILE__), 'unableStartDeamon');
-        event::add('jeedom::alert', array('level' => 'error', 'page' => 'plugin',
-                'message' => __('Container Eufy non connecté au Cloud', __FILE__)));
+	self::send_alert('Container Eufy non connecté au Cloud');
 	return false;
     }
-    log::add(__CLASS__, 'info', 'Lancement du démon eufyd');
+    log::add(__CLASS__, 'info', '*** Lancement du démon eufyd ***');
     $cmd = eufyUtils::getPyCmdLine();
     $result = exec($cmd . ' >> ' . log::getPathToLog('eufy_daemon') . ' 2>&1 &');
     $i = 0;
@@ -99,11 +102,12 @@ class eufy extends eqLogic {
     sleep(3);
     eufy::refreshAllDevices();
     message::removeAll(__CLASS__, 'unableStartDeamon');
-    log::add(__CLASS__, 'info', 'Démon Eufy lancé');
+    log::add(__CLASS__, 'info', 'Démon eufyd lancé');
     return true;
   }
 
   public static function deamon_stop() {
+    log::add(__CLASS__, 'info', '*** Arrêt du démon eufyd ***');
     $pid_file = jeedom::getTmpFolder(__CLASS__) . '/deamon.pid'; // ne pas modifier
     if (file_exists($pid_file)) {
         $pid = intval(trim(file_get_contents($pid_file)));
@@ -112,7 +116,13 @@ class eufy extends eqLogic {
     system::kill('eufyd.py');
     cache::set('eufy::container_ok',false);
     cache::set('eufy::online',false);
-    sleep(1);
+    while ($i < 5) {
+	$deamon_info = self::deamon_info();
+	if ($deamon_info['state'] == 'nok')
+	   break;
+	sleep(1);
+	$i++;
+    }
   }
 
 
@@ -184,7 +194,7 @@ class eufy extends eqLogic {
     if (isset($result['state'])) {
         log::add(__CLASS__, 'debug','>>> State message received');
         $online = ($result['state']['driver']['pushConnected'] == 'true');
-        eufy::setOnlineStatus ($online);
+        cache::set('eufy::online', $online);
         if ((isset($result['state']['stations'])) || (isset($result['state']['devices'])))
              eufy::setDevicesList($result['state']['stations'],$result['state']['devices']);
     }
@@ -221,7 +231,7 @@ class eufy extends eqLogic {
         else if ($event['source'] == 'driver') {
             log::add('eufy', 'debug','>>> driver message received: ' . $event['event']);
             if (($event['event'] == 'push disconnected') || ($event['event'] == 'disconnected'))
-                eufy::setOnlineStatus (false);
+		eufy::deamon_stop();
         }
      } else
 	log::add(__CLASS__, 'warning', '[' . __FUNCTION__ . '] unexpected error: ' . json_encode($event));
@@ -320,6 +330,7 @@ class eufy extends eqLogic {
         return;
 
     $val = ($property == 'picture')? 'object' : json_encode($value);
+
     log::add(__CLASS__, 'info', '['. __FUNCTION__ . '] device: '. $eqLogic->getName() .' s/no: '. $sno . ' property: '
     	. $property . ' value: ' . $val);
 
@@ -558,12 +569,6 @@ class eufy extends eqLogic {
     $b = cache::byKey('eufy::container_ok')->getValue();
 //  log::add(__CLASS__, 'debug', 'isListening: ' .  $b);
     return $b;
-  }
-
-  public static function setOnlineStatus($b)
-  {
-//  log::add(__CLASS__, 'debug', 'online status: ' . $b);
-    cache::set('eufy::online', $b);
   }
 
   public static function isOnline ()
