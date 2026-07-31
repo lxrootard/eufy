@@ -352,7 +352,7 @@ class eufy extends eqLogic {
 	$s2=cache::byKey('eufy::'.$sno)->getValue();
 	if ($s1 == $s2) return;
     }
-    if ($cmd->getGeneric_type() == 'LIGHT_COLOR')
+    if (($cmd->getGeneric_type() == 'LIGHT_COLOR') && (!is_array($value)))
        $value = eufyUtils::rgb2hex($value);
 
     if ($cmd->sendEvent($value)) {
@@ -450,9 +450,10 @@ class eufy extends eqLogic {
 	else if ($prop['type'] == 'boolean') {
 	    $subtype = 'binary';
 	    $cmd->setIsVisible(0); // on masque l'info
-	} else {
+	}
+	else {
 	    $subtype = 'string';
-	    if ($id == 'picture') {
+	    if (($prop['type'] == 'object') && ($id == 'picture')) {
 		cache::set('eufy::' . $this->getConfiguration('serialNumber'), 0);
 		$cmd->setCustomTemplate('cmd.info.string','ImageViewer_lxr');
 	    }
@@ -464,8 +465,10 @@ class eufy extends eqLogic {
             $cmd->setConfiguration('listValue',eufyUtils::list2enum($prop['states']));
 	    $cmd->setCustomTemplate('cmd.action.select','List_lxr');
 	}
-	else if (($prop['type']== 'object') && (strpos(strtolower($id),'color') !== false))
-	    $subtype = 'color';
+	else if (($prop['type']== 'object') && (strpos(strtolower($id),'color') !== false)) {
+	    $subtype =  'color';
+	    $cmd->setConfiguration('params', '[#color#]');
+	}
 	if ((isset($prop['min'])) && (isset($prop['max'])))
 	    $subtype = 'slider';
 	if ($prop['type'] == 'boolean') {
@@ -474,8 +477,6 @@ class eufy extends eqLogic {
 	    $cmd->setCustomTemplate('cmd.action.other','BinarySwitch_lxr');
 	}
    }
-   log::add(__CLASS__, 'info', '['. __FUNCTION__ . '] device: ' . $this->getName() . ' s/no: ' . $this->getLogicalId() .
-	' id: ' . $id .' / name: '.$name . ' / type: '.$type . ' / subtype: '.$subtype.' / itf: '.$itf);
    $cmd->setSubType($subtype);
    if ($subtype == 'slider') {
 	$cmd->setConfiguration('minValue', $prop['min']);
@@ -483,7 +484,12 @@ class eufy extends eqLogic {
    }
    if (isset($unit))
 	$cmd->setUnite($unit);
-   $cmd->setGeneric_type($cmd->getGenericType());
+   $gentype = eufyUtils::mapGenericType($id,$type,$prop['type']);
+   $cmd->setGeneric_type($gentype);
+   log::add(__CLASS__, 'info', '['. __FUNCTION__ . '] device: ' . $this->getName() . ' s/no: ' . $this->getLogicalId() .
+	' id: ' . $id .' / name: '.$name . ' / eufytype: ' . $prop['type'] . ' / type: '.$type . ' / subtype: '.$subtype .
+	' / generic: ' . $gentype . ' / itf: ' . $itf);
+ 
    $cmd->save();
 
    return $cmd;
@@ -602,38 +608,6 @@ class eufyCmd extends cmd {
 	return true;
    }
    return false;
-  }
-
-  public function getGenericType () {
-   $type = $this->getType();
-   $id = $this->getLogicalId();
-   if ($type == 'info') {
-        if ($id == 'battery')
-            return 'BATTERY';
-        else if (($id == 'guardMode') || ($id == 'currentMode'))
-            return 'ALARM_MODE';
-        else if ($id == 'enabled')
-            return 'ALARM_ARMED';
-        else if (stripos($id, 'volume') !== false)
-            return 'VOLUME';
-	else if ((stripos($id, 'alarm') !== false) || (stripos($id, 'state') !== false))
-	    return 'ALARM_STATE';
-        else if (stripos($id, 'url') !== false)
-            return 'CAMERA_URL';
-        else if (stripos($id, 'recording') !== false)
-            return 'CAMERA_RECORD';
-        else if (stripos($id, 'power') !== false)
-            return 'POWER';
-        else
-            return 'GENERIC_INFO';
-   } else {
-        if (stripos($id, 'guardMode') !== false)
-            return 'ALARM_SET_MODE';
-        else if (stripos($id, 'volume') !== false)
-            return 'SET_VOLUME';
-        else
-            return 'GENERIC_ACTION';
-   }
   }
 
   // Exécution d'une commande

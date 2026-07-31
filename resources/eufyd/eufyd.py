@@ -39,7 +39,7 @@ class Eufyd(BaseDaemon):
                   await asyncio.sleep(0.3)
                   async for msg in ws:
                        await self.upd_jeedom(msg)
-                       # logging.info("> received msg: " + msg)
+                       # logging.info("> [on_start] received msg: " + msg)
         except Exception as err:
              logging.exception('[on_start] unexpected error from eufy-security-ws: '  + type(err).__name__ + ": " + str(err))
 
@@ -54,7 +54,7 @@ class Eufyd(BaseDaemon):
                  await asyncio.sleep(0.3)
                  async for msg in ws:
                      await self.upd_jeedom(msg)
-                     # logging.info("> received msg: " + msg)
+                     # logging.info("> [on_message] received msg: " + msg)
 
         except Exception as err:
             logging.exception("[on_message] error sending message: " + type(err).__name__+ ": " + str(err))

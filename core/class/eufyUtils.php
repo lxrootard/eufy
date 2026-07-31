@@ -124,12 +124,48 @@ class eufyUtils {
     return $cmd;
   }
 
+
+  public static function mapGenericType($id, $type, $eufyType) {
+   if ($type == 'info') {
+	if ($id == 'battery')
+            return 'BATTERY';
+	else if (($id == 'guardMode') || ($id == 'currentMode'))
+            return 'ALARM_MODE';
+	else if ($id == 'enabled')
+            return 'ALARM_ARMED';
+	else if (stripos($id, 'volume') !== false)
+            return 'VOLUME';
+	else if ((stripos($id, 'alarm') !== false) || (stripos($id, 'state') !== false))
+            return 'ALARM_STATE';
+	else if (stripos($id, 'recording') !== false)
+            return 'CAMERA_RECORD';
+	else if (stripos($id, 'power') !== false)
+            return 'POWER';
+	else if ($eufyType == 'object') {
+	    if (stripos($id, 'picture') !== false)
+		return 'CAMERA_URL';
+	    else
+		return 'LIGHT_COLOR';
+	} else
+	    return 'GENERIC_INFO';
+   } else {
+	if (stripos($id, 'guardMode') !== false)
+	    return 'ALARM_SET_MODE';
+	else if (stripos($id, 'volume') !== false)
+	    return 'SET_VOLUME';
+	else if (stripos($id, 'color') !== false)
+	    return 'LIGHT_SET_COLOR';
+	else
+	    return 'GENERIC_ACTION';
+   }
+  }
+
   public static function list2enum($list)
   {
    $enum = "";
    foreach ($list as $key => $val) {
-        $enum .= $key . '|' . $val ;
-        if (next($list)) $enum .= ";";
+	$enum .= $key . '|' . $val ;
+	if (next($list)) $enum .= ";";
    }
    // log::add('eufy', 'debug', '['. __FUNCTION__ . '] ' . json_encode($list) .' => ' . $enum);
    return $enum;
