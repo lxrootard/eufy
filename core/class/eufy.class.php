@@ -352,7 +352,7 @@ class eufy extends eqLogic {
 	$s2=cache::byKey('eufy::'.$sno)->getValue();
 	if ($s1 == $s2) return;
     }
-    if (($cmd->getGeneric_type() == 'LIGHT_COLOR') && (!is_array($value)))
+    if (($cmd->getGeneric_type() == 'LIGHT_COLOR') && (! is_array(json_decode($value))))
        $value = eufyUtils::rgb2hex($value);
 
     if ($cmd->sendEvent($value)) {
@@ -408,7 +408,7 @@ class eufy extends eqLogic {
 	    if ($prop['type'] == 'boolean') {
 		$this->createActionCmd($prop, $itf, $id.':on', $prop['label'] .' On', $info);
 		$this->createActionCmd($prop, $itf, $id.':off', $prop['label'] .' Off', $info);
-	    } else if ($prop['type'] == 'number') {
+	    } else if (($prop['type'] == 'number') || ($prop['type'] == 'object')) {
 		$this->createActionCmd($prop, $itf, $id.':set', 'Set '. $prop['label'], $info);
 		if ($id != 'guardMode') {
 		    $info->setIsVisible(0);

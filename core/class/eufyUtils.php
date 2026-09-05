@@ -271,6 +271,7 @@ class eufyUtils {
                 'message' => $msg));
         $eufy = 'bropat/eufy-security-ws';
         $yaml = realpath(__DIR__ . '/../..') . '/data/docker-compose.yml';
+	$json = realpath(__DIR__ . '/../..') . '/data/store/persistent.json';
         $cid  = shell_exec(system::getCmdSudo() . " docker ps -a | grep -i eufy|awk '{ print $1 }'");
         $images = shell_exec(system::getCmdSudo() . ' docker images -q ' . $eufy );
         log::add('eufy', 'debug','images installées: '. $images);
@@ -306,6 +307,8 @@ class eufyUtils {
                 if ($cid != "")
                         throw new Exception(__('Le container est déjà démarré', __FILE__));
                 self::updateYaml();
+		if (file_exists($json))
+			rename($json,$json . '.old');
                 $cmd = 'docker compose -f '. $yaml .' up -d';
                 if ($arch == 'aarch64')
                         $cmd = 'DOCKER_DEFAULT_PLATFORM=linux/arm64 ' . $cmd;

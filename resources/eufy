@@ -8,6 +8,7 @@
 image='bropat/eufy-security-ws'
 eufyfile=$(realpath "$0")
 data=$(dirname "$eufyfile")/../data
+json=$data/store/persistent.json
 res=$(dirname "$eufyfile")/../resources
 pyexec='/usr/bin/python3'
 venv=$res/python_venv
@@ -43,6 +44,7 @@ echo eufy 'action:' $action 'options:' $opts
 case $action in
         start|install)
         	echo 'starting image' $image
+		[ -f $json ] && mv $json $json.old ;
 		docker compose -f $data/docker-compose.yml up -d ;;
         stop)
                 [ "$container_id" == "" ] && echo $image 'not running' && exit 1;
@@ -64,6 +66,7 @@ case $action in
 		docker logs $container_id ;;
         restart)
                 $0 stop
+		sleep 1
                 $0 start ;;
 	uninstall)
 		$0 stop

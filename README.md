@@ -57,6 +57,8 @@ Also check the [Jeedom community blog](https://community.jeedom.com/tag/plugin-e
 tag: `#plugin-eufy`
 
 ## ChangeLog
+* v3.7 [lxrootard](https://github.com/lxrootard)
+<br> - fix for eufy-security-ws #595
 * v3.6 [lxrootard](https://github.com/lxrootard)
 <br> - Fix for color and object types
 * v3.5 [lxrootard](https://github.com/lxrootard)
