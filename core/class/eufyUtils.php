@@ -378,12 +378,12 @@ class eufyUtils {
 	$container = self::initContainerSettings();
         $h = "'" . $container['host'] . "'";
         $p = "'" . $container['port'] . "'";
-        // log::add('eufy', 'debug',  '>>> Testing EufyWS service on '. $host . ':' . $port);
+        //log::add('eufy', 'debug',  '>>> Testing EufyWS service on '. $h . ':' . $p);
         $python = self::getPyPath();
         $script =  __DIR__ . '/../../resources/test_eufy.py ';
 	$cmdline = $script . $option . ' -u ' . $h . ':' . $p;
         $rc = shell_exec(system::getCmdSudo() . $python . ' ' . $cmdline .' 2>&1');
-        // log::add('eufy', 'debug', '*** Test result '. $rc);
+        //log::add('eufy', 'debug', '*** Test result '. $rc);
         return json_decode($rc);
   }
 

@@ -24,9 +24,6 @@ usage() {
  echo "      -u URL eufy service URL, default 127.0.0.1:3000"
 }
 
-container_id=`sudo docker ps -a | grep -i $image|awk '{ print $1 }'`
-[ ! -f $data/docker-compose.yml ] && echo 'eufy image not installed, yaml file not found' && exit 1;
-
 opts=''
 while getopts "d:u:h" opt; do
    case "$opt" in
@@ -38,7 +35,10 @@ done
 shift $(( OPTIND - 1 ))
 action=$1
 [ -z "$action" ] && usage && exit 1 ;
-
+if [ "$action" != "test" ]; then
+	[ ! -f $data/docker-compose.yml ] && echo 'eufy image not installed, yaml file not found' && exit 1;
+	container_id=`sudo docker ps -a | grep -i $image|awk '{ print $1 }'`
+fi
 echo eufy 'action:' $action 'options:' $opts
 
 case $action in

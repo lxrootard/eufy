@@ -21,6 +21,8 @@ require_once __DIR__  . '/eufyUtils.php';
 
 class eufy extends eqLogic {
 
+  public static $_encryptConfigKey = array('password');
+
   public static function backupExclude() {
     return [ 'resources/python_venv' ];
   }
@@ -352,8 +354,10 @@ class eufy extends eqLogic {
 	$s2=cache::byKey('eufy::'.$sno)->getValue();
 	if ($s1 == $s2) return;
     }
-    if (($cmd->getGeneric_type() == 'LIGHT_COLOR') && (! is_array(json_decode($value))))
-       $value = eufyUtils::rgb2hex($value);
+
+
+   if (($cmd->getGeneric_type() == 'LIGHT_COLOR') && is_array($value)) $value = json_encode($value);
+	$value = eufyUtils::rgb2hex($value);
 
     if ($cmd->sendEvent($value)) {
 //	log::add(__CLASS__, 'debug', 'device info updated, property: '. $property);
