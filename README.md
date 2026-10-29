@@ -57,6 +57,8 @@ Also check the [Jeedom community blog](https://community.jeedom.com/tag/plugin-e
 tag: `#plugin-eufy`
 
 ## ChangeLog
+* v3.9 [lxrootard](https://github.com/lxrootard)
+<br> - quickfix various issues
 * v3.8 [lxrootard](https://github.com/lxrootard)
 <br> - fix eufy script, new websockets lib, crypted passwd
 * v3.7 [lxrootard](https://github.com/lxrootard)

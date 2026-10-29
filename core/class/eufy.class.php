@@ -356,7 +356,7 @@ class eufy extends eqLogic {
     }
 
 
-   if (($cmd->getGeneric_type() == 'LIGHT_COLOR') && is_array($value)) $value = json_encode($value);
+   if (($cmd->getGeneric_type() == 'LIGHT_COLOR') && is_array($value))
 	$value = eufyUtils::rgb2hex($value);
 
     if ($cmd->sendEvent($value)) {

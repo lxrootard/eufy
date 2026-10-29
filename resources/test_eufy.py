@@ -17,7 +17,7 @@ if args.url:
 else:
 	url = '127.0.0.1:3000'
 
-ws = client.connect("ws://" + url, legacy=True)
+ws = client.connect("ws://" + url)
 
 if args.version:
 	print(ws.recv())
