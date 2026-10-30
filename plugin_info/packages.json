@@ -8,7 +8,7 @@
     "wheel" : {},
     "requests" : {},
     "pyudev" : {},
-    "websockets" : { "version": "16.0" },
+    "websockets" : { "version": "15.0.1" },
     "jeedomdaemon": {}
   },
   "npm": {},
